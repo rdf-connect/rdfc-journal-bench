@@ -1,0 +1,272 @@
+% ============================================================================
+% Section 6 (Comparative evaluation) -- draft sketch
+%
+% Replaces the bullet outline of Section 6 in main-7.pdf. Written against the
+% benchmark in this repository (rdfc-journal-bench); every number marked \res{}
+% is a placeholder, with the preliminary value (1 rep, n = 1000, tmpfs unless
+% noted) in a comment next to it.
+%
+% Where this departs from the current outline -- decide before polishing:
+%  (a) Baselines. The outline compares against cwltool only. The benchmark has
+%      a shell pipe (cross-process floor), the in-process driver of experiment 1
+%      (zero-overhead reference), and three CWL runners (cwltool, Toil,
+%      StreamFlow). Table 1 lists "CWL (cwltool)" and would need a note.
+%  (b) B1 is implemented as RML -> SHACL -> file. SPARQL loading is left out of
+%      the measured window: it is an external stateful service, identical in
+%      every arm, and only adds noise. The outline says it is included.
+%  (c) B3 (cross-environment composition) is not a separate pipeline: B1 already
+%      runs the JVM RMLMapper and the TypeScript SHACL validator in one
+%      pipeline. A Python step is not part of it. Proposal: fold B3 into B1 and
+%      keep "change effort" (swapping an implementation) as its own metric.
+%  (d) B2 (incremental feed) is not built. For CWL it is a capability boundary
+%      rather than a number; see \S\ref{sec:eval-capability}.
+%  (e) Scale. The outline says 10^3 to 10^7 records. Streaming arms reach that;
+%      CWL-scatter at one record per task costs ~0.75 s per task, so 10^4
+%      records already exceed a 30 min cap. Proposal: 10^2..10^5 for all arms,
+%      10^6+ for the streaming arms only.
+%  (f) Metrics. CPU time is not collected yet; "intermediate I/O" is measured as
+%      peak intermediate storage, not bytes written. Definition size and change
+%      effort are not measured yet.
+% ============================================================================
+
+\newcommand{\res}[1]{\textbf{[#1]}}
+
+\section{Comparative evaluation}
+\label{sec:eval}
+
+Feature matrices such as Table~1 say what a framework can express, not what
+that expressiveness costs. This section measures the cost. The difficulty is
+that RDF-Connect and the systems it is naturally compared with are optimised
+for different points in the workload space: a batch system over files pays per
+process and per file, a streaming system pays per message. A single pipeline
+run at a single size would therefore pick the winner before any code runs. We
+address this with three commitments, and report the results as a function of
+the workload rather than as a single number.
+
+\paragraph{The same executables in every system.} Every system runs the
+identical RML mapper and SHACL validator. In RDF-Connect they are the
+published processors (\texttt{rml-processor-jvm}, \texttt{shacl-processor-ts});
+everywhere else they are thin command-line wrappers around the same library
+calls, built from the same source (\texttt{rml-map}, \texttt{shacl-validate}).
+Warm-up state is not shared across invocations, because it is exactly what
+distinguishes the systems. Whatever differs between systems is therefore the
+composition, not the computation.
+
+\paragraph{The same semantics in every system.} The SHACL stage has two
+outputs in every system, as the processor has: the data of every unit that
+conforms in full, and a validation report for every unit that does not. SHACL
+defines a verdict but not what to discard; any rule finer than the processor's
+own would be an invention of the benchmark, so none is used.
+
+\paragraph{Correctness is checked, not assumed.} The generator records which
+records it broke. From that alone, without running any system, the expected
+output of every run is derived: the mapped quads of every unit without a
+broken record, and one report per unit with one. Every run is compared against
+it exactly, and a run that does not match is reported as failed rather than
+timed.
+
+% ----------------------------------------------------------------------------
+\subsection{Systems under comparison}
+\label{sec:eval-systems}
+
+\begin{description}
+\item[RDF-Connect.] The orchestrator with the JVM runner hosting the RML
+  mapper and the Node.js runner hosting the SHACL validator, a source, and two
+  sinks. Every message crosses the orchestrator (Section~3.4).
+\item[Shell pipe.] \texttt{rml-map | shacl-validate}, both streaming,
+  stdin to stdout. It is RDF-Connect without the orchestrator: the same two
+  warm processes, connected by the operating system instead. It answers the
+  question a sceptical reader asks first: what does the declarative, validated
+  description cost over piping the programs together?
+\item[CWL.] One \texttt{CommandLineTool} per stage, composed into a workflow.
+  CWL never splits files, so processing records in groups requires an explicit
+  \texttt{split} step, a scattered sub-workflow per chunk (map, then validate),
+  and a \texttt{cat} step to gather the results; all three are part of the
+  measured workflow. With one chunk the scatter workflow reduces to the batch
+  workflow a CWL user would write, plus the split and gather
+  (\res{0.3}\,s). To separate the language from one implementation of it, the
+  identical workflow runs on three runners: \texttt{cwltool}
+  \res{3.2.20260720092025}, the reference implementation; Toil \res{9.5.0}, a
+  production runner; and StreamFlow \res{0.2.0rc3}. All run without
+  containers.
+\item[In-process driver.] The processors of the synthetic pipeline wired
+  directly with in-memory channels, used in \S\ref{sec:eval-overhead} as the
+  zero-overhead reference against which the orchestrator's own cost is
+  measured.
+\end{description}
+
+% ----------------------------------------------------------------------------
+\subsection{Workloads}
+\label{sec:eval-workloads}
+
+\paragraph{Knowledge graph construction (B1).} Sensor observations arrive as
+JSON records; each is lifted to RDF by an RML mapping (SOSA, GeoSPARQL) and
+validated against SHACL shapes; conforming data and validation reports are
+written out. The mapping runs on the JVM and the validator on Node.js, so B1
+is also the cross-environment case of the outline's B3. Records are generated
+deterministically, a fraction of them broken in one of three ways that
+violate a datatype, cardinality, or pattern constraint.
+
+\paragraph{The swept parameter: records per unit.} A \emph{unit} is the
+amount of data one execution handles: one message in RDF-Connect, one line in
+the shell pipe, one task in CWL. At one record per unit, every system
+processes a stream of records; at all records per unit, every system processes
+one batch. Sweeping the unit between these extremes places the systems on one
+axis instead of choosing a point on it, and the crossover between them is the
+result that does not depend on which pipeline we picked.
+
+\paragraph{Orchestration overhead.} A synthetic pipeline whose processors do a
+configurable amount of CPU work per message isolates what the orchestrator
+adds per message (\S\ref{sec:eval-overhead}).
+
+\paragraph{Incremental feed (B2).} See \S\ref{sec:eval-capability}.
+
+% ----------------------------------------------------------------------------
+\subsection{Metrics and setup}
+\label{sec:eval-setup}
+
+% Table 5 of the current draft stays; changes:
+%  - Makespan, time to first output, peak memory: as defined.
+%  - Peak memory: largest total resident memory of the live process tree,
+%    sampled every 20 ms (summing per-process peaks over-counts short-lived
+%    processes, e.g. 26 GB instead of 1.3 GB for CWL-scatter).
+%  - Intermediate I/O -> "peak intermediate storage": largest total size of the
+%    runner's working directories during the run.
+%  - CPU time: TODO, not collected yet.
+%  - Add: records per unit (swept), correctness (pass/fail per run).
+
+All runs use one machine: \res{Intel Core i7-1185G7, 8 hardware threads,
+15\,GB RAM, Linux 7.1.3}, Node.js \res{26.4.0}, OpenJDK \res{22.0.1}. Run
+directories and inputs live on tmpfs, so that the file-passing systems are
+measured against the systems and not against the disk. Every configuration is
+repeated \res{5} times and medians are reported; a configuration that exceeds
+\res{30}\,min is stopped, reported as such, and not repeated.
+
+% ----------------------------------------------------------------------------
+\subsection{Results}
+\label{sec:eval-results}
+
+\paragraph{Start-up and per-record cost.} One cold process costs
+\res{1.03}\,s for the mapper and \res{0.28}\,s for the validator
+% bench/stages.ts, n = 10^4, all valid
+; a record through an already warm pipe costs \res{0.71}\,ms. One process start
+is therefore worth about \res{1\,500} streamed records, and every system that
+starts processes per unit pays that price per unit.
+
+% Table 6 replacement: rows = system, columns = records per unit.
+\begin{table}[t]
+\caption{Makespan of B1 in seconds for \res{$10^3$} records, by records per
+unit (medians of \res{5} runs). All runs produce the expected output.}
+\label{tab:eval-unit}
+\begin{tabular}{lrrrr}
+\toprule
+System & 1 & 10 & 100 & 1000 \\
+\midrule
+Shell pipe            & \res{2.0} & \res{1.8} & \res{1.8} & \res{1.9} \\
+RDF-Connect           & \res{10.6} & \res{6.9} & \res{5.7} & \res{5.3} \\
+CWL (cwltool)         & \res{738} & \res{74} & \res{10.4} & \res{3.4} \\
+CWL (Toil)            & \res{--} & \res{--} & \res{--} & \res{--} \\
+CWL (StreamFlow)      & failed$^a$ & \res{78} & \res{10.1} & \res{3.0} \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+{\footnotesize $^a$ All 1\,000 tasks completed (\res{739}\,s); the gather
+step failed because StreamFlow passes its command line to \texttt{sh} as one
+argument, which exceeds the operating system's per-argument limit
+(\S\ref{sec:eval-capability}).}
+% values: anchor-quick-valid (all records valid, tmpfs, 1 rep). Toil not run
+% at n = 1000. Earlier on-disk run with 5 % invalid (anchor-quick): shell
+% 2.1/2.5/2.3/2.5, rdfc 10.8/8.3/7.4/6.7, cwltool 873/91/11.8/3.8.
+% n = 100 (anchor-check): unit 1 cwltool 73 s, Toil 152 s, StreamFlow 75 s;
+% unit 100 (one task) 2.7 / 19.0 / 2.4 s.
+\end{table}
+
+\paragraph{Records per unit.} Table~\ref{tab:eval-unit} shows the systems on
+the swept axis. At one record per unit, CWL pays a task per record,
+\res{0.75--0.87}\,s with \texttt{cwltool} and StreamFlow and \res{1.5}\,s with
+Toil, and is \res{70$\times$} slower than RDF-Connect. As units
+grow, the task cost is shared by more records and CWL overtakes RDF-Connect
+between \res{100 and 1\,000} records per unit; with one unit it is within
+\res{1.5$\times$} of the shell pipe. RDF-Connect's cost is dominated by a fixed
+start-up of \res{4--5}\,s (orchestrator, one JVM and one Node.js runner) and a
+per-message cost of \res{6}\,ms at one record per unit, against \res{1.3}\,ms
+for the shell pipe. % TODO: the crossover at larger n, from anchor-unit.
+
+\paragraph{Time to first output.} For the streaming systems the first result
+arrives after start-up regardless of the input size (\res{0.8--1.1}\,s for the
+shell pipe, \res{4--6}\,s for RDF-Connect). A CWL workflow produces its
+results when the workflow completes, so its time to first output equals its
+makespan and grows with the input.
+
+\paragraph{Memory and intermediate storage.} RDF-Connect holds three runtimes
+and peaks at \res{1.1--1.2}\,GB, independent of the unit; the shell pipe at
+\res{0.4}\,GB. CWL-scatter runs up to \res{8} tasks in parallel and peaks at
+\res{1.4}\,GB. Intermediate storage is where the architectures separate:
+streaming systems materialise nothing between stages, while CWL stages every
+chunk, its mapped output, and its report as files. % TODO: storage vs n.
+
+% ----------------------------------------------------------------------------
+\subsection{Orchestration overhead}
+\label{sec:eval-overhead}
+
+% From experiment 1 (docs/benchmark-1-results.md).
+Routing every message through the orchestrator (Section~3.7) has a price that
+the synthetic pipeline isolates. With processors that do no work, a message
+through RDF-Connect costs \res{0.23}\,ms against \res{0.002}\,ms in-process. As
+processors do more work per message, the overhead's share falls: it is
+\res{35}\,\% at 1\,ms of work per message and \res{7.5}\,\% at 10\,ms. The
+minimum effective task granularity, the work per message at which half the
+time is still overhead, is \res{0.42}\,ms. For the RML mapping and SHACL
+validation of B1, which cost \res{0.6} and \res{0.4}\,ms per record warm, the
+orchestrator is therefore a visible but not dominant share of the per-record
+cost; for cheaper processors it dominates.
+
+% ----------------------------------------------------------------------------
+\subsection{Capability and portability}
+\label{sec:eval-capability}
+
+\paragraph{Unbounded input.} An RDF-Connect pipeline can consume a source that
+never ends and emit results as they arrive. A CWL step starts when its input
+files are complete, so an unbounded stream is not slow in CWL but
+inexpressible; emulating it with re-triggered micro-batches (the outline's B2)
+measures the emulation. We report this as a capability boundary rather than
+as a number. % Decide: keep B2 as a measured micro-batch emulation, or not.
+
+\paragraph{Portability of a valid description.} The same valid CWL workflow
+did not run unchanged on all three runners. StreamFlow wrote a tool's standard
+error into the file captured as its standard output, and staged a gathered
+array of files into one directory, where files sharing a name overwrote each
+other; both produced wrong output silently. Toil re-runs a failed job with
+more resources by default, which hides failures in the timing unless disabled.
+The workarounds are small and harmless for the other runners, but they show
+that a portable description does not by itself make the execution portable.
+A third limit is not a defect of the description at all: StreamFlow hands a
+step's command line to \texttt{sh} as a single argument, so a gather over
+\res{1\,000} chunk files exceeds the operating system's 128\,KB limit on one
+argument and fails after all tasks have run. Fine-grained scatter is thus
+bounded not only by its cost but, on one runner, by its feasibility.
+% Portability observations belong in the paper; runner performance quirks
+% (e.g. Toil's fixed ~15 s start) belong only in the numbers.
+
+% ----------------------------------------------------------------------------
+\subsection{Threats to validity}
+\label{sec:eval-threats}
+
+\begin{itemize}
+\item \emph{Implementation versus paradigm.} Three CWL runners, two of which
+  agree within \res{10}\,\%, guard against attributing one runner's cost to
+  CWL.
+\item \emph{Author bias.} We develop RDF-Connect. The parameter grid is fixed
+  before the final runs, all raw measurements and the benchmark are published,
+  and the regions where RDF-Connect loses (the shell pipe everywhere; CWL at
+  large units) are reported as such.
+\item \emph{Workload choice.} The records-per-unit sweep and the synthetic
+  work sweep report surfaces rather than points, so a reader can locate their
+  own workload instead of relying on ours.
+\item \emph{Filesystem effects.} All systems run on tmpfs; results on disk
+  would penalise the file-passing systems further.
+\item \emph{Invalid data.} A unit is rejected whole when one record fails, so
+  large units with broken records forward little data. Timing runs use
+  \res{valid} data; correctness runs use \res{5}\,\% broken records.
+\end{itemize}

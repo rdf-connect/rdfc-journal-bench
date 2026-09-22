@@ -1,0 +1,51 @@
+# Anchor pipeline, RML stage: sensor observations → RDF (default graph).
+#
+# The logical source is named "stdin": rml-map registers its input under that
+# name (--source), and the RDF-Connect arm uses rdfc:mappingId "stdin". The
+# source is a JSON array of records in every arm, hence the $[*] iterator.
+#
+# No blank nodes, so outputs of different arms compare as plain N-Quads lines.
+@base <http://ex.org/mapping/>.
+@prefix rr: <http://www.w3.org/ns/r2rml#>.
+@prefix rml: <http://semweb.mmlab.be/ns/rml#>.
+@prefix ql: <http://semweb.mmlab.be/ns/ql#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix sosa: <http://www.w3.org/ns/sosa/>.
+@prefix geo: <http://www.opengis.net/ont/geosparql#>.
+@prefix sf: <http://www.opengis.net/ont/sf#>.
+@prefix qudt: <http://qudt.org/schema/qudt/>.
+
+<#Source> rml:source "stdin"; rml:referenceFormulation ql:JSONPath; rml:iterator "$[*]".
+
+<#Observation> a rr:TriplesMap;
+  rml:logicalSource <#Source>;
+  rr:subjectMap [
+    rr:template "http://ex.org/obs/{id}";
+    rr:class sosa:Observation;
+  ];
+  rr:predicateObjectMap
+    [ rr:predicate sosa:madeBySensor;
+      rr:objectMap [ rr:template "http://ex.org/sensor/{sensor}" ] ],
+    [ rr:predicate sosa:observedProperty;
+      rr:objectMap [ rr:template "http://ex.org/property/{property}" ] ],
+    [ rr:predicate sosa:resultTime;
+      rr:objectMap [ rml:reference "time"; rr:datatype xsd:dateTime ] ],
+    [ rr:predicate sosa:hasSimpleResult;
+      rr:objectMap [ rml:reference "value"; rr:datatype xsd:double ] ],
+    [ rr:predicate qudt:unit;
+      rr:objectMap [ rr:template "http://qudt.org/vocab/unit/{unit}" ] ],
+    [ rr:predicate rdfs:comment;
+      rr:objectMap [ rml:reference "note" ] ],
+    [ rr:predicate geo:hasGeometry;
+      rr:objectMap [ rr:template "http://ex.org/obs/{id}/geometry" ] ].
+
+<#Geometry> a rr:TriplesMap;
+  rml:logicalSource <#Source>;
+  rr:subjectMap [
+    rr:template "http://ex.org/obs/{id}/geometry";
+    rr:class sf:Point;
+  ];
+  rr:predicateObjectMap
+    [ rr:predicate geo:asWKT;
+      rr:objectMap [ rr:template "POINT({lon} {lat})"; rr:termType rr:Literal; rr:datatype geo:wktLiteral ] ].

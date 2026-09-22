@@ -1,0 +1,143 @@
+@prefix owl:  <http://www.w3.org/2002/07/owl#>.
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#>.
+@prefix sh:   <http://www.w3.org/ns/shacl#>.
+@prefix rdfc: <https://w3id.org/rdf-connect#>.
+@prefix bench:<https://w3id.org/rdf-connect/bench#>.
+
+<> owl:imports <./node_modules/@rdfc/js-runner/index.ttl>.
+
+# ── Generator ────────────────────────────────────────────────────────────────
+bench:BenchGenerator rdfc:jsImplementationOf rdfc:Processor;
+  rdfc:entrypoint <./>;
+  rdfc:file <./dist/src/processors.js>;
+  rdfc:class "BenchGenerator".
+
+[ ] a sh:NodeShape;
+  sh:targetClass bench:BenchGenerator;
+  sh:property [
+    sh:path rdfc:writer; sh:name "writer";
+    sh:class rdfc:Writer; sh:minCount 1; sh:maxCount 1;
+  ], [
+    sh:path bench:count; sh:name "count";
+    sh:datatype xsd:integer; sh:minCount 1; sh:maxCount 1;
+  ], [
+    sh:path bench:size; sh:name "size";
+    sh:datatype xsd:integer; sh:minCount 1; sh:maxCount 1;
+  ], [
+    sh:path bench:mode; sh:name "mode";
+    sh:datatype xsd:string; sh:minCount 1; sh:maxCount 1;
+  ], [
+    sh:path bench:resultPath; sh:name "resultPath";
+    sh:datatype xsd:string; sh:minCount 1; sh:maxCount 1;
+  ], [
+    sh:path bench:lingerMs; sh:name "lingerMs";
+    sh:datatype xsd:integer; sh:maxCount 1;
+  ].
+
+# ── Pass-through ─────────────────────────────────────────────────────────────
+bench:BenchPassThrough rdfc:jsImplementationOf rdfc:Processor;
+  rdfc:entrypoint <./>;
+  rdfc:file <./dist/src/processors.js>;
+  rdfc:class "BenchPassThrough".
+
+[ ] a sh:NodeShape;
+  sh:targetClass bench:BenchPassThrough;
+  sh:property [
+    sh:path rdfc:reader; sh:name "reader";
+    sh:class rdfc:Reader; sh:minCount 1; sh:maxCount 1;
+  ], [
+    sh:path rdfc:writer; sh:name "writer";
+    sh:class rdfc:Writer; sh:minCount 1; sh:maxCount 1;
+  ], [
+    sh:path bench:workUs; sh:name "workUs";
+    sh:datatype xsd:integer; sh:maxCount 1;
+  ].
+
+# ── Sink ─────────────────────────────────────────────────────────────────────
+bench:BenchSink rdfc:jsImplementationOf rdfc:Processor;
+  rdfc:entrypoint <./>;
+  rdfc:file <./dist/src/processors.js>;
+  rdfc:class "BenchSink".
+
+[ ] a sh:NodeShape;
+  sh:targetClass bench:BenchSink;
+  sh:property [
+    sh:path rdfc:reader; sh:name "reader";
+    sh:class rdfc:Reader; sh:minCount 1; sh:maxCount 1;
+  ], [
+    sh:path bench:resultPath; sh:name "resultPath";
+    sh:datatype xsd:string; sh:minCount 1; sh:maxCount 1;
+  ], [
+    sh:path bench:workUs; sh:name "workUs";
+    sh:datatype xsd:integer; sh:maxCount 1;
+  ].
+
+# ── Extra runner definitions ─────────────────────────────────────────────────
+# Two distinct runner IRIs, both spawning a plain js-runner. Declaring a
+# processor against a different IRI puts it in a *separate* runner process,
+# which lets the harness separate "same process, but still routed through the
+# orchestrator" from "genuinely crossing a process boundary".
+bench:NodeRunnerA a rdfc:CommandRunner;
+  rdfc:handlesSubjectsOf rdfc:jsImplementationOf;
+  rdfc:command "npx js-runner".
+
+bench:NodeRunnerB a rdfc:CommandRunner;
+  rdfc:handlesSubjectsOf rdfc:jsImplementationOf;
+  rdfc:command "npx js-runner".
+
+# Same runner, invoked without the `npx` resolution step, to separate npm
+# tooling cost from RDF-Connect's own startup cost.
+bench:NodeRunnerDirect a rdfc:CommandRunner;
+  rdfc:handlesSubjectsOf rdfc:jsImplementationOf;
+  rdfc:command "node ./node_modules/@rdfc/js-runner/bin/runner.js".
+
+# ── Experiment 2: anchor pipeline (src/anchor.ts) ────────────────────────────
+bench:AnchorSource rdfc:jsImplementationOf rdfc:Processor;
+  rdfc:entrypoint <./>;
+  rdfc:file <./dist/src/anchor.js>;
+  rdfc:class "AnchorSource".
+
+[ ] a sh:NodeShape;
+  sh:targetClass bench:AnchorSource;
+  sh:property [
+    sh:path bench:mappingWriter; sh:name "mappingWriter";
+    sh:class rdfc:Writer; sh:minCount 1; sh:maxCount 1;
+  ], [
+    sh:path rdfc:writer; sh:name "writer";
+    sh:class rdfc:Writer; sh:minCount 1; sh:maxCount 1;
+  ], [
+    sh:path bench:mappingPath; sh:name "mappingPath";
+    sh:datatype xsd:string; sh:minCount 1; sh:maxCount 1;
+  ], [
+    sh:path bench:input; sh:name "input";
+    sh:datatype xsd:string; sh:minCount 1; sh:maxCount 1;
+  ], [
+    sh:path bench:resultPath; sh:name "resultPath";
+    sh:datatype xsd:string; sh:minCount 1; sh:maxCount 1;
+  ].
+
+bench:AnchorSink rdfc:jsImplementationOf rdfc:Processor;
+  rdfc:entrypoint <./>;
+  rdfc:file <./dist/src/anchor.js>;
+  rdfc:class "AnchorSink".
+
+[ ] a sh:NodeShape;
+  sh:targetClass bench:AnchorSink;
+  sh:property [
+    sh:path rdfc:reader; sh:name "reader";
+    sh:class rdfc:Reader; sh:minCount 1; sh:maxCount 1;
+  ], [
+    sh:path bench:outPath; sh:name "outPath";
+    sh:datatype xsd:string; sh:minCount 1; sh:maxCount 1;
+  ], [
+    sh:path bench:resultPath; sh:name "resultPath";
+    sh:datatype xsd:string; sh:minCount 1; sh:maxCount 1;
+  ].
+
+# The official rdfc:JvmRunner curls jvm-runner.jar on start. This one runs the
+# same jar from vendor/ (fetched once, see README), so no run touches the
+# network. The rdfc:javaImplementationOf vocabulary comes from the runner's
+# index jar, imported by the anchor pipelines.
+bench:JvmRunner a rdfc:Runner;
+  rdfc:handlesSubjectsOf rdfc:javaImplementationOf;
+  rdfc:command "java -jar ./vendor/jvm-runner.jar".

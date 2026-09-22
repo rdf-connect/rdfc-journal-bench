@@ -1,0 +1,29 @@
+# Anchor pipeline, SHACL stage: what a well-formed observation looks like.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix sosa: <http://www.w3.org/ns/sosa/>.
+@prefix geo: <http://www.opengis.net/ont/geosparql#>.
+@prefix sf: <http://www.opengis.net/ont/sf#>.
+@prefix qudt: <http://qudt.org/schema/qudt/>.
+@prefix ex: <http://ex.org/shapes#>.
+
+ex:ObservationShape a sh:NodeShape;
+  sh:targetClass sosa:Observation;
+  sh:closed true;
+  sh:ignoredProperties (rdf:type);
+  sh:property
+    [ sh:path sosa:madeBySensor; sh:nodeKind sh:IRI; sh:minCount 1; sh:maxCount 1 ],
+    [ sh:path sosa:observedProperty; sh:nodeKind sh:IRI; sh:minCount 1; sh:maxCount 1 ],
+    [ sh:path sosa:resultTime; sh:datatype xsd:dateTime; sh:minCount 1; sh:maxCount 1 ],
+    [ sh:path sosa:hasSimpleResult; sh:datatype xsd:double; sh:minCount 1; sh:maxCount 1 ],
+    [ sh:path qudt:unit; sh:nodeKind sh:IRI; sh:minCount 1; sh:maxCount 1 ],
+    [ sh:path rdfs:comment; sh:datatype xsd:string; sh:maxCount 1 ],
+    [ sh:path geo:hasGeometry; sh:node ex:PointShape; sh:minCount 1; sh:maxCount 1 ].
+
+ex:PointShape a sh:NodeShape;
+  sh:targetClass sf:Point;
+  sh:property
+    [ sh:path geo:asWKT; sh:datatype geo:wktLiteral; sh:minCount 1; sh:maxCount 1;
+      sh:pattern "^POINT\\(-?[0-9.]+ -?[0-9.]+\\)$" ].

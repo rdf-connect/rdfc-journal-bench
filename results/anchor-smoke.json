@@ -1,0 +1,77 @@
+[
+  {
+    "arm": "shell",
+    "workload": {
+      "pipeline": "anchor",
+      "count": 100,
+      "size": 0,
+      "unit": 1,
+      "mode": "ndjson",
+      "depth": 2
+    },
+    "rep": 0,
+    "ok": true,
+    "wallMs": 1107.530856,
+    "startupMs": 798.6816,
+    "spanMs": 282.9863190000002,
+    "throughput": 349.4475960475277,
+    "latency": null,
+    "messages": 90,
+    "bytes": 112948,
+    "peakRssMb": 291.20703125,
+    "quads": 900,
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "workload": {
+      "pipeline": "anchor",
+      "count": 100,
+      "size": 0,
+      "unit": 1,
+      "mode": "ndjson",
+      "depth": 2
+    },
+    "rep": 0,
+    "ok": true,
+    "wallMs": 1990.4693909999999,
+    "startupMs": 1990.4693909999999,
+    "spanMs": null,
+    "throughput": null,
+    "latency": null,
+    "messages": 1,
+    "bytes": 112681,
+    "peakRssMb": 257.5546875,
+    "peakDiskMb": 0.11911678314208984,
+    "quads": 900,
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "workload": {
+      "pipeline": "anchor",
+      "count": 100,
+      "size": 0,
+      "unit": 1,
+      "mode": "ndjson",
+      "depth": 2
+    },
+    "rep": 0,
+    "ok": true,
+    "wallMs": 77360.741773,
+    "startupMs": 77360.741773,
+    "spanMs": null,
+    "throughput": null,
+    "latency": null,
+    "messages": 1,
+    "bytes": 112948,
+    "peakRssMb": 1260.34765625,
+    "peakDiskMb": 0.24109172821044922,
+    "stepsMs": {
+      "split": 0,
+      "gather": 1000
+    },
+    "quads": 900,
+    "correct": true
+  }
+]

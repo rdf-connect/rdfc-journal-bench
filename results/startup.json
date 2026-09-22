@@ -1,0 +1,577 @@
+[
+  {
+    "arm": "rdfc",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 0,
+    "ok": true,
+    "wallMs": 1684.5680969999999,
+    "startupMs": 1665.59619140625,
+    "spanMs": 0.0009765625,
+    "throughput": 0,
+    "latency": {
+      "mean": 3.017516999999998,
+      "p50": 3.017516999999998,
+      "p90": 3.017516999999998,
+      "p99": 3.017516999999998
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "rdfc",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 1,
+    "ok": true,
+    "wallMs": 1842.448962,
+    "startupMs": 1823.24853515625,
+    "spanMs": 0.0009765625,
+    "throughput": 0,
+    "latency": {
+      "mean": 2.621748999999994,
+      "p50": 2.621748999999994,
+      "p90": 2.621748999999994,
+      "p99": 2.621748999999994
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "rdfc",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 2,
+    "ok": true,
+    "wallMs": 1693.946962,
+    "startupMs": 1673.04248046875,
+    "spanMs": 0.0009765625,
+    "throughput": 0,
+    "latency": {
+      "mean": 2.670689999999979,
+      "p50": 2.670689999999979,
+      "p90": 2.670689999999979,
+      "p99": 2.670689999999979
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "rdfc",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 3,
+    "ok": true,
+    "wallMs": 1650.4051449999997,
+    "startupMs": 1629.888916015625,
+    "spanMs": 0.0009765625,
+    "throughput": 0,
+    "latency": {
+      "mean": 2.4875640000000203,
+      "p50": 2.4875640000000203,
+      "p90": 2.4875640000000203,
+      "p99": 2.4875640000000203
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "rdfc",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 4,
+    "ok": true,
+    "wallMs": 1652.8019539999996,
+    "startupMs": 1631.405029296875,
+    "spanMs": 0.0009765625,
+    "throughput": 0,
+    "latency": {
+      "mean": 2.6728099999999984,
+      "p50": 2.6728099999999984,
+      "p90": 2.6728099999999984,
+      "p99": 2.6728099999999984
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "rdfc-direct",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 0,
+    "ok": true,
+    "wallMs": 1867.8797950000007,
+    "startupMs": 1848.220458984375,
+    "spanMs": 0.0009765625,
+    "throughput": 0,
+    "latency": {
+      "mean": 2.564426999999995,
+      "p50": 2.564426999999995,
+      "p90": 2.564426999999995,
+      "p99": 2.564426999999995
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "rdfc-direct",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 1,
+    "ok": true,
+    "wallMs": 1648.1667469999993,
+    "startupMs": 1616.736328125,
+    "spanMs": 0.001708984375,
+    "throughput": 0,
+    "latency": {
+      "mean": 3.675643000000008,
+      "p50": 3.675643000000008,
+      "p90": 3.675643000000008,
+      "p99": 3.675643000000008
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "rdfc-direct",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 2,
+    "ok": true,
+    "wallMs": 1615.354964,
+    "startupMs": 1595.3515625,
+    "spanMs": 0.0009765625,
+    "throughput": 0,
+    "latency": {
+      "mean": 2.294696000000016,
+      "p50": 2.294696000000016,
+      "p90": 2.294696000000016,
+      "p99": 2.294696000000016
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "rdfc-direct",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 3,
+    "ok": true,
+    "wallMs": 1468.8255410000002,
+    "startupMs": 1448.562744140625,
+    "spanMs": 0.0009765625,
+    "throughput": 0,
+    "latency": {
+      "mean": 2.2457469999999944,
+      "p50": 2.2457469999999944,
+      "p90": 2.2457469999999944,
+      "p99": 2.2457469999999944
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "rdfc-direct",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 4,
+    "ok": true,
+    "wallMs": 1500.8045569999995,
+    "startupMs": 1479.134521484375,
+    "spanMs": 0.000732421875,
+    "throughput": 0,
+    "latency": {
+      "mean": 2.820128000000011,
+      "p50": 2.820128000000011,
+      "p90": 2.820128000000011,
+      "p99": 2.820128000000011
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "rdfc-split",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 0,
+    "ok": true,
+    "wallMs": 2055.083330999998,
+    "startupMs": 1735.145263671875,
+    "spanMs": 0.00146484375,
+    "throughput": 0,
+    "latency": {
+      "mean": 2.642138000000017,
+      "p50": 2.642138000000017,
+      "p90": 2.642138000000017,
+      "p99": 2.642138000000017
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "rdfc-split",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 1,
+    "ok": true,
+    "wallMs": 2097.8081310000016,
+    "startupMs": 1767.31005859375,
+    "spanMs": 0.00146484375,
+    "throughput": 0,
+    "latency": {
+      "mean": 3.112429999999989,
+      "p50": 3.112429999999989,
+      "p90": 3.112429999999989,
+      "p99": 3.112429999999989
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "rdfc-split",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 2,
+    "ok": true,
+    "wallMs": 2196.5490019999997,
+    "startupMs": 1873.7412109375,
+    "spanMs": 0.00146484375,
+    "throughput": 0,
+    "latency": {
+      "mean": 3.0463029999999947,
+      "p50": 3.0463029999999947,
+      "p90": 3.0463029999999947,
+      "p99": 3.0463029999999947
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "rdfc-split",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 3,
+    "ok": true,
+    "wallMs": 2156.0952959999995,
+    "startupMs": 1837.517578125,
+    "spanMs": 0.001220703125,
+    "throughput": 0,
+    "latency": {
+      "mean": 2.577744999999993,
+      "p50": 2.577744999999993,
+      "p90": 2.577744999999993,
+      "p99": 2.577744999999993
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "rdfc-split",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 4,
+    "ok": true,
+    "wallMs": 2004.2358859999986,
+    "startupMs": 1684.224853515625,
+    "spanMs": 0.00390625,
+    "throughput": 0,
+    "latency": {
+      "mean": 3.137978000000004,
+      "p50": 3.137978000000004,
+      "p90": 3.137978000000004,
+      "p99": 3.137978000000004
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "native",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 0,
+    "ok": true,
+    "wallMs": 126.29668700000184,
+    "startupMs": 122.6650390625,
+    "spanMs": 0.0009765625,
+    "throughput": 0,
+    "latency": {
+      "mean": 0.11881999999999948,
+      "p50": 0.11881999999999948,
+      "p90": 0.11881999999999948,
+      "p99": 0.11881999999999948
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "native",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 1,
+    "ok": true,
+    "wallMs": 126.56244100000185,
+    "startupMs": 122.78662109375,
+    "spanMs": 0.0009765625,
+    "throughput": 0,
+    "latency": {
+      "mean": 0.12389100000000042,
+      "p50": 0.12389100000000042,
+      "p90": 0.12389100000000042,
+      "p99": 0.12389100000000042
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "native",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 2,
+    "ok": true,
+    "wallMs": 126.62459899999885,
+    "startupMs": 123.141357421875,
+    "spanMs": 0.0009765625,
+    "throughput": 0,
+    "latency": {
+      "mean": 0.12139799999999923,
+      "p50": 0.12139799999999923,
+      "p90": 0.12139799999999923,
+      "p99": 0.12139799999999923
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "native",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 3,
+    "ok": true,
+    "wallMs": 138.79466799999864,
+    "startupMs": 134.21923828125,
+    "spanMs": 0.000732421875,
+    "throughput": 0,
+    "latency": {
+      "mean": 0.1199269999999899,
+      "p50": 0.1199269999999899,
+      "p90": 0.1199269999999899,
+      "p99": 0.1199269999999899
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "native",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 4,
+    "ok": true,
+    "wallMs": 128.99652499999866,
+    "startupMs": 125.445068359375,
+    "spanMs": 0.0009765625,
+    "throughput": 0,
+    "latency": {
+      "mean": 0.11995699999999943,
+      "p50": 0.11995699999999943,
+      "p90": 0.11995699999999943,
+      "p99": 0.11995699999999943
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "native-loose",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 0,
+    "ok": true,
+    "wallMs": 135.0080820000003,
+    "startupMs": 130.337646484375,
+    "spanMs": 0.0009765625,
+    "throughput": 0,
+    "latency": {
+      "mean": 0.11332399999999154,
+      "p50": 0.11332399999999154,
+      "p90": 0.11332399999999154,
+      "p99": 0.11332399999999154
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "native-loose",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 1,
+    "ok": true,
+    "wallMs": 133.84439400000338,
+    "startupMs": 129.371826171875,
+    "spanMs": 0.000732421875,
+    "throughput": 0,
+    "latency": {
+      "mean": 0.11022400000000232,
+      "p50": 0.11022400000000232,
+      "p90": 0.11022400000000232,
+      "p99": 0.11022400000000232
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "native-loose",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 2,
+    "ok": true,
+    "wallMs": 131.67317600000024,
+    "startupMs": 128.158203125,
+    "spanMs": 0.0009765625,
+    "throughput": 0,
+    "latency": {
+      "mean": 0.11627700000001084,
+      "p50": 0.11627700000001084,
+      "p90": 0.11627700000001084,
+      "p99": 0.11627700000001084
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "native-loose",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 3,
+    "ok": true,
+    "wallMs": 134.12119499999972,
+    "startupMs": 129.81689453125,
+    "spanMs": 0.0009765625,
+    "throughput": 0,
+    "latency": {
+      "mean": 0.1103870000000029,
+      "p50": 0.1103870000000029,
+      "p90": 0.1103870000000029,
+      "p99": 0.1103870000000029
+    },
+    "messages": 1,
+    "bytes": 1
+  },
+  {
+    "arm": "native-loose",
+    "workload": {
+      "count": 1,
+      "size": 1,
+      "mode": "string",
+      "depth": 0
+    },
+    "rep": 4,
+    "ok": true,
+    "wallMs": 129.2183440000008,
+    "startupMs": 124.84912109375,
+    "spanMs": 0.0009765625,
+    "throughput": 0,
+    "latency": {
+      "mean": 0.10938800000000981,
+      "p50": 0.10938800000000981,
+      "p90": 0.10938800000000981,
+      "p99": 0.10938800000000981
+    },
+    "messages": 1,
+    "bytes": 1
+  }
+]

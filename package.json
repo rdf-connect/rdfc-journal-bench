@@ -1,0 +1,20 @@
+{
+  "name": "rdfc-journal-bench",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "description": "Benchmarks for the RDF-Connect journal paper",
+  "scripts": {
+    "build": "tsc",
+    "bench:overhead": "node dist/bench/run.js"
+  },
+  "dependencies": {
+    "@rdfc/js-runner": "^3.3.0",
+    "@rdfc/orchestrator-js": "^2.2.2",
+    "winston": "^3.19.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.3"
+  }
+}

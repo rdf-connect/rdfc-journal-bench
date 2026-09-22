@@ -1,0 +1,80 @@
+[
+  {
+    "arm": "streamflow-scatter",
+    "workload": {
+      "pipeline": "anchor",
+      "count": 100,
+      "size": 0,
+      "unit": 1,
+      "invalid": 0.05,
+      "mode": "ndjson",
+      "depth": 2
+    },
+    "rep": 0,
+    "ok": true,
+    "wallMs": 74685.407016,
+    "startupMs": 74685.407016,
+    "spanMs": null,
+    "throughput": null,
+    "latency": null,
+    "messages": 90,
+    "bytes": 112948,
+    "peakRssMb": 1477.40625,
+    "peakDiskMb": 0.4548330307006836,
+    "quads": 900,
+    "reports": 10,
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "workload": {
+      "pipeline": "anchor",
+      "count": 100,
+      "size": 0,
+      "unit": 10,
+      "invalid": 0.05,
+      "mode": "ndjson",
+      "depth": 2
+    },
+    "rep": 0,
+    "ok": true,
+    "wallMs": 8599.809437000004,
+    "startupMs": 8599.809437000004,
+    "spanMs": null,
+    "throughput": null,
+    "latency": null,
+    "messages": 4,
+    "bytes": 50111,
+    "peakRssMb": 1528.92578125,
+    "peakDiskMb": 0.2532491683959961,
+    "quads": 400,
+    "reports": 6,
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "workload": {
+      "pipeline": "anchor",
+      "count": 100,
+      "size": 0,
+      "unit": 100,
+      "invalid": 0.05,
+      "mode": "ndjson",
+      "depth": 2
+    },
+    "rep": 0,
+    "ok": true,
+    "wallMs": 2375.1635810000007,
+    "startupMs": 2375.1635810000007,
+    "spanMs": null,
+    "throughput": null,
+    "latency": null,
+    "messages": 0,
+    "bytes": 0,
+    "peakRssMb": 319.8359375,
+    "peakDiskMb": 0.14849281311035156,
+    "quads": 0,
+    "reports": 1,
+    "correct": true
+  }
+]

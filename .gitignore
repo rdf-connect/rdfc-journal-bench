@@ -1,0 +1,20 @@
+node_modules/
+dist/
+# Generated per run by the harness
+pipelines/
+results/runs/
+# Processor checkouts pulled in for experiment 2
+/rml-processor-jvm/
+/shacl-processor-ts/
+results/stages/data/
+results/stages/out/
+results/anchor-data/
+vendor/
+.venv/
+.venv-toil/
+.venv-streamflow/
+# Per-run output and logs; only the summaries are versioned
+results/*.log
+results/stages/*.log
+results/smoke-*/
+results/big/
