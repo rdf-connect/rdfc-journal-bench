@@ -3,9 +3,6 @@ dist/
 # Generated per run by the harness
 pipelines/
 results/runs/
-# Processor checkouts pulled in for experiment 2
-/rml-processor-jvm/
-/shacl-processor-ts/
 results/stages/data/
 results/stages/out/
 results/anchor-data/

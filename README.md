@@ -95,9 +95,10 @@ node dist/bench/run.js <sweep> --reps=3 --arms=rdfc,native
 
 Experiment 2 needs the two processor checkouts built as CLIs, and the JVM
 runner in `vendor/` (the official runner definition would `curl` it on every
-start):
+start). The checkouts are git submodules, pinned to their `cli-tools` branch:
 
 ```bash
+git clone --recurse-submodules <this repo>   # or, in a clone: git submodule update --init
 (cd rml-processor-jvm && gradle shadowJar cliJar)
 (cd shacl-processor-ts && npm ci && npm run build)
 mkdir -p vendor

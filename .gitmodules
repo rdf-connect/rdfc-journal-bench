@@ -1,0 +1,8 @@
+[submodule "rml-processor-jvm"]
+	path = rml-processor-jvm
+	url = https://github.com/rdf-connect/rml-processor-jvm.git
+	branch = cli-tools
+[submodule "shacl-processor-ts"]
+	path = shacl-processor-ts
+	url = https://github.com/rdf-connect/shacl-processor-ts.git
+	branch = cli-tools
