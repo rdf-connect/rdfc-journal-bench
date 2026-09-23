@@ -182,11 +182,49 @@ repeated \res{5} times and medians are reported; a configuration that exceeds
 \label{sec:eval-results}
 
 \paragraph{Start-up and per-record cost.} One cold process costs
-\res{1.03}\,s for the mapper and \res{0.28}\,s for the validator
-% bench/stages.ts, n = 10^4, all valid
-; a record through an already warm pipe costs \res{0.71}\,ms. One process start
-is therefore worth about \res{1\,500} streamed records, and every system that
+\res{1.03}\,s for the mapper and \res{0.28}\,s for the validator; a record
+through an already warm pipe costs \res{0.71}\,ms. One process start is
+therefore worth about \res{1\,500} streamed records, and every system that
 starts processes per unit pays that price per unit.
+
+\paragraph{Input size.} Table~\ref{tab:eval-size} reports the six-stage
+pipeline over \res{5} to \res{30} recorded snapshots. Per snapshot, cost falls
+for every system that keeps its processes (shell \res{801}$\to$\res{238}\,ms,
+RDF-Connect \res{1845}$\to$\res{473}\,ms, CWL-batch
+\res{1465}$\to$\res{373}\,ms) as start-up amortises, and stays flat at
+\res{1.8}\,s for CWL-scatter, which pays a task per snapshot. Intermediate
+storage is where the architectures separate: CWL writes every stage's output
+and every stage's state to disk, growing linearly
+(\res{6.4}$\to$\res{35.1}\,MB), while the streaming systems materialise
+nothing between stages.
+
+\begin{table}[t]
+\caption{The Blue-bike pipeline by input size: makespan (s) and CWL's
+intermediate storage (MB). Medians of \res{2} runs; every run published exactly
+the members the input implies.}
+\label{tab:eval-size}
+\begin{tabular}{rrrrrr}
+\toprule
+snapshots & shell & RDF-Connect & CWL-batch & CWL-scatter & CWL disk \\
+\midrule
+5  & \res{4.0} & \res{9.2}  & \res{7.3}  & \res{12.0} & \res{6.4} \\
+10 & \res{4.6} & \res{10.4} & \res{8.1}  & \res{20.4} & \res{12.3} \\
+20 & \res{6.1} & \res{12.2} & \res{9.9}  & \res{36.7} & \res{23.7} \\
+30 & \res{7.1} & \res{14.2} & \res{11.2} & \res{52.7} & \res{35.1} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Granularity: the crossover.} Sweeping how many snapshots one CWL
+task handles, at \res{30} snapshots, gives \res{52.7}, \res{19.4},
+\res{12.7} and \res{11.4}\,s for \res{1}, \res{5}, \res{15} and all
+snapshots per task. At one snapshot per task --- the granularity the streaming
+systems work at throughout --- CWL is \res{3.7}$\times$ slower than
+RDF-Connect. It overtakes RDF-Connect between \res{5} and \res{15} snapshots
+per task, and with a single task it reaches its own batch encoding. The
+comparison the framework claims is therefore visible directly: RDF-Connect
+costs \res{1.27}$\times$ of CWL's best case while keeping the granularity CWL
+must surrender to reach it.
 
 % Table 6 replacement: rows = system, columns = records per unit.
 \begin{table}[t]

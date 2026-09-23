@@ -214,6 +214,21 @@ medians; 32/32 runs published exactly the expected members):
   not; longer recordings will add members. Report per-snapshot cost, not cost
   per member.
 
+**The crossover** (n = 30, 1 rep): CWL-scatter by snapshots per task, against
+RDF-Connect at 14.2 s and the shell pipe at 7.1 s, both a snapshot at a time:
+
+| snapshots/task | 1 | 5 | 15 | 30 (all) |
+|---|---:|---:|---:|---:|
+| cwl-scatter | 52.7 s | 19.4 s | 12.7 s | 11.4 s |
+
+At one snapshot per task CWL is 3.7× slower than RDF-Connect; it overtakes it
+between 5 and 15 snapshots per task, and at one task it equals cwl-batch
+(11.2 s), as expected. **RDF-Connect costs 1.27× of CWL's best case while
+keeping the granularity CWL has to give up to get there** — the claim the paper
+makes, measured. Intermediate storage stays ~46.5 MB whatever the chunk size,
+so it is the state carried between stages, not the chunking, that dominates
+CWL's disk use.
+
 **Capability finding — stateful stages cannot be scattered.** Change detection
 keeps the previous state of every member, the bucketiser keeps its fragment
 state, and the writer appends to a published tree. CWL scatter runs its tasks
