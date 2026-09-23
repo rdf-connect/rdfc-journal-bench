@@ -176,6 +176,23 @@ finds DCAT-AP types, so members are selected with a SPARQL query on its
 `focusNodes` channel; `Sdsify` and `Bucketize` therefore key on
 `as:published`, as the deployed DCAT-AP feeds do.
 
+**Encodings so far.** Two of the three run the seven-stage chain and publish
+the *identical* 70 members (5 snapshots):
+
+| Arm | Wall | Notes |
+|---|---:|---|
+| shell pipe | 2.8 s | six stages in one pipe; metadata channels are FIFOs, so stages overlap |
+| RDF-Connect | 9.2 s | `src/genbluebike.ts`; JVM runner for the mapper, js-runner for the other five |
+| sequential CLIs | 5.0 s | the same stages one after another, for reference |
+
+**New finding — log relaying is not free.** The mapper warns about every
+station without a `last_seen` (257 of 327). The shell arm sends that to
+/dev/null; RDF-Connect relays runner stderr to the orchestrator, which logged
+**13 023 lines for 5 snapshots**. At a day of snapshots that is millions of
+lines through gRPC, and it is inside the measured window. Either report it as
+a cost of central log aggregation, or quiet the mapper in every arm equally
+and report it separately. Decide before the timed runs.
+
 ### 3.3 What has to be built
 
 1. **A generic processor-to-CLI adapter (`rdfc-proc`).** ✅ built
