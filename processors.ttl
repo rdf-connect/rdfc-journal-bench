@@ -138,6 +138,8 @@ bench:AnchorSink rdfc:jsImplementationOf rdfc:Processor;
 # same jar from vendor/ (fetched once, see README), so no run touches the
 # network. The rdfc:javaImplementationOf vocabulary comes from the runner's
 # index jar, imported by the anchor pipelines.
+# -Dlogback.configurationFile quiets the mapper's per-record warnings; the CLI
+# arms get the same file through JAVA_OPTS, so the arms stay comparable.
 bench:JvmRunner a rdfc:Runner;
   rdfc:handlesSubjectsOf rdfc:javaImplementationOf;
-  rdfc:command "java -jar ./vendor/jvm-runner.jar".
+  rdfc:command "java -Dlogback.configurationFile=./bench/logback-quiet.xml -jar ./vendor/jvm-runner.jar".

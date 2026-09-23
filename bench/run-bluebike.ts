@@ -21,6 +21,7 @@ import { renderBluebikePipeline } from '../src/genbluebike.js'
 import { runPipe } from './proc.js'
 import {
   type Arm,
+  JAVA_OPTS,
   cwlCommand,
   expectedMembers,
   ldesDir,
@@ -89,7 +90,7 @@ async function runOnce(arm: Arm, n: number, unit: number, rep: number): Promise<
   }
 
   const run = await runPipe(cmd, '/dev/null', join(runDir, 'stdout.txt'), {
-    env: { PATH: `${join(ROOT, 'cwl', 'bin')}:${process.env.PATH}` },
+    env: { PATH: `${join(ROOT, 'cwl', 'bin')}:${process.env.PATH}`, JAVA_OPTS },
     diskDirs: diskDirs.length ? diskDirs : undefined,
     timeoutMs: TIMEOUT_MS,
   })

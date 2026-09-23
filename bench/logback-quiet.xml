@@ -1,0 +1,25 @@
+<!--
+  Quiets the RML mapper's per-record warnings (a WARN for every station without
+  a `last_seen`, i.e. most of them on real Blue-bike data).
+
+  Every arm gets this, so they stay comparable: the shell and CWL arms through
+  JAVA_OPTS, the RDF-Connect arm through the JVM runner's command. Without it
+  the shell arm discards the warnings on stderr while RDF-Connect relays them
+  to the orchestrator, which logged 13k lines for five snapshots.
+-->
+<configuration>
+  <appender name="STDERR" class="ch.qos.logback.core.ConsoleAppender">
+    <target>System.err</target>
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- The mapper and its data-access layer: errors only. -->
+  <logger name="be.ugent" level="ERROR"/>
+  <logger name="com.jayway.jsonpath" level="ERROR"/>
+
+  <root level="WARN">
+    <appender-ref ref="STDERR"/>
+  </root>
+</configuration>

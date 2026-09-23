@@ -23,6 +23,8 @@ const STEPS = join(ROOT, 'steps')
 const CWL = join(ROOT, 'cwl')
 const CWLTOOL = join(ROOT, '.venv', 'bin', 'cwltool')
 const MAPPING = join(ROOT, 'anchor', 'bluebike.rml.ttl')
+/** Quiets the mapper's per-record warnings; see bench/logback-quiet.xml. */
+export const JAVA_OPTS = `-Dlogback.configurationFile=${join(ROOT, 'bench', 'logback-quiet.xml')}`
 const SHAPES = join(ROOT, 'anchor', 'bluebike-shapes.ttl')
 
 export const FOCUS_QUERY = `PREFIX hubs: <https://purl.eu/ns/mobility/passenger-transport-hubs#>
@@ -153,7 +155,7 @@ export function cwlCommand(kind: 'batch' | 'scatter', input: string, runDir: str
     ].join('\n'),
   )
   return (
-    `${CWLTOOL} --no-container --parallel --timestamps` +
+    `${CWLTOOL} --no-container --parallel --timestamps --preserve-environment JAVA_OPTS` +
     ` --outdir ${runDir}/final --tmpdir-prefix ${runDir}/cwl-tmp/ --tmp-outdir-prefix ${runDir}/cwl-out/` +
     ` ${CWL}/bluebike-${kind}.cwl ${job} 2> ${runDir}/cwltool.log`
   )
