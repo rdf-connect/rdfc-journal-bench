@@ -9,8 +9,12 @@
     "bench:overhead": "node dist/bench/run.js"
   },
   "dependencies": {
+    "@rdfc/dumps-to-feed-processor-ts": "^2.0.1",
+    "@rdfc/file-utils-processors-ts": "^1.0.3",
     "@rdfc/js-runner": "^3.3.0",
     "@rdfc/orchestrator-js": "^2.2.2",
+    "@rdfc/sds-processors-ts": "^3.0.1",
+    "n3": "^2.7.12",
     "winston": "^3.19.0"
   },
   "devDependencies": {

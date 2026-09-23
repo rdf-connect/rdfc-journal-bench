@@ -138,13 +138,18 @@ source. *URLs and sizes to be verified before committing.*
 
 ### 3.3 What has to be built
 
-1. **A generic processor-to-CLI adapter (`rdfc-proc`).** CWL and the shell pipe
+1. **A generic processor-to-CLI adapter (`rdfc-proc`).** ✅ built
+   (`bench/rdfc-proc.ts`), see below. CWL and the shell pipe
    need a command-line tool per stage. Instead of one wrapper per processor:
    run any JS processor as a CLI, with stdin/stdout as its reader/writer, its
    configuration from a JSON file, and experiment 1's in-memory channels
    (`src/inmem.ts`) in between. Keeps the same-executables rule by
    construction, and is reusable by anyone comparing against RDF-Connect.
-   (`rml-map` already covers the JVM mapper.)
+   (`rml-map` already covers the JVM mapper.) Verified: running `Validate`
+   through it produces byte-identical output to the hand-written
+   `shacl-validate` CLI, which also confirms that CLI mirrors the processor.
+   `Sdsify` runs through it unchanged, including the RDF terms it takes
+   (`{"$iri": ...}` placeholders).
 2. **State handling for stateful stages.** `Bucketize` keeps fragment state
    across messages; `DumpsToFeed` keeps the previous snapshot. In a stream this
    just works. In CWL-scatter, parallel chunks cannot share state, so those
@@ -157,13 +162,17 @@ source. *URLs and sizes to be verified before committing.*
 4. **A correctness reference for real data.** The generator trick no longer
    works; use a canonicalised batch output, cross-check the systems against
    each other, plus spot checks.
-5. **Wide gathers.** StreamFlow runs a step as `sh -c "<command>"`, one
+5. **Non-deterministic output.** `Sdsify` stamps every member with a
+   transaction id containing a timestamp, so the deep pipeline's output is not
+   byte-identical across runs. The correctness check has to canonicalise those
+   away (or compare modulo the SDS bookkeeping quads).
+6. **Wide gathers.** StreamFlow runs a step as `sh -c "<command>"`, one
    argument, so a gather over ~1 000 chunk files exceeds Linux's 128 KB
    per-argument limit and fails after all tasks have run (n = 1 000, unit = 1).
    A deeper pipeline gathers at every stateful stage, so either gather through
    a manifest file (changes the CWL for every runner) or report the limit as
    a finding. cwltool passes arguments as a list and is not affected.
-6. **Data recording** for B2 (one day of GBFS snapshots, published with the
+7. **Data recording** for B2 (one day of GBFS snapshots, published with the
    benchmark).
 
 Rough effort: a few days, of which the adapter and the CWL state handling are
