@@ -188,42 +188,43 @@ finds DCAT-AP types, so members are selected with a SPARQL query on its
 | sequential CLIs | 5.0 s | the same stages one after another, for reference |
 
 **Sweep on the deep pipeline** (`results/bluebike.json`, 2 reps, tmpfs,
-medians, quiet logs; 32/32 runs published exactly the expected members):
+medians, quiet logs, CPU from cgroup; 32/32 runs published the expected
+members):
 
-| snapshots | shell | rdfc | cwl-batch | cwl-scatter | CWL disk |
-|---:|---:|---:|---:|---:|---:|
-| 5 | 3.2 s | 8.2 s | 5.9 s | 10.1 s | 4.0 MB |
-| 10 | 3.8 s | 8.3 s | 6.8 s | 16.8 s | 7.4 MB |
-| 20 | 5.2 s | 10.3 s | 8.5 s | 36.5 s | 13.9 MB |
-| 30 | 6.1 s | 11.3 s | 9.1 s | 45.1 s | 20.7 MB |
+| snapshots | arm | wall | CPU | cores | disk |
+|---:|---|---:|---:|---:|---:|
+| 5 | shell | 2.4 s | 11.7 s | 5.0 | – |
+| 5 | rdfc | 7.8 s | 19.6 s | 2.5 | – |
+| 5 | cwl-batch | 5.9 s | 12.4 s | 2.1 | 4.0 MB |
+| 5 | cwl-scatter | 9.6 s | 51.1 s | 5.3 | 5.9 MB |
+| 30 | shell | 6.4 s | 30.1 s | 4.8 | – |
+| 30 | rdfc | 11.4 s | 29.4 s | 2.6 | – |
+| 30 | cwl-batch | 9.8 s | 21.8 s | 2.3 | 20.6 MB |
+| 30 | cwl-scatter | 48.1 s | 319.8 s | 6.9 | 32.0 MB |
 
-- **Intermediate storage grows linearly for CWL** (4.0 → 20.7 MB) and is zero
-  for the streaming arms. Quieting the mapper cut it by ~40 %: the per-task log
-  files were part of what CWL stages.
-- **Per-snapshot cost falls** for shell (635 → 204 ms), rdfc (1 636 → 377 ms)
-  and cwl-batch (1 187 → 303 ms); cwl-scatter stays at 1.5–2.0 s, a process per
-  stage per snapshot.
-- **Peak memory:** cwl-batch lowest (411 → 902 MB), streaming arms hold every
-  stage at once (1.2 → 2.0 GB), cwl-scatter highest.
+- **RDF-Connect and the shell pipe cost the same CPU** (29.4 vs 30.1 s at
+  n=30). RDF-Connect's longer makespan comes from using 2.6 cores against 4.8:
+  a channel admits one message at a time, so less of the pipeline runs at once.
+  That points at the known "no pipeline parallelism" limitation, not at gRPC.
+- **CWL-scatter burns 15× the CPU of CWL-batch** for identical output.
+- **Intermediate storage** still grows linearly for CWL (4.0 → 20.6 MB) and is
+  zero for the streaming arms.
 - **Note on the workload:** the published member set stays 70 across 30
-  snapshots, because a member's IRI is keyed on `last_seen` and only
-  `bikes_available` changes minute to minute. Report per-snapshot cost, not
-  cost per member.
+  snapshots (a member IRI is keyed on `last_seen`; only `bikes_available`
+  changes minute to minute). Report per-snapshot cost, not cost per member.
 
-**The crossover** (n = 30, 1 rep, quiet logs): CWL-scatter by snapshots per
-task, against RDF-Connect at 11.3 s and the shell pipe at 6.1 s, both a
-snapshot at a time:
+**The crossover** (n = 30, 1 rep): CWL-scatter by snapshots per task, against
+RDF-Connect at 11.4 s wall / 29.4 s CPU and the shell pipe at 6.4 s / 30.1 s:
 
 | snapshots/task | 1 | 5 | 15 | 30 (all) |
 |---|---:|---:|---:|---:|
-| cwl-scatter | 46.5 s | 16.6 s | 11.0 s | 10.5 s |
+| wall | 45.4 s | 15.8 s | 9.8 s | 9.1 s |
+| CPU | 310.9 s | 94.4 s | 45.2 s | 21.0 s |
+| cores | 6.8 | 6.0 | 4.6 | 2.3 |
 
-At one snapshot per task CWL is 4.1× slower than RDF-Connect; it draws level
-between 5 and 15 snapshots per task, and at one task it equals cwl-batch
-(9.1 s), as expected. RDF-Connect costs 1.07× CWL's best case while keeping the
-granularity CWL gives up to get there. Intermediate storage is 32 MB whatever
-the chunk size, so it is the state carried between stages, not the chunking,
-that dominates CWL's disk use.
+Granularity costs CWL 15× the CPU (310.9 vs 21.0 s). RDF-Connect works at one
+snapshot per message throughout for 29.4 s of CPU: 1.4× CWL's cheapest run,
+and a tenth of what CWL spends to match its granularity.
 
 **Definition size** (non-comment lines; `steps/*.ttl` holds the per-stage
 configuration the CLI arms need, which the RDF-Connect pipeline carries inline):

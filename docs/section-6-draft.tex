@@ -194,23 +194,40 @@ size of a system's working directories during the run.
 
 Table~\ref{tab:eval-size} gives the makespan by input size. Every system that
 keeps its processes alive amortises startup: per snapshot, the shell pipeline
-falls from \res{635} to \res{204}\,ms, RDF-Connect from \res{1636} to
-\res{377}\,ms, CWL-batch from \res{1187} to \res{303}\,ms. CWL-scatter stays
-between \res{1.5} and \res{2.0}\,s per snapshot, because it starts a fresh
+falls from \res{473} to \res{212}\,ms, RDF-Connect from \res{1568} to
+\res{379}\,ms, CWL-batch from \res{1186} to \res{327}\,ms. CWL-scatter stays
+between \res{1.6} and \res{1.9}\,s per snapshot, because it starts a fresh
 process per stage per snapshot.
 
+Makespan and CPU time tell different stories, and both belong in the
+comparison. The shell pipeline finishes first but uses \res{4.8} cores, its six
+stages running at once; RDF-Connect uses \res{2.6}. In CPU terms the two are
+the same to within \res{2}\,\% (\res{30.1} against \res{29.4}\,s at
+\res{30} snapshots), so the orchestrator is not what makes RDF-Connect slower
+here --- a message crosses it in under a millisecond
+(\S\ref{sec:eval-micro}), while a channel admits one message at a time, which
+limits how much of the pipeline runs concurrently. CWL-batch is the most
+frugal (\res{21.8}\,s of CPU) because it runs one stage at a time over whole
+files.
+
 \begin{table}[t]
-\caption{Makespan (s) by input size, and the intermediate storage the CWL arms
-write. Medians of \res{2} runs; all runs published the expected members.}
+\caption{The pipeline by input size: makespan and CPU time (s), mean cores
+busy, and the intermediate storage the CWL arms write. Medians of \res{2}
+runs; all runs published the expected members.}
 \label{tab:eval-size}
-\begin{tabular}{rrrrrr}
+\begin{tabular}{rlrrrr}
 \toprule
-snapshots & shell & RDF-Connect & CWL-batch & CWL-scatter & CWL storage \\
+snapshots & system & makespan & CPU & cores & storage \\
 \midrule
-5  & \res{3.2} & \res{8.2}  & \res{5.9} & \res{10.1} & \res{4.0}\,MB \\
-10 & \res{3.8} & \res{8.3}  & \res{6.8} & \res{16.8} & \res{7.4}\,MB \\
-20 & \res{5.2} & \res{10.3} & \res{8.5} & \res{36.5} & \res{13.9}\,MB \\
-30 & \res{6.1} & \res{11.3} & \res{9.1} & \res{45.1} & \res{20.7}\,MB \\
+5  & shell       & \res{2.4}  & \res{11.7}  & \res{5.0} & --- \\
+   & RDF-Connect & \res{7.8}  & \res{19.6}  & \res{2.5} & --- \\
+   & CWL-batch   & \res{5.9}  & \res{12.4}  & \res{2.1} & \res{4.0}\,MB \\
+   & CWL-scatter & \res{9.6}  & \res{51.1}  & \res{5.3} & \res{5.9}\,MB \\
+\midrule
+30 & shell       & \res{6.4}  & \res{30.1}  & \res{4.8} & --- \\
+   & RDF-Connect & \res{11.4} & \res{29.4}  & \res{2.6} & --- \\
+   & CWL-batch   & \res{9.8}  & \res{21.8}  & \res{2.3} & \res{20.6}\,MB \\
+   & CWL-scatter & \res{48.1} & \res{319.8} & \res{6.9} & \res{32.0}\,MB \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -228,12 +245,14 @@ five, \res{11.0}\,s with fifteen and \res{10.5}\,s with a single task, where it
 meets its own batch encoding. RDF-Connect takes \res{11.3}\,s and the shell
 pipeline \res{6.1}\,s, both processing one snapshot at a time throughout.
 
-This is the comparison the framework's design implies. Working snapshot by
-snapshot, CWL costs \res{4.1}$\times$ what RDF-Connect costs. CWL becomes
-faster than RDF-Connect only by enlarging its tasks, and at its best it is
-\res{1.07}$\times$ faster while handling the whole input as one batch. The
-price of message-level granularity in RDF-Connect is therefore small, and a
-batch system charges for it steeply.
+The CPU figures make the trade explicit. CWL spends \res{310.9}\,s of CPU
+with one snapshot per task and \res{21.0}\,s with a single task: fine-grained
+processing costs it \res{15}$\times$ the CPU for the same output, because each
+task pays for its own JVM and Node.js startup. RDF-Connect works at that
+granularity throughout for \res{29.4}\,s, which is \res{1.4}$\times$ CWL's
+cheapest run and a tenth of what CWL spends to match its granularity. That is
+the trade the framework's design implies, and it is what the comparison is
+for.
 
 Two further measurements follow from the descriptions rather than the runs.
 Describing the pipeline takes \res{110} lines of RDF in one document for
@@ -295,9 +314,12 @@ runs; the benchmark, the recorded input and all raw measurements are published;
 and the cases where RDF-Connect loses are reported: the shell pipeline is
 faster everywhere, and CWL is faster once its tasks are large.
 
-\emph{Parallelism differs.} CWL-scatter runs up to \res{8} tasks at once while
-RDF-Connect uses about two cores, so makespan alone flatters the system that
-takes more of the machine. \res{We therefore also report CPU time.}
+\emph{Parallelism differs.} The systems take different shares of the machine:
+\res{4.8} cores for the shell pipeline, \res{6.9} for CWL-scatter, \res{2.6}
+for RDF-Connect. Makespan alone would flatter whichever takes more, so we
+report CPU time from the kernel's cgroup accounting alongside it, covering
+every descendant process including the short-lived ones a scattered workflow
+starts.
 
 \emph{One machine, one dataset.} The pipeline is one deployment among the
 several of Section~5, and the recorded input covers \res{24}\,h of one API.
