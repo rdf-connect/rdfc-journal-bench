@@ -64,7 +64,10 @@ src/processors.ts    BenchGenerator / BenchPassThrough / BenchSink — shared by
 src/inmem.ts         in-memory Reader/Writer with the framework's exact ack semantics
 src/native.ts        hand-wired driver (arm B), replicating Runner's lifecycle
 src/genpipeline.ts   emits pipeline.ttl for arm A (and for the anchor pipeline)
-src/anchor.ts        AnchorSource / AnchorSink — ends of the experiment-2 rdfc pipeline
+src/anchor.ts        AnchorSource / AnchorSink — ends of the experiment-2 rdfc pipelines
+src/genbluebike.ts   emits pipeline.ttl for the realistic (Blue-bike) pipeline
+steps/               per-stage processor descriptions, shared by the shell and CWL arms
+cwl/                 CWL tools and workflows for both pipelines
 processors.ttl       processor descriptions + SHACL shapes + runner definitions
 anchor/              experiment-2 workload: RML mapping + SHACL shapes
 bench/run.ts         sweep harness
@@ -72,6 +75,10 @@ bench/anchor.ts      experiment-2 inputs, shell command, reference output
 bench/gen-records.ts experiment-2 record generator
 bench/stages.ts      cost of each experiment-2 stage as a CLI tool
 bench/proc.ts        run a shell pipeline: wall clock, line timestamps, peak RSS
+bench/rdfc-proc.ts   run any JS processor as a CLI, configured from RDF
+bench/bluebike.ts    the realistic workload: archive, arms, correctness oracle
+bench/run-bluebike.ts  sweep for the realistic pipeline
+bench/record-bluebike.ts  records the Blue-bike API into a replayable archive
 bench/summarize.ts   raw JSON -> paper-ready tables
 bench/all.sh         full suite
 ```
@@ -106,6 +113,13 @@ J=https://javadoc.jitpack.io/com/github/rdf-connect/jvm-runner/runner/master-SNA
 curl -L -o vendor/jvm-runner.jar $J/runner-master-SNAPSHOT-all.jar
 curl -L -o vendor/jvm-runner-index.jar $J/runner-master-SNAPSHOT-index.jar
 
+# the realistic pipeline (Blue-bike: map, validate, change detection, SDS,
+# fragmentation, LDES publication), all four arms:
+node dist/bench/record-bluebike.js --out data/bluebike-$(date +%F).ndjson --for=1h
+node dist/bench/run-bluebike.js --ns=5,10,20,30 --reps=2
+node dist/bench/run-bluebike.js --ns=30 --reps=1 --arms=cwl-scatter --unit=5
+
+# the two-stage anchor pipeline (calibration and ground truth):
 node dist/bench/run.js anchor-unit --reps=3 --arms=shell,rdfc,cwl-scatter
 # sweeps: anchor-smoke | anchor-check | anchor-quick | anchor-n | anchor-unit
 # arms:   shell | rdfc | cwl-scatter | toil-scatter | streamflow-scatter

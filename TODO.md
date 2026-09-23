@@ -192,6 +192,27 @@ wanted).
 
 ---
 
+## 2b. The realistic pipeline — running (2026-09-23)
+
+The two-stage anchor pipeline is superseded as the headline benchmark by the
+deployed Blue-bike chain; see `docs/future-work.md` for the full state.
+
+- [x] Six stages, all published processors, two runtimes, the deployment's own
+      RML mapping: map → validate → change detection → SDS → fragmentation →
+      LDES on disk.
+- [x] `bench/rdfc-proc.ts` runs any JS processor as a CLI, configured from RDF
+      through its own SHACL shapes, so the shell and CWL arms run the same code.
+- [x] All four arms (shell, rdfc, cwl-batch, cwl-scatter) agree exactly against
+      an oracle derived from the input.
+- [x] First sweep: CWL disk grows linearly, streaming materialises nothing;
+      crossover at 5–15 snapshots per task; RDF-Connect 1.27× CWL's best case
+      while keeping granularity.
+- [x] Definition size and change effort measured (`docs/change-effort/`).
+- [ ] Re-run at scale when the 24 h recording finishes (~1 440 snapshots).
+- [ ] B2: latency under a continuous source (the streaming claim).
+- [ ] CPU time and cores; pinned server; 5+ interleaved reps.
+- [ ] Decide how to treat log relaying (13 k lines for 5 snapshots in rdfc).
+
 ## 3. Observations to record along the way
 
 Not blockers — note the behaviour, state it in the paper, fix later.
