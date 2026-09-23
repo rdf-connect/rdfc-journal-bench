@@ -9,8 +9,8 @@
  * deployed CA-Blue-Bike-LDES pipeline, its SHACL shapes as both quality gate
  * and feed member shape, time-based fragmentation, and a static LDES on disk.
  *
- * The shape and the focus-node query reach DumpsToFeed through GlobRead, the
- * ecosystem's file reader, rather than through anything benchmark-specific.
+ * The source sends the member shape and the focus-node query with every
+ * snapshot, because DumpsToFeed consumes one of each per dump.
  */
 export type BluebikePipelineConfig = {
   /** NDJSON input: one snapshot (a JSON array of stations) per line. */
@@ -34,7 +34,6 @@ export function renderBluebikePipeline(cfg: BluebikePipelineConfig): string {
   <../vendor/jvm-runner-index.jar>,
   <../rml-processor-jvm/build/libs/rml-processor-jvm-0.0.2-all.jar>,
   <../shacl-processor-ts/processors.ttl>,
-  <../node_modules/@rdfc/file-utils-processors-ts/processors.ttl>,
   <../node_modules/@rdfc/dumps-to-feed-processor-ts/processor.ttl>,
   <../node_modules/@rdfc/sds-processors-ts/configs/sdsify.ttl>,
   <../node_modules/@rdfc/sds-processors-ts/configs/bucketizer.ttl>,
@@ -46,8 +45,8 @@ export function renderBluebikePipeline(cfg: BluebikePipelineConfig): string {
     rdfc:processor <mapper>;
   ], [
     rdfc:instantiates rdfc:NodeRunner;
-    rdfc:processor <source>, <shapeReader>, <focusReader>, <validate>,
-      <changes>, <sdsify>, <bucketize>, <writer>;
+    rdfc:processor <source>, <validate>, <changes>, <sdsify>, <bucketize>,
+      <writer>;
   ].
 
 # ── Channels ────────────────────────────────────────────────────────────────
@@ -65,10 +64,14 @@ export function renderBluebikePipeline(cfg: BluebikePipelineConfig): string {
 <bucketMeta> a rdfc:Writer, rdfc:Reader.
 
 # ── Stages ──────────────────────────────────────────────────────────────────
-<source> a bench:AnchorSource;
+<source> a bench:BluebikeSource;
   bench:mappingWriter <mapping>;
   rdfc:writer <snapshots>;
+  bench:shapeWriter <shape>;
+  bench:focusWriter <focus>;
   bench:mappingPath "${cfg.mapping}";
+  bench:shapePath "${cfg.shapes}";
+  bench:focusPath "${cfg.focusQuery}";
   bench:input "${cfg.input}";
   bench:resultPath "${cfg.resultDir}/source.json".
 
@@ -90,16 +93,6 @@ export function renderBluebikePipeline(cfg: BluebikePipelineConfig): string {
   rdfc:outgoing <validated>;
   rdfc:report <reports>;
   rdfc:mime "application/n-quads".
-
-<shapeReader> a rdfc:GlobRead;
-  rdfc:glob "${cfg.shapes}";
-  rdfc:output <shape>;
-  rdfc:closeOnEnd true.
-
-<focusReader> a rdfc:GlobRead;
-  rdfc:glob "${cfg.focusQuery}";
-  rdfc:output <focus>;
-  rdfc:closeOnEnd true.
 
 <changes> a rdfc:DumpsToFeed;
   rdfc:dump <validated>;

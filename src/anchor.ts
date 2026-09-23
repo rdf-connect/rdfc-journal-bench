@@ -71,6 +71,61 @@ export class AnchorSource extends Processor<SourceArgs> {
   }
 }
 
+type BluebikeSourceArgs = {
+  /** Channel read by the RML mapper as `rdfc:mappings`. */
+  mappingWriter: Writer
+  /** Channel read by the RML mapper as its triggering source. */
+  writer: Writer
+  /** The member shape and the query selecting members, for DumpsToFeed. */
+  shapeWriter: Writer
+  focusWriter: Writer
+  mappingPath: string
+  shapePath: string
+  focusPath: string
+  input: string
+  resultPath: string
+}
+
+/**
+ * Source of the Blue-bike pipeline: the mapping once, then every snapshot.
+ *
+ * The member shape and the focus-node query go out with each snapshot, because
+ * DumpsToFeed consumes one of each per dump and holds back a dump that arrives
+ * without them. The command-line arms do the same, one message per line.
+ */
+export class BluebikeSource extends Processor<BluebikeSourceArgs> {
+  async init(): Promise<void> {}
+  async transform(): Promise<void> {}
+
+  async produce(this: BluebikeSourceArgs & this): Promise<void> {
+    const encoder = new TextEncoder()
+    const shape = readFileSync(this.shapePath)
+    const focus = readFileSync(this.focusPath)
+
+    await this.mappingWriter.buffer(readFileSync(this.mappingPath))
+    await this.mappingWriter.close()
+
+    let count = 0
+    let firstAbs = 0
+    const lines = createInterface({ input: createReadStream(this.input), crlfDelay: Infinity })
+    for await (const line of lines) {
+      if (!line.trim()) continue
+      if (count === 0) firstAbs = nowAbs()
+      await this.shapeWriter.buffer(shape)
+      await this.focusWriter.buffer(focus)
+      await this.writer.buffer(encoder.encode(asArray(line)))
+      count++
+    }
+    const endAbs = nowAbs()
+    await Promise.all([this.writer.close(), this.shapeWriter.close(), this.focusWriter.close()])
+
+    writeFileSync(
+      this.resultPath,
+      JSON.stringify({ role: 'source', count, firstAbs, endAbs }, null, 2),
+    )
+  }
+}
+
 type SinkArgs = {
   reader: Reader
   /** NDJSON output, one JSON string of N-Quads per message, like the CLIs. */

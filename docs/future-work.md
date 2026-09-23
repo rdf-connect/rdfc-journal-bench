@@ -187,6 +187,23 @@ finds DCAT-AP types, so members are selected with a SPARQL query on its
 | cwl-scatter (1 snapshot/task) | 11.7 s | `cwl/bluebike-scatter.cwl` |
 | sequential CLIs | 5.0 s | the same stages one after another, for reference |
 
+**Bug found 2026-09-23, all earlier deep-pipeline numbers superseded.**
+`DumpsToFeed.tryProcessing()` consumes one member shape and one focus query
+*per dump*; we sent each once, so every snapshot after the first was mapped and
+validated and then held back at change detection, never reaching the SDS,
+fragmentation and publication stages. The oracle missed it because this
+archive's `last_seen` values never change, so the first snapshot already
+contains all 70 members.
+
+Fixed by sending the shape and query with every dump (a `BluebikeSource`
+processor in the RDF-Connect arm, repeated lines in the CLI arms), and the
+oracle now also predicts activity counts: at n=30, 70 creates and 62 updates.
+Cost of the fix in measured time: at n=5 the shell arm goes 2.4 → 3.6 s, rdfc
+7.8 → 11.4 s, since the work is now actually done.
+
+Worth reporting to the processor's author: a shape arriving on a channel is
+consumed per dump rather than held, which silently stalls a stream.
+
 **Sweep on the deep pipeline** (`results/bluebike.json`, 2 reps, tmpfs,
 medians, quiet logs, CPU from cgroup; 32/32 runs published the expected
 members):

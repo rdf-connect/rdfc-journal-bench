@@ -74,6 +74,57 @@ export function expectedMembers(n: number): Set<string> {
   return members
 }
 
+/**
+ * What a correct run publishes, derived from the input alone: one Create per
+ * distinct member, and one Update whenever a member's station data changes
+ * between consecutive snapshots.
+ */
+export function expectedActivities(n: number): { creates: number; updates: number } {
+  const snaps = snapshots(n)
+  const seen = new Set<string>()
+  let creates = 0
+  let updates = 0
+  let previous = new Map<number, string>()
+
+  for (const snap of snaps) {
+    const current = new Map<number, string>()
+    for (const station of snap.stations) {
+      if (!station.last_seen) continue // no member is minted without one
+      const member = `${station.id}#${station.last_seen}`
+      const content = JSON.stringify(station)
+      current.set(station.id, content)
+      if (!seen.has(member)) {
+        seen.add(member)
+        creates++
+      } else if (previous.get(station.id) !== content) {
+        updates++
+      }
+    }
+    previous = current
+  }
+  return { creates, updates }
+}
+
+/** The activities a run published, counted from the LDES on disk. */
+export function publishedActivities(ldesDir: string): { creates: number; updates: number } {
+  let creates = 0
+  let updates = 0
+  const walk = (dir: string) => {
+    if (!existsSync(dir)) return
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const path = join(dir, entry.name)
+      if (entry.isDirectory()) walk(path)
+      else if (entry.name.endsWith('.trig')) {
+        const text = readFileSync(path, 'utf8')
+        creates += text.match(/activitystreams#Create/g)?.length ?? 0
+        updates += text.match(/activitystreams#Update/g)?.length ?? 0
+      }
+    }
+  }
+  walk(ldesDir)
+  return { creates, updates }
+}
+
 /** The members a run actually published, read back from the LDES on disk. */
 export function publishedMembers(ldesDir: string): Set<string> {
   const members = new Set<string>()
@@ -114,12 +165,19 @@ export function splitArm(arm: Arm): { runner: Runner; encoding: Encoding } | nul
   return m ? { runner: m[1] as Runner, encoding: m[2] as Encoding } : null
 }
 
-/** Files every arm needs beside the snapshots: the member shape and the query. */
-export function prepareSideInputs(runDir: string) {
+/**
+ * Files every arm needs beside the snapshots: the member shape and the query
+ * that selects members.
+ *
+ * One message of each per snapshot: DumpsToFeed consumes a shape and a query
+ * alongside every dump, and holds back any dump that arrives without them.
+ */
+export function prepareSideInputs(runDir: string, n: number) {
   const shape = join(runDir, 'shape.ndjson')
   const focus = join(runDir, 'focus.ndjson')
-  writeFileSync(shape, JSON.stringify(readFileSync(SHAPES, 'utf8')) + '\n')
-  writeFileSync(focus, JSON.stringify(FOCUS_QUERY) + '\n')
+  const line = (x: string) => JSON.stringify(x) + '\n'
+  writeFileSync(shape, line(readFileSync(SHAPES, 'utf8')).repeat(n))
+  writeFileSync(focus, line(FOCUS_QUERY).repeat(n))
   writeFileSync(join(runDir, 'focus.rq'), FOCUS_QUERY)
   mkdirSync(join(runDir, 'feed-state-seed'), { recursive: true })
   return { shape, focus }

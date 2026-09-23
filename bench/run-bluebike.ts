@@ -23,10 +23,12 @@ import {
   type Arm,
   JAVA_OPTS,
   cwlCommand,
+  expectedActivities,
   expectedMembers,
   ldesDir,
   prepareInput,
   prepareSideInputs,
+  publishedActivities,
   publishedMembers,
   runnerPath,
   shellCommand,
@@ -54,6 +56,9 @@ type Run = {
   /** Members published, and how many were expected. */
   members: number
   expected: number
+  /** Activities published, and how many were expected. */
+  activities: { creates: number; updates: number }
+  expectedActivities: { creates: number; updates: number }
   correct: boolean
   stderr?: string
 }
@@ -64,7 +69,7 @@ async function runOnce(arm: Arm, n: number, unit: number, rep: number): Promise<
   mkdirSync(runDir, { recursive: true })
 
   const input = prepareInput(n, runDir)
-  prepareSideInputs(runDir)
+  prepareSideInputs(runDir, n)
   const expected = expectedMembers(n)
 
   let cmd: string
@@ -111,8 +116,14 @@ async function runOnce(arm: Arm, n: number, unit: number, rep: number): Promise<
     timeoutMs: TIMEOUT_MS,
   })
 
-  const published = publishedMembers(ldesDir(arm, runDir))
-  let correct = published.size === expected.size
+  const dir = ldesDir(arm, runDir)
+  const published = publishedMembers(dir)
+  const acts = publishedActivities(dir)
+  const wantActs = expectedActivities(n)
+  let correct =
+    published.size === expected.size &&
+    acts.creates === wantActs.creates &&
+    acts.updates === wantActs.updates
   if (correct) for (const m of expected) if (!published.has(m)) { correct = false; break }
 
   return {
@@ -128,6 +139,8 @@ async function runOnce(arm: Arm, n: number, unit: number, rep: number): Promise<
     peakDiskMb: run.peakDiskMb,
     members: published.size,
     expected: expected.size,
+    activities: acts,
+    expectedActivities: wantActs,
     correct,
     stderr: run.timedOut
       ? `timed out after ${TIMEOUT_MS / 60000} min`
@@ -135,7 +148,8 @@ async function runOnce(arm: Arm, n: number, unit: number, rep: number): Promise<
         ? run.stderr.trim().slice(-500) || `exit ${run.code}; logs in ${runDir}`
         : correct
           ? undefined
-          : `published ${published.size} members, expected ${expected.size}`,
+          : `published ${published.size} members (${acts.creates}C/${acts.updates}U), ` +
+            `expected ${expected.size} (${wantActs.creates}C/${wantActs.updates}U)`,
   }
 }
 
@@ -180,7 +194,7 @@ async function main() {
   console.log(
     `\n${'snapshots'.padStart(9)}${'arm'.padStart(20)}${'wall ms'.padStart(10)}${'ms/snap'.padStart(9)}` +
       `${'cpu ms'.padStart(10)}${'cores'.padStart(7)}${'peak MB'.padStart(9)}${'disk MB'.padStart(9)}` +
-      `${'members'.padStart(9)}${'correct'.padStart(9)}`,
+      `${'C/U'.padStart(11)}${'correct'.padStart(9)}`,
   )
   console.log('-'.repeat(102))
   for (const n of ns) {
@@ -197,7 +211,7 @@ async function main() {
         `${String(n).padStart(9)}${arm.padStart(20)}${fmt(wall)}${fmt(wall / n, 1, 9)}` +
           `${fmt(median(ok.map((r) => r.cpuMs ?? NaN)))}${fmt(median(ok.map((r) => r.cores ?? NaN)), 2, 7)}` +
           `${fmt(median(ok.map((r) => r.peakRssMb)), 0, 9)}${fmt(median(ok.map((r) => r.peakDiskMb ?? NaN)), 1, 9)}` +
-          `${fmt(median(ok.map((r) => r.members)), 0, 9)}${correct.padStart(9)}`,
+          `${`${ok[0].activities.creates}/${ok[0].activities.updates}`.padStart(11)}${correct.padStart(9)}`,
       )
     }
     console.log()
