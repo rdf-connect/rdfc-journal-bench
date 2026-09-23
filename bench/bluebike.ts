@@ -30,7 +30,13 @@ const SHAPES = join(ROOT, 'anchor', 'bluebike-shapes.ttl')
 export const FOCUS_QUERY = `PREFIX hubs: <https://purl.eu/ns/mobility/passenger-transport-hubs#>
 SELECT DISTINCT ?entity WHERE { ?entity a hubs:ResourceReport }`
 
-export type Station = { id: number; last_seen: string | null }
+export type Station = {
+  id: number
+  last_seen: string | null
+  bikes_available: number
+  bikes_in_use: number
+  name: string
+}
 type Snapshot = { fetchedAt: string; stations: Station[] }
 
 /** The recorded archive, newest recording first. */
@@ -80,27 +86,30 @@ export function expectedMembers(n: number): Set<string> {
  * between consecutive snapshots.
  */
 export function expectedActivities(n: number): { creates: number; updates: number } {
-  const snaps = snapshots(n)
-  const seen = new Set<string>()
+  // Change detection remembers the last content it stored for a member, not
+  // the content of the previous snapshot: a station missing from a snapshot
+  // and returning unchanged is not a change.
+  //
+  // What counts as content is decided by the member shape, not by the station
+  // record. The shape reaches the report's own properties and the station's
+  // name, but takes the geometry and the capacity as IRIs without their
+  // contents, so a change in `bikes_in_use` (which the mapping turns into the
+  // station's total capacity) leaves the member untouched and publishes
+  // nothing. `bikes_available` becomes the report's number and does change it.
+  const lastSeenContent = new Map<string, string>()
   let creates = 0
   let updates = 0
-  let previous = new Map<number, string>()
 
-  for (const snap of snaps) {
-    const current = new Map<number, string>()
+  for (const snap of snapshots(n)) {
     for (const station of snap.stations) {
       if (!station.last_seen) continue // no member is minted without one
       const member = `${station.id}#${station.last_seen}`
-      const content = JSON.stringify(station)
-      current.set(station.id, content)
-      if (!seen.has(member)) {
-        seen.add(member)
-        creates++
-      } else if (previous.get(station.id) !== content) {
-        updates++
-      }
+      const content = JSON.stringify([station.bikes_available, station.name])
+      const previous = lastSeenContent.get(member)
+      if (previous === undefined) creates++
+      else if (previous !== content) updates++
+      lastSeenContent.set(member, content)
     }
-    previous = current
   }
   return { creates, updates }
 }
