@@ -5,9 +5,9 @@
     "unit": 30,
     "rep": 0,
     "ok": true,
-    "wallMs": 11387.595889999999,
-    "peakRssMb": 734.84375,
-    "peakDiskMb": 46.594770431518555,
+    "wallMs": 10519.925875,
+    "peakRssMb": 862.33203125,
+    "peakDiskMb": 31.974514961242676,
     "members": 70,
     "expected": 70,
     "correct": true

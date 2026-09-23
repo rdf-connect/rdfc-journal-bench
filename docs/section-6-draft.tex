@@ -194,10 +194,10 @@ size of a system's working directories during the run.
 
 Table~\ref{tab:eval-size} gives the makespan by input size. Every system that
 keeps its processes alive amortises startup: per snapshot, the shell pipeline
-falls from \res{801} to \res{238}\,ms, RDF-Connect from \res{1845} to
-\res{473}\,ms, CWL-batch from \res{1465} to \res{373}\,ms. CWL-scatter stays at
-about \res{1.8}\,s per snapshot, because it starts a fresh process per stage
-per snapshot.
+falls from \res{635} to \res{204}\,ms, RDF-Connect from \res{1636} to
+\res{377}\,ms, CWL-batch from \res{1187} to \res{303}\,ms. CWL-scatter stays
+between \res{1.5} and \res{2.0}\,s per snapshot, because it starts a fresh
+process per stage per snapshot.
 
 \begin{table}[t]
 \caption{Makespan (s) by input size, and the intermediate storage the CWL arms
@@ -207,31 +207,31 @@ write. Medians of \res{2} runs; all runs published the expected members.}
 \toprule
 snapshots & shell & RDF-Connect & CWL-batch & CWL-scatter & CWL storage \\
 \midrule
-5  & \res{4.0} & \res{9.2}  & \res{7.3}  & \res{12.0} & \res{6.4}\,MB \\
-10 & \res{4.6} & \res{10.4} & \res{8.1}  & \res{20.4} & \res{12.3}\,MB \\
-20 & \res{6.1} & \res{12.2} & \res{9.9}  & \res{36.7} & \res{23.7}\,MB \\
-30 & \res{7.1} & \res{14.2} & \res{11.2} & \res{52.7} & \res{35.1}\,MB \\
+5  & \res{3.2} & \res{8.2}  & \res{5.9} & \res{10.1} & \res{4.0}\,MB \\
+10 & \res{3.8} & \res{8.3}  & \res{6.8} & \res{16.8} & \res{7.4}\,MB \\
+20 & \res{5.2} & \res{10.3} & \res{8.5} & \res{36.5} & \res{13.9}\,MB \\
+30 & \res{6.1} & \res{11.3} & \res{9.1} & \res{45.1} & \res{20.7}\,MB \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 Storage grows with the input for the CWL arms and stays at zero for the
-streaming ones. A file-passing system writes every stage's output, and here
+streaming ones (\res{4.0} to \res{20.7}\,MB over this range). A file-passing system writes every stage's output, and here
 also every stage's state, to disk; a streaming system passes them in memory.
 The growth is a property of the execution model rather than of cwltool, which
 is why we report it alongside makespan.
 
 How much data one execution handles is the parameter that matters most, and it
 is the one a CWL user controls by choosing a chunk size. At \res{30} snapshots,
-CWL-scatter takes \res{52.7}\,s with one snapshot per task, \res{19.4}\,s with
-five, \res{12.7}\,s with fifteen and \res{11.4}\,s with a single task, where it
-meets its own batch encoding. RDF-Connect takes \res{14.2}\,s and the shell
-pipeline \res{7.1}\,s, both processing one snapshot at a time throughout.
+CWL-scatter takes \res{46.5}\,s with one snapshot per task, \res{16.6}\,s with
+five, \res{11.0}\,s with fifteen and \res{10.5}\,s with a single task, where it
+meets its own batch encoding. RDF-Connect takes \res{11.3}\,s and the shell
+pipeline \res{6.1}\,s, both processing one snapshot at a time throughout.
 
 This is the comparison the framework's design implies. Working snapshot by
-snapshot, CWL costs \res{3.7}$\times$ what RDF-Connect costs. CWL becomes
+snapshot, CWL costs \res{4.1}$\times$ what RDF-Connect costs. CWL becomes
 faster than RDF-Connect only by enlarging its tasks, and at its best it is
-\res{1.27}$\times$ faster while handling the whole input as one batch. The
+\res{1.07}$\times$ faster while handling the whole input as one batch. The
 price of message-level granularity in RDF-Connect is therefore small, and a
 batch system charges for it steeply.
 
