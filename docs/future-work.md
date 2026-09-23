@@ -176,14 +176,31 @@ finds DCAT-AP types, so members are selected with a SPARQL query on its
 `focusNodes` channel; `Sdsify` and `Bucketize` therefore key on
 `as:published`, as the deployed DCAT-AP feeds do.
 
-**Encodings so far.** Two of the three run the seven-stage chain and publish
-the *identical* 70 members (5 snapshots):
+**Encodings.** All three run the chain and publish the *identical* 70 members
+(5 snapshots, 1 rep, indicative only):
 
 | Arm | Wall | Notes |
 |---|---:|---|
 | shell pipe | 2.8 s | six stages in one pipe; metadata channels are FIFOs, so stages overlap |
+| cwl-batch | 6.4 s | `cwl/bluebike-batch.cwl`, one task per stage |
 | RDF-Connect | 9.2 s | `src/genbluebike.ts`; JVM runner for the mapper, js-runner for the other five |
+| cwl-scatter (1 snapshot/task) | 11.7 s | `cwl/bluebike-scatter.cwl` |
 | sequential CLIs | 5.0 s | the same stages one after another, for reference |
+
+**Capability finding — stateful stages cannot be scattered.** Change detection
+keeps the previous state of every member, the bucketiser keeps its fragment
+state, and the writer appends to a published tree. CWL scatter runs its tasks
+independently and cannot thread a value from one to the next (there is no
+fold), so only the stateless prefix (map, validate) scatters and the stateful
+tail runs as single tasks over the gathered stream. In a streaming system those
+stages simply keep their state. This is a structural limit, not a speed
+difference, and belongs next to "unbounded input is inexpressible" in the
+capability table.
+
+**Cost of making state explicit.** In CWL each stateful stage stages its
+predecessor's state in (a LevelDB directory, a state file, the published LDES
+tree) and hands it on as an output, so state is copied between tasks. That is
+worth measuring as intermediate storage as n grows.
 
 **New finding — log relaying is not free.** The mapper warns about every
 station without a `last_seen` (257 of 327). The shell arm sends that to

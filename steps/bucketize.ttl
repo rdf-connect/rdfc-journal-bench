@@ -25,4 +25,6 @@
     tree:k 4;
     tree:minBucketSpan 3600;
   ] );
-  rdfc:outputStreamId <https://blue-bike.be/ldes#stream>.
+  rdfc:outputStreamId <https://blue-bike.be/ldes#stream>;
+  # Relative, so each CWL task keeps its state in its own working directory.
+  rdfc:savePath "./bucket-state.json".
