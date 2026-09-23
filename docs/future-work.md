@@ -187,6 +187,33 @@ finds DCAT-AP types, so members are selected with a SPARQL query on its
 | cwl-scatter (1 snapshot/task) | 11.7 s | `cwl/bluebike-scatter.cwl` |
 | sequential CLIs | 5.0 s | the same stages one after another, for reference |
 
+**First sweep on the deep pipeline** (`results/bluebike.json`, 2 reps, tmpfs,
+medians; 32/32 runs published exactly the expected members):
+
+| snapshots | shell | rdfc | cwl-batch | cwl-scatter | CWL disk (batch/scatter) |
+|---:|---:|---:|---:|---:|---:|
+| 5 | 4.0 s | 9.2 s | 7.3 s | 12.0 s | 6.4 / 8.3 MB |
+| 10 | 4.6 s | 10.4 s | 8.1 s | 20.4 s | 12.3 / 16.1 MB |
+| 20 | 6.1 s | 12.2 s | 9.9 s | 36.7 s | 23.7 / 31.3 MB |
+| 30 | 7.1 s | 14.2 s | 11.2 s | 52.7 s | 35.1 / 46.5 MB |
+
+- **Intermediate storage separates the architectures**, as the design doc
+  predicted: CWL grows linearly in n (6.4 → 35.1 MB), the streaming arms
+  materialise nothing between stages. This is the result that cannot be
+  explained away as implementation quality.
+- **Per-snapshot cost falls** for shell (801 → 238 ms), rdfc (1 845 → 473 ms)
+  and cwl-batch (1 465 → 373 ms) as start-up amortises, but stays flat for
+  cwl-scatter (≈1.8 s), which pays per task.
+- **Peak memory:** cwl-batch is lowest (412 → 769 MB, one stage at a time);
+  the streaming arms hold every stage at once (1.3 → 1.8 GB); cwl-scatter is
+  highest (2.0 GB at n=30) from parallel tasks.
+- **Note on the workload:** the published member set stays 70 across 30
+  snapshots, because a member's IRI is keyed on `last_seen` and only
+  `bikes_available` changes minute to minute. The work grows with n (every
+  snapshot is mapped, validated and diffed) but the feed's member set does
+  not; longer recordings will add members. Report per-snapshot cost, not cost
+  per member.
+
 **Capability finding — stateful stages cannot be scattered.** Change detection
 keeps the previous state of every member, the bucketiser keeps its fragment
 state, and the writer appends to a published tree. CWL scatter runs its tasks
