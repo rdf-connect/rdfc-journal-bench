@@ -245,6 +245,18 @@ and offers no validation, typing or provenance at all, which is the honest
 framing: definition size alone is not the argument, but it is the metric
 Table~5 promises and it favours the declarative description.
 
+**Change effort** (adding one published processor to the pipeline, artefacts and
+method in `docs/change-effort/`):
+
+| Arm | diff | files |
+|---|---:|---:|
+| RDF-Connect | 10 lines in `pipeline.ttl` | 1 |
+| shell | 1 line in the pipe + 9-line step description | 2 |
+| CWL | 7 lines in the workflow + a 15-line tool + 9-line step description | 3 |
+
+Verified rather than counted: the modified RDF-Connect pipeline runs and still
+publishes exactly the expected members; the modified CWL workflow validates.
+
 **Capability finding — stateful stages cannot be scattered.** Change detection
 keeps the previous state of every member, the bucketiser keeps its fragment
 state, and the writer appends to a published tree. CWL scatter runs its tasks

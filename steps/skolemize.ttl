@@ -1,0 +1,13 @@
+# Replaces blank nodes with IRIs before the data becomes feed members.
+@prefix rdfc: <https://w3id.org/rdf-connect#>.
+@prefix owl:  <http://www.w3.org/2002/07/owl#>.
+
+<> owl:imports <../node_modules/@rdfc/skolemization-processor-ts/processor.ttl>.
+
+<in> a rdfc:Reader.
+<out> a rdfc:Writer.
+
+<skolemize> a rdfc:SkolemizationProcessor;
+  rdfc:incoming <in>;
+  rdfc:outgoing <out>;
+  rdfc:mime "application/n-quads".

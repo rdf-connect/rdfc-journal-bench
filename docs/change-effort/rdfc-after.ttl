@@ -1,0 +1,131 @@
+@prefix owl:  <http://www.w3.org/2002/07/owl#>.
+@prefix rdfc: <https://w3id.org/rdf-connect#>.
+@prefix bench:<https://w3id.org/rdf-connect/bench#>.
+@prefix as:   <https://www.w3.org/ns/activitystreams#>.
+@prefix tree: <https://w3id.org/tree#>.
+
+<> owl:imports <../processors.ttl>,
+  <../vendor/jvm-runner-index.jar>,
+  <../rml-processor-jvm/build/libs/rml-processor-jvm-0.0.2-all.jar>,
+  <../shacl-processor-ts/processors.ttl>,
+  <../node_modules/@rdfc/file-utils-processors-ts/processors.ttl>,
+  <../node_modules/@rdfc/dumps-to-feed-processor-ts/processor.ttl>,
+  <../node_modules/@rdfc/skolemization-processor-ts/processor.ttl>,
+  <../node_modules/@rdfc/sds-processors-ts/configs/sdsify.ttl>,
+  <../node_modules/@rdfc/sds-processors-ts/configs/bucketizer.ttl>,
+  <../node_modules/@rdfc/sds-processors-ts/configs/ldes_disk_writer.ttl>.
+
+<> a rdfc:Pipeline;
+  rdfc:consistsOf [
+    rdfc:instantiates bench:JvmRunner;
+    rdfc:processor <mapper>;
+  ], [
+    rdfc:instantiates rdfc:NodeRunner;
+    rdfc:processor <source>, <shapeReader>, <focusReader>, <validate>,
+      <skolemize>, <changes>, <sdsify>, <bucketize>, <writer>;
+  ].
+
+# ── Channels ────────────────────────────────────────────────────────────────
+<mapping> a rdfc:Writer, rdfc:Reader.
+<snapshots> a rdfc:Writer, rdfc:Reader.
+<mapped> a rdfc:Writer, rdfc:Reader.
+<validated> a rdfc:Writer, rdfc:Reader.
+<skolemized> a rdfc:Writer, rdfc:Reader.
+<reports> a rdfc:Writer, rdfc:Reader.
+<shape> a rdfc:Writer, rdfc:Reader.
+<focus> a rdfc:Writer, rdfc:Reader.
+<feed> a rdfc:Writer, rdfc:Reader.
+<sdsData> a rdfc:Writer, rdfc:Reader.
+<sdsMeta> a rdfc:Writer, rdfc:Reader.
+<bucketData> a rdfc:Writer, rdfc:Reader.
+<bucketMeta> a rdfc:Writer, rdfc:Reader.
+
+# ── Stages ──────────────────────────────────────────────────────────────────
+<source> a bench:AnchorSource;
+  bench:mappingWriter <mapping>;
+  rdfc:writer <snapshots>;
+  bench:mappingPath "/home/silvius/pocs/rdfc-journal-bench/anchor/bluebike.rml.ttl";
+  bench:input "/dev/shm/rdfc-bb/rdfc__n10_u1__r0/snapshots.ndjson";
+  bench:resultPath "/dev/shm/rdfc-bb/rdfc__n10_u1__r0/source.json".
+
+<mapper> a rdfc:RmlMapper;
+  rdfc:mappings <mapping>;
+  rdfc:source [
+    rdfc:reader <snapshots>;
+    rdfc:mappingId "stdin";
+    rdfc:triggers true;
+  ];
+  rdfc:defaultTarget [
+    rdfc:writer <mapped>;
+    rdfc:format "nquads";
+  ].
+
+<validate> a rdfc:Validate;
+  rdfc:shaclPath "/home/silvius/pocs/rdfc-journal-bench/anchor/bluebike-shapes.ttl";
+  rdfc:incoming <mapped>;
+  rdfc:outgoing <validated>;
+  rdfc:report <reports>;
+  rdfc:mime "application/n-quads".
+
+<shapeReader> a rdfc:GlobRead;
+  rdfc:glob "/home/silvius/pocs/rdfc-journal-bench/anchor/bluebike-shapes.ttl";
+  rdfc:output <shape>;
+  rdfc:closeOnEnd true.
+
+<focusReader> a rdfc:GlobRead;
+  rdfc:glob "/dev/shm/rdfc-bb/rdfc__n10_u1__r0/focus.rq";
+  rdfc:output <focus>;
+  rdfc:closeOnEnd true.
+
+<skolemize> a rdfc:SkolemizationProcessor;
+  rdfc:incoming <validated>;
+  rdfc:outgoing <skolemized>;
+  rdfc:mime "application/n-quads".
+
+<changes> a rdfc:DumpsToFeed;
+  rdfc:dump <skolemized>;
+  rdfc:nodeShape <shape>;
+  rdfc:focusNodes <focus>;
+  rdfc:output <feed>;
+  rdfc:feedname "bluebike";
+  rdfc:flush false;
+  rdfc:dumpContentType "application/n-quads";
+  rdfc:focusNodesStrategy "sparql";
+  rdfc:nodeShapeIri "https://blue-bike.be/shapes#ResourceReportShape";
+  rdfc:dbDir "/dev/shm/rdfc-bb/rdfc__n10_u1__r0/feed-state/".
+
+<sdsify> a rdfc:Sdsify;
+  rdfc:input <feed>;
+  rdfc:output <sdsData>;
+  rdfc:metadataOutput <sdsMeta>;
+  rdfc:typeFilter as:Create, as:Update, as:Delete;
+  rdfc:metadataConfig [
+    rdfc:streamId <https://blue-bike.be/ldes#stream>;
+    rdfc:description "Feed of Blue-bike station availability updates.";
+    rdfc:timestampPath as:published;
+  ].
+
+<bucketize> a rdfc:Bucketize;
+  rdfc:channels [
+    rdfc:dataInput <sdsData>;
+    rdfc:metadataInput <sdsMeta>;
+    rdfc:dataOutput <bucketData>;
+    rdfc:metadataOutput <bucketMeta>;
+  ];
+  rdfc:bucketizeStrategy ( [
+    a tree:TimebasedFragmentation;
+    tree:timestampPath as:published;
+    tree:maxSize 1000;
+    tree:k 4;
+    tree:minBucketSpan 3600;
+  ] );
+  rdfc:outputStreamId <https://blue-bike.be/ldes#stream>.
+
+<writer> a rdfc:LdesDiskWriter;
+  rdfc:dataInput <bucketData>;
+  rdfc:metadataInput <bucketMeta>;
+  rdfc:directory "/dev/shm/rdfc-bb/rdfc__n10_u1__r0/ldes-output";
+  rdfc:streamName [
+    rdfc:stream <https://blue-bike.be/ldes#stream>;
+    rdfc:name "bluebike";
+  ].
