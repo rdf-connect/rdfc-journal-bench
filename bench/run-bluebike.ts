@@ -28,7 +28,9 @@ import {
   prepareInput,
   prepareSideInputs,
   publishedMembers,
+  runnerPath,
   shellCommand,
+  splitArm,
 } from './bluebike.js'
 
 const ROOT = resolve(import.meta.dirname, '..', '..')
@@ -66,6 +68,7 @@ async function runOnce(arm: Arm, n: number, unit: number, rep: number): Promise<
   const expected = expectedMembers(n)
 
   let cmd: string
+  let path = join(ROOT, 'cwl', 'bin')
   const diskDirs: string[] = []
   switch (arm) {
     case 'shell':
@@ -85,15 +88,25 @@ async function runOnce(arm: Arm, n: number, unit: number, rep: number): Promise<
       cmd = `npx rdfc ${ttlPath} > ${runDir}/log.txt 2>&1`
       break
     }
-    case 'cwl-batch':
-    case 'cwl-scatter':
-      cmd = cwlCommand(arm === 'cwl-batch' ? 'batch' : 'scatter', input, runDir, unit)
-      diskDirs.push(join(runDir, 'cwl-tmp'), join(runDir, 'cwl-out'))
+    default: {
+      const spec = splitArm(arm)
+      if (!spec) throw new Error(`unknown arm '${arm}'`)
+      cmd = cwlCommand(spec.runner, spec.encoding, input, runDir, unit)
+      // Where each runner keeps the files it stages between tasks.
+      diskDirs.push(
+        ...{
+          cwl: [join(runDir, 'cwl-tmp'), join(runDir, 'cwl-out')],
+          toil: [join(runDir, 'toil-jobstore'), join(runDir, 'toil-work')],
+          streamflow: [join(runDir, 'sf-tmp')],
+        }[spec.runner],
+      )
+      path = runnerPath(spec.runner)
       break
+    }
   }
 
   const run = await runPipe(cmd, '/dev/null', join(runDir, 'stdout.txt'), {
-    env: { PATH: `${join(ROOT, 'cwl', 'bin')}:${process.env.PATH}`, JAVA_OPTS },
+    env: { PATH: `${path}:${process.env.PATH}`, JAVA_OPTS },
     diskDirs: diskDirs.length ? diskDirs : undefined,
     timeoutMs: TIMEOUT_MS,
   })
@@ -165,23 +178,23 @@ async function main() {
   writeFileSync(outPath, JSON.stringify(runs, null, 2))
 
   console.log(
-    `\n${'snapshots'.padStart(9)}${'arm'.padStart(13)}${'wall ms'.padStart(10)}${'ms/snap'.padStart(9)}` +
+    `\n${'snapshots'.padStart(9)}${'arm'.padStart(20)}${'wall ms'.padStart(10)}${'ms/snap'.padStart(9)}` +
       `${'cpu ms'.padStart(10)}${'cores'.padStart(7)}${'peak MB'.padStart(9)}${'disk MB'.padStart(9)}` +
       `${'members'.padStart(9)}${'correct'.padStart(9)}`,
   )
-  console.log('-'.repeat(95))
+  console.log('-'.repeat(102))
   for (const n of ns) {
     for (const arm of arms) {
       const all = runs.filter((r) => r.arm === arm && r.snapshots === n)
       const ok = all.filter((r) => r.ok)
       const correct = `${all.filter((r) => r.correct).length}/${all.length}`
       if (!ok.length) {
-        console.log(`${String(n).padStart(9)}${arm.padStart(13)}   (failed: ${all[0]?.stderr ?? ''})`)
+        console.log(`${String(n).padStart(9)}${arm.padStart(20)}   (failed: ${all[0]?.stderr ?? ''})`)
         continue
       }
       const wall = median(ok.map((r) => r.wallMs))
       console.log(
-        `${String(n).padStart(9)}${arm.padStart(13)}${fmt(wall)}${fmt(wall / n, 1, 9)}` +
+        `${String(n).padStart(9)}${arm.padStart(20)}${fmt(wall)}${fmt(wall / n, 1, 9)}` +
           `${fmt(median(ok.map((r) => r.cpuMs ?? NaN)))}${fmt(median(ok.map((r) => r.cores ?? NaN)), 2, 7)}` +
           `${fmt(median(ok.map((r) => r.peakRssMb)), 0, 9)}${fmt(median(ok.map((r) => r.peakDiskMb ?? NaN)), 1, 9)}` +
           `${fmt(median(ok.map((r) => r.members)), 0, 9)}${correct.padStart(9)}`,

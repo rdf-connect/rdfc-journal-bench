@@ -95,7 +95,24 @@ export function publishedMembers(ldesDir: string): Set<string> {
   return members
 }
 
-export type Arm = 'shell' | 'rdfc' | 'cwl-batch' | 'cwl-scatter'
+export type Arm =
+  | 'shell'
+  | 'rdfc'
+  | 'cwl-batch'
+  | 'cwl-scatter'
+  | 'toil-batch'
+  | 'toil-scatter'
+  | 'streamflow-batch'
+  | 'streamflow-scatter'
+
+/** The CWL runners: the same workflows, so differences are the runner. */
+export type Runner = 'cwl' | 'toil' | 'streamflow'
+export type Encoding = 'batch' | 'scatter'
+
+export function splitArm(arm: Arm): { runner: Runner; encoding: Encoding } | null {
+  const m = arm.match(/^(cwl|toil|streamflow)-(batch|scatter)$/)
+  return m ? { runner: m[1] as Runner, encoding: m[2] as Encoding } : null
+}
 
 /** Files every arm needs beside the snapshots: the member shape and the query. */
 export function prepareSideInputs(runDir: string) {
@@ -131,11 +148,17 @@ export function shellCommand(input: string, runDir: string): string {
   ].join('; ')
 }
 
-/** The CWL arms, run by cwltool without containers. */
-export function cwlCommand(kind: 'batch' | 'scatter', input: string, runDir: string, unit: number): string {
-  if (!existsSync(CWLTOOL)) {
-    throw new Error(`missing ${CWLTOOL}: python3 -m venv .venv && .venv/bin/pip install cwltool`)
-  }
+const TOIL_BIN = join(ROOT, '.venv-toil', 'bin')
+const STREAMFLOW_BIN = join(ROOT, '.venv-streamflow', 'bin')
+
+/** PATH a runner needs: the tools, and its own helper executables. */
+export function runnerPath(runner: Runner): string {
+  const bin = { cwl: '', toil: `:${TOIL_BIN}`, streamflow: `:${STREAMFLOW_BIN}` }[runner]
+  return `${join(ROOT, 'cwl', 'bin')}${bin}`
+}
+
+/** The job document, shared by all three runners. */
+function writeJob(kind: Encoding, input: string, runDir: string, unit: number): string {
   const job = join(runDir, 'job.yml')
   writeFileSync(
     job,
@@ -154,16 +177,95 @@ export function cwlCommand(kind: 'batch' | 'scatter', input: string, runDir: str
       '',
     ].join('\n'),
   )
+  return job
+}
+
+/**
+ * The CWL arms. The three runners execute the same workflow documents, so a
+ * difference between them is the runner, not the description.
+ *
+ *   cwltool     the reference implementation
+ *   Toil        a production runner; retries off, or it reruns failed jobs
+ *               with more memory and hides the failure in the timing
+ *   StreamFlow  bound to a local deployment; it ignores TMPDIR, so its
+ *               working directory is set in the generated configuration
+ */
+export function cwlCommand(
+  runner: Runner,
+  kind: Encoding,
+  input: string,
+  runDir: string,
+  unit: number,
+): string {
+  const job = writeJob(kind, input, runDir, unit)
+  const workflow = `${CWL}/bluebike-${kind}.cwl`
+  const outdir = `${runDir}/final`
+
+  if (runner === 'cwl') {
+    if (!existsSync(CWLTOOL)) {
+      throw new Error(`missing ${CWLTOOL}: python3 -m venv .venv && .venv/bin/pip install cwltool`)
+    }
+    return (
+      `${CWLTOOL} --no-container --parallel --timestamps --preserve-environment JAVA_OPTS` +
+      ` --outdir ${outdir} --tmpdir-prefix ${runDir}/cwl-tmp/ --tmp-outdir-prefix ${runDir}/cwl-out/` +
+      ` ${workflow} ${job} 2> ${runDir}/cwltool.log`
+    )
+  }
+
+  if (runner === 'toil') {
+    const runner = join(TOIL_BIN, 'toil-cwl-runner')
+    if (!existsSync(runner)) {
+      throw new Error('missing Toil: uv venv -p 3.14 .venv-toil && uv pip install -p .venv-toil "toil[cwl]"')
+    }
+    return (
+      `mkdir -p ${runDir}/toil-work && ${runner} --no-container --retryCount 0` +
+      ` --preserve-environment JAVA_OPTS` +
+      ` --jobStore ${runDir}/toil-jobstore --workDir ${runDir}/toil-work --outdir ${outdir}` +
+      ` --logFile ${runDir}/toil.log ${workflow} ${job} 2> ${runDir}/toil.stderr`
+    )
+  }
+
+  const sfRunner = join(STREAMFLOW_BIN, 'cwl-runner')
+  if (!existsSync(sfRunner)) {
+    throw new Error(
+      'missing StreamFlow: uv venv -p 3.12 .venv-streamflow && ' +
+        'uv pip install -p .venv-streamflow --prerelease=allow "streamflow==0.2.0rc3"',
+    )
+  }
+  const config = join(runDir, 'streamflow.yml')
+  writeFileSync(
+    config,
+    [
+      'version: v1.0',
+      'workflows:',
+      '  bluebike:',
+      '    type: cwl',
+      '    config:',
+      `      file: ${workflow}`,
+      `      settings: ${job}`,
+      '    bindings:',
+      '      - step: /',
+      '        target:',
+      '          deployment: local-bench',
+      'deployments:',
+      '  local-bench:',
+      '    type: local',
+      '    config: {}',
+      `    workdir: ${join(runDir, 'sf-tmp')}`,
+      '',
+    ].join('\n'),
+  )
   return (
-    `${CWLTOOL} --no-container --parallel --timestamps --preserve-environment JAVA_OPTS` +
-    ` --outdir ${runDir}/final --tmpdir-prefix ${runDir}/cwl-tmp/ --tmp-outdir-prefix ${runDir}/cwl-out/` +
-    ` ${CWL}/bluebike-${kind}.cwl ${job} 2> ${runDir}/cwltool.log`
+    `mkdir -p ${runDir}/sf-tmp && ${sfRunner} --streamflow-file ${config} --outdir ${outdir}` +
+    ` ${workflow} ${job} 2> ${runDir}/streamflow.log`
   )
 }
 
-/** Where each arm leaves the published LDES. */
+/**
+ * Where an arm leaves the published LDES. The runners lay out --outdir
+ * differently (StreamFlow nests every output in a directory of its own), so
+ * for those the whole output directory is searched.
+ */
 export function ldesDir(arm: Arm, runDir: string): string {
-  return arm === 'shell' || arm === 'rdfc'
-    ? join(runDir, 'ldes-output')
-    : join(runDir, 'final', 'ldes-output')
+  return arm === 'shell' || arm === 'rdfc' ? join(runDir, 'ldes-output') : join(runDir, 'final')
 }
