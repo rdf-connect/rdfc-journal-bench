@@ -271,6 +271,24 @@ method in `docs/change-effort/`):
 Verified rather than counted: the modified RDF-Connect pipeline runs and still
 publishes exactly the expected members; the modified CWL workflow validates.
 
+**Nextflow arm added (2026-09-23).** `nextflow/bluebike.nf`, Nextflow 26.04.6,
+the same command-line tools. It is the closest competitor to a streaming
+system: a process still runs per item, but channels let stages overlap, so a
+snapshot is mapped while the previous one is validated.
+
+- **The stateful stages behave exactly as in CWL.** A Nextflow process is an
+  isolated task over staged inputs, so change detection, fragmentation and
+  publication run once over the gathered stream. The capability finding is a
+  property of the paradigm, not of CWL.
+- **Ordering is not free either.** Channels are unordered, so the first run
+  gathered snapshots interleaved and change detection invented 17 updates where
+  12 happened. The gather has to be sorted explicitly by snapshot number. A
+  streaming system preserves order by construction; a dataflow engine does not.
+- At n=5: Nextflow 15.8 s wall / 72.5 s CPU, against CWL-scatter 12.3 s / 55.4 s
+  and the shell pipe 3.8 s / 18.2 s. Nextflow pays for its own JVM on top of a
+  process per task. Whether the overlap pays off at larger n is the open
+  question.
+
 **Capability finding — stateful stages cannot be scattered.** Change detection
 keeps the previous state of every member, the bucketiser keeps its fragment
 state, and the writer appends to a published tree. CWL scatter runs its tasks

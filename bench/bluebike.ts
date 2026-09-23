@@ -155,6 +155,7 @@ export type Arm =
   | 'toil-scatter'
   | 'streamflow-batch'
   | 'streamflow-scatter'
+  | 'nextflow'
 
 /** The CWL runners: the same workflows, so differences are the runner. */
 export type Runner = 'cwl' | 'toil' | 'streamflow'
@@ -204,6 +205,30 @@ export function shellCommand(input: string, runDir: string): string {
       ` | node ${PROC} --config ${step('bucketize.ttl')} --stdin in --read metadataIn=${fifo('meta.fifo')} --stdout out --write metadataOut=${fifo('bmeta.fifo')} 2>/dev/null` +
       ` | node ${PROC} --config ${step('ldes-writer.ttl')} --stdin in --read metadataIn=${fifo('bmeta.fifo')} 2>${runDir}/writer.log`,
   ].join('; ')
+}
+
+const NEXTFLOW = join(ROOT, 'vendor', 'nextflow')
+
+/**
+ * Nextflow: the closest competitor to a streaming system among the workflow
+ * managers. A process still runs per item, but channels let stages overlap, so
+ * a snapshot is mapped while the previous one is validated — which CWL's
+ * scatter cannot do. The stateful stages still run once over the gathered
+ * stream, and the gather has to be ordered explicitly: channels are unordered,
+ * and change detection compares each snapshot with the one before it.
+ */
+export function nextflowCommand(input: string, runDir: string, unit: number): string {
+  if (!existsSync(NEXTFLOW)) {
+    throw new Error(`missing Nextflow: curl -s https://get.nextflow.io -o vendor/nextflow && chmod +x vendor/nextflow`)
+  }
+  return (
+    `cd ${runDir} && NXF_HOME=${join(ROOT, 'vendor', '.nextflow')} ${NEXTFLOW} -quiet run` +
+    ` ${join(ROOT, 'nextflow', 'bluebike.nf')}` +
+    ` --snapshots ${input} --mapping ${MAPPING}` +
+    ` --shape ${join(runDir, 'shape.ndjson')} --focus ${join(runDir, 'focus.ndjson')}` +
+    ` --seed ${join(runDir, 'feed-state-seed')} --steps ${STEPS} --unit ${unit}` +
+    ` --outdir ${runDir}/final -w ${runDir}/work 2> ${runDir}/nextflow.log`
+  )
 }
 
 const TOIL_BIN = join(ROOT, '.venv-toil', 'bin')

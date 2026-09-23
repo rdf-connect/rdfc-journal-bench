@@ -26,6 +26,7 @@ import {
   expectedActivities,
   expectedMembers,
   ldesDir,
+  nextflowCommand,
   prepareInput,
   prepareSideInputs,
   publishedActivities,
@@ -93,6 +94,10 @@ async function runOnce(arm: Arm, n: number, unit: number, rep: number): Promise<
       cmd = `npx rdfc ${ttlPath} > ${runDir}/log.txt 2>&1`
       break
     }
+    case 'nextflow':
+      cmd = nextflowCommand(input, runDir, unit)
+      diskDirs.push(join(runDir, 'work'))
+      break
     default: {
       const spec = splitArm(arm)
       if (!spec) throw new Error(`unknown arm '${arm}'`)
