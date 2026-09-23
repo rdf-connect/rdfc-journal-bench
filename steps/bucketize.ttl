@@ -1,0 +1,28 @@
+# Time-based fragmentation of the SDS stream, as in the deployed feeds.
+@prefix rdfc: <https://w3id.org/rdf-connect#>.
+@prefix owl:  <http://www.w3.org/2002/07/owl#>.
+@prefix tree: <https://w3id.org/tree#>.
+@prefix elements: <http://purl.org/dc/elements/1.1/>.
+
+<> owl:imports <../node_modules/@rdfc/sds-processors-ts/configs/bucketizer.ttl>.
+
+<in> a rdfc:Reader.
+<metadataIn> a rdfc:Reader.
+<out> a rdfc:Writer.
+<metadataOut> a rdfc:Writer.
+
+<bucketize> a rdfc:Bucketize;
+  rdfc:channels [
+    rdfc:dataInput <in>;
+    rdfc:metadataInput <metadataIn>;
+    rdfc:dataOutput <out>;
+    rdfc:metadataOutput <metadataOut>;
+  ];
+  rdfc:bucketizeStrategy ( [
+    a tree:TimebasedFragmentation;
+    tree:timestampPath elements:date;
+    tree:maxSize 1000;
+    tree:k 4;
+    tree:minBucketSpan 3600;
+  ] );
+  rdfc:outputStreamId <https://blue-bike.be/ldes#stream>.

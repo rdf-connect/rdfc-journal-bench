@@ -1,0 +1,23 @@
+# Wraps mapped Blue-bike reports as SDS members, as the deployed pipeline does
+# (CA-Blue-Bike-LDES: Sdsify over hubs:ResourceReport).
+@prefix rdfc: <https://w3id.org/rdf-connect#>.
+@prefix owl:  <http://www.w3.org/2002/07/owl#>.
+@prefix hubs: <https://purl.eu/ns/mobility/passenger-transport-hubs#>.
+@prefix elements: <http://purl.org/dc/elements/1.1/>.
+
+<> owl:imports <../node_modules/@rdfc/sds-processors-ts/configs/sdsify.ttl>.
+
+<in> a rdfc:Reader.
+<out> a rdfc:Writer.
+<metadata> a rdfc:Writer.
+
+<sdsify> a rdfc:Sdsify;
+  rdfc:input <in>;
+  rdfc:output <out>;
+  rdfc:metadataOutput <metadata>;
+  rdfc:typeFilter hubs:ResourceReport;
+  rdfc:metadataConfig [
+    rdfc:streamId <https://blue-bike.be/ldes#stream>;
+    rdfc:description "Blue-bike station availability reports.";
+    rdfc:timestampPath elements:date;
+  ].

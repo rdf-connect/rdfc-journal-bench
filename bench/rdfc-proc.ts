@@ -2,69 +2,78 @@
 /**
  * rdfc-proc: run any RDF-Connect JS processor as a command-line tool.
  *
- *   rdfc-proc --config step.json [--set key=value ...]
+ *   rdfc-proc --config step.ttl --processor <iri>
+ *             [--stdin <channel>] [--stdout <channel>]
+ *             [--read <channel>=<file>] [--write <channel>=<file>]
  *
  * The shell-pipe and CWL arms need one executable per pipeline stage. Writing a
  * wrapper per processor would mean re-implementing each stage, and the
- * benchmark would no longer be comparing the same code. This adapter instead
- * instantiates the published processor class itself and drives it through the
- * runner's lifecycle, with stdin and stdout in place of channels:
+ * benchmark would no longer compare the same code. This adapter instead
+ * configures and drives the published processor exactly as the framework does:
  *
- *   1. construct        2. await init()
- *   3. transform() (not awaited)        4. produce()
- *   5. feed stdin, close, await the rest
+ *   - the step is described in Turtle, like a pipeline, and its `owl:imports`
+ *     are followed (so a processor's own processors.ttl supplies its shapes);
+ *   - arguments are materialised with rdf-lens through those SHACL shapes, the
+ *     way js-runner's `Runner.handlePipeline` / `createProcessor` do, which is
+ *     what makes arguments like a bucketiser's fragmentation strategy (an RDF
+ *     subgraph, not a value) work at all;
+ *   - channels become the in-memory Reader/Writer of experiment 1
+ *     (src/inmem.ts), which keep the js-runner's semantics;
+ *   - the lifecycle is the runner's: init, then transform (not awaited), then
+ *     produce, then feed the inputs and await the rest.
  *
- * The channels are the in-memory Reader/Writer of experiment 1 (src/inmem.ts),
- * which keep the js-runner's semantics, including "a write resolves only once
- * the consumer has consumed the message".
+ * Channels named on the command line are bound to stdin, stdout or a file;
+ * every other channel in the description is bound to a sink that discards.
+ * A channel is matched by full IRI or by its last path/fragment segment.
  *
  * Framing is the benchmark's NDJSON: one message per line, each line a JSON
- * string. `--set` overrides a dotted path in `args` (e.g. --set config.k=v).
- *
- * The config file names the processor and its arguments, with channels written
- * as placeholders:
- *
- *   {
- *     "module": "@rdfc/sds-processors-ts/lib/bucketize.js",
- *     "class": "Bucketize",
- *     "args": {
- *       "input":  { "$stdin": true },
- *       "output": { "$stdout": true },
- *       "report": { "$write": "reports.ndjson" },
- *       "savePath": "state.json"
- *     }
- *   }
- *
- * Placeholders: {"$stdin":true}, {"$stdout":true}, {"$read":"path"},
- * {"$write":"path"} for channels, and {"$iri":"..."} / {"$literal":"..."} for
- * the RDF terms some processors take (the orchestrator derives those from the
- * pipeline description). Anything else is passed through as data.
+ * string. Anything the processor itself writes to stdout (some log to it
+ * directly) is diverted to stderr, so the data channel stays parsable.
  */
 import { createInterface } from 'readline'
 import { createReadStream, createWriteStream, readFileSync } from 'fs'
 import { once } from 'events'
 import { Writable } from 'stream'
 import { parseArgs } from 'util'
-import { pathToFileURL } from 'url'
+import { pathToFileURL, fileURLToPath } from 'url'
 import { resolve } from 'path'
-import { DataFactory } from 'n3'
+import { NamedNode, Parser } from 'n3'
+import type { Quad, Term } from '@rdfjs/types'
+import { empty, extractShapes } from 'rdf-lens'
 import { createLogger, format, transports, type Logger } from 'winston'
-import type { Any, Handler, Writer } from '@rdfc/js-runner'
+import type { Any, Handler, Reader, Writer } from '@rdfc/js-runner'
 import { MemoryReader, memoryChannel } from '../src/inmem.js'
 
-const USAGE = `Usage: rdfc-proc --config <file.json> [--set <key=value> ...]
+const RDFC = 'https://w3id.org/rdf-connect#'
+const RDFL = 'https://w3id.org/rdf-lens/ontology#'
+const OWL_IMPORTS = 'http://www.w3.org/2002/07/owl#imports'
+const RDF_TYPE = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type'
 
-Runs one RDF-Connect JS processor, reading NDJSON messages from stdin and
-writing them to stdout (one JSON string per line).
+const USAGE = `Usage: rdfc-proc --config <step.ttl> --processor <iri> [bindings]
 
-  --config <file>   processor module, class and arguments
-  --set key=value   override args.<key> (dotted path); values parse as JSON
-  -h, --help        show this help`
+Runs one RDF-Connect JS processor, configured from an RDF description.
 
-// ── Writers ──────────────────────────────────────────────────────────────────
+  --config <file>        Turtle describing the processor instance (owl:imports followed)
+  --processor <iri>      the instance to run (default: the only processor described)
+  --stdin <channel>      bind this channel to stdin
+  --stdout <channel>     bind this channel to stdout
+  --read <channel>=<f>   bind this channel to an input file
+  --write <channel>=<f>  bind this channel to an output file
+  -h, --help             show this help
+
+Channels are NDJSON: one message per line, each line a JSON string.`
 
 const encoder = new TextEncoder()
 const decoder = new TextDecoder()
+
+// ── Writers ──────────────────────────────────────────────────────────────────
+
+/**
+ * The real stdout, captured before the processor is loaded: a processor that
+ * logs to stdout would otherwise corrupt the data channel, so `main` diverts
+ * process.stdout to stderr and data is written through this.
+ */
+const stdoutWrite = process.stdout.write.bind(process.stdout)
 
 /** A Writer that appends every message to a stream as one NDJSON line. */
 class NdjsonWriter implements Writer {
@@ -72,9 +81,10 @@ class NdjsonWriter implements Writer {
   private _canceled = false
   private readonly cancelHandlers = new Set<Handler>()
 
+  /** `out` is null for an unbound channel, or 'stdout' for the data channel. */
   constructor(
     readonly uri: string,
-    private readonly out: Writable,
+    private readonly out: Writable | 'stdout' | null,
   ) {}
 
   get canceled(): boolean {
@@ -88,7 +98,13 @@ class NdjsonWriter implements Writer {
 
   private async write(msg: string): Promise<void> {
     if (this.closed) throw new Error(`Writer for ${this.uri} is closed`)
-    if (!this.out.write(JSON.stringify(msg) + '\n')) await once(this.out, 'drain')
+    if (!this.out) return // unbound channel: the message is discarded
+    const line = JSON.stringify(msg) + '\n'
+    if (this.out === 'stdout') {
+      if (!stdoutWrite(line)) await once(process.stdout, 'drain')
+      return
+    }
+    if (!this.out.write(line)) await once(this.out, 'drain')
   }
 
   async string(msg: string): Promise<void> {
@@ -104,9 +120,9 @@ class NdjsonWriter implements Writer {
     transform?: (x: T) => Uint8Array,
   ): Promise<void> {
     const t = transform || ((x: unknown) => <Uint8Array>x)
-    const parts: Uint8Array[] = []
-    for await (const chunk of buffer) parts.push(t(chunk))
-    await this.write(parts.map((p) => decoder.decode(p)).join(''))
+    const parts: string[] = []
+    for await (const chunk of buffer) parts.push(decoder.decode(t(chunk)))
+    await this.write(parts.join(''))
   }
 
   async any(any: Any): Promise<void> {
@@ -122,114 +138,72 @@ class NdjsonWriter implements Writer {
       this._canceled = true
       await Promise.all([...this.cancelHandlers].map((h) => h()))
     }
-    if (this.out !== process.stdout) {
-      await new Promise((res) => this.out.end(res))
+    if (this.out && this.out !== 'stdout') {
+      await new Promise((res) => (this.out as Writable).end(res))
     }
   }
 }
 
-// ── Config ───────────────────────────────────────────────────────────────────
+// ── Description ──────────────────────────────────────────────────────────────
 
-type StepConfig = {
-  module: string
-  class: string
-  args: Record<string, unknown>
-}
+/** Parses a Turtle file and everything it `owl:imports`, as the runner does. */
+function importFile(file: string): Quad[] {
+  const done = new Set<string>()
+  const todo = [pathToFileURL(resolve(file))]
+  const quads: Quad[] = []
 
-type Placeholder =
-  | { $stdin: true }
-  | { $stdout: true }
-  | { $read: string }
-  | { $write: string }
-  | { $iri: string }
-  | { $literal: string }
+  for (let item = todo.pop(); item !== undefined; item = todo.pop()) {
+    if (done.has(item.toString())) continue
+    done.add(item.toString())
+    if (item.protocol !== 'file:') throw new Error(`unsupported protocol ${item.protocol}`)
 
-const PLACEHOLDERS = ['$stdin', '$stdout', '$read', '$write', '$iri', '$literal']
-
-function placeholderOf(v: unknown): Placeholder | null {
-  if (!v || typeof v !== 'object' || Array.isArray(v)) return null
-  const keys = Object.keys(v)
-  if (keys.length !== 1) return null
-  return PLACEHOLDERS.includes(keys[0]) ? (v as Placeholder) : null
-}
-
-/** Replaces channel placeholders with live channels; collects what to feed and close. */
-function bindChannels(args: Record<string, unknown>) {
-  const inputs: { reader: MemoryReader; file?: string }[] = []
-  const outputs: Writer[] = []
-
-  const walk = (value: unknown): unknown => {
-    const ph = placeholderOf(value)
-    if (ph) {
-      if ('$iri' in ph) return DataFactory.namedNode(ph.$iri)
-      if ('$literal' in ph) return DataFactory.literal(ph.$literal)
-      if ('$stdin' in ph || '$read' in ph) {
-        const [, reader] = memoryChannel(`urn:rdfc-proc:in:${inputs.length}`)
-        inputs.push({ reader, file: '$read' in ph ? ph.$read : undefined })
-        return reader
+    const text = readFileSync(fileURLToPath(item), 'utf8')
+    const extra = new Parser({ baseIRI: item.toString() }).parse(text)
+    for (const q of extra) {
+      if (q.subject.value === item.toString() && q.predicate.value === OWL_IMPORTS) {
+        todo.push(new URL(q.object.value))
       }
-      const file = '$write' in ph ? ph.$write : undefined
-      const out = file ? createWriteStream(file) : process.stdout
-      const w = new NdjsonWriter(`urn:rdfc-proc:out:${outputs.length}`, out)
-      outputs.push(w)
-      return w
     }
-    if (Array.isArray(value)) return value.map(walk)
-    if (value && typeof value === 'object') {
-      return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, walk(v)]))
-    }
-    return value
+    quads.push(...extra)
   }
-
-  return { args: walk(args) as Record<string, unknown>, inputs, outputs }
+  return quads
 }
 
-function applyOverrides(args: Record<string, unknown>, sets: string[]) {
-  for (const s of sets) {
-    const eq = s.indexOf('=')
-    if (eq < 0) throw new Error(`--set expects key=value, got '${s}'`)
-    const path = s.slice(0, eq).split('.')
-    const raw = s.slice(eq + 1)
-    let value: unknown
-    try {
-      value = JSON.parse(raw)
-    } catch {
-      value = raw
-    }
-    let target = args
-    for (const k of path.slice(0, -1)) {
-      if (typeof target[k] !== 'object' || target[k] === null) target[k] = {}
-      target = target[k] as Record<string, unknown>
-    }
-    target[path[path.length - 1]] = value
-  }
+/** A channel binding given on the command line, matched by IRI or last segment. */
+type Binding = { kind: 'stdin' | 'stdout' | 'read' | 'write'; channel: string; file?: string }
+
+function matches(binding: Binding, iri: string): boolean {
+  if (binding.channel === iri) return true
+  const tail = iri.split(/[#/]/).pop()
+  return !!tail && tail === binding.channel
 }
 
 /**
  * The processor's logger. The js-runner ships log records to the orchestrator;
  * here they go to stderr, so stdout carries only data.
  */
-function stderrLogger(): Logger {
+function stderrLogger(uri: string): Logger {
   return createLogger({
     level: process.env.LOG_LEVEL ?? 'warn',
+    defaultMeta: { processor: uri },
     format: format.combine(format.timestamp(), format.simple()),
     transports: [new transports.Stream({ stream: process.stderr })],
   })
 }
 
-// ── Main ─────────────────────────────────────────────────────────────────────
+type Lifecycle = { init(): Promise<void>; transform(): Promise<void>; produce(): Promise<void> }
 
-type Lifecycle = {
-  init(): Promise<void>
-  transform(): Promise<void>
-  produce(): Promise<void>
-}
+// ── Main ─────────────────────────────────────────────────────────────────────
 
 async function main() {
   const { values } = parseArgs({
     options: {
       config: { type: 'string' },
-      set: { type: 'string', multiple: true, default: [] },
+      processor: { type: 'string' },
+      stdin: { type: 'string' },
+      stdout: { type: 'string' },
+      read: { type: 'string', multiple: true, default: [] },
+      write: { type: 'string', multiple: true, default: [] },
       help: { type: 'boolean', short: 'h', default: false },
     },
   })
@@ -238,26 +212,92 @@ async function main() {
     process.exit(values.help ? 0 : 2)
   }
 
-  const cfg: StepConfig = JSON.parse(readFileSync(values.config, 'utf8'))
-  applyOverrides(cfg.args, values.set!)
-  const { args, inputs, outputs } = bindChannels(cfg.args)
+  const bindings: Binding[] = []
+  if (values.stdin) bindings.push({ kind: 'stdin', channel: values.stdin })
+  if (values.stdout) bindings.push({ kind: 'stdout', channel: values.stdout })
+  for (const spec of [...values.read!, ...values.write!]) {
+    const eq = spec.indexOf('=')
+    if (eq < 0) throw new Error(`--read/--write expect <channel>=<file>, got '${spec}'`)
+    const channel = spec.slice(0, eq)
+    const file = spec.slice(eq + 1)
+    bindings.push({
+      kind: values.read!.includes(spec) ? 'read' : 'write',
+      channel,
+      file,
+    })
+  }
 
-  const module = cfg.module.startsWith('.')
-    ? pathToFileURL(resolve(module_dir(values.config!), cfg.module)).href
-    : cfg.module
-  const loaded = await import(module)
-  const Cls = loaded[cfg.class]
-  if (!Cls) throw new Error(`${cfg.module} has no export '${cfg.class}'`)
+  const quads = importFile(values.config)
 
-  const processor = new Cls(args, stderrLogger()) as Lifecycle
+  // Which instance to run: the one named, or the only one with a type that is
+  // declared as a JS processor.
+  const jsTypes = new Set(
+    quads.filter((q) => q.predicate.value === RDFC + 'jsImplementationOf').map((q) => q.subject.value),
+  )
+  const instances = quads
+    .filter((q) => q.predicate.value === RDF_TYPE && jsTypes.has(q.object.value))
+    .map((q) => q.subject.value)
+  const uri = values.processor ?? instances[0]
+  if (!uri) throw new Error('no processor instance found; pass --processor <iri>')
 
-  // The runner's order: init everything, then transform (not awaited), then
-  // produce; data only flows once every processor has been initialised.
+  // Channels: bound to stdin/stdout/files, or to a sink that discards.
+  const inputs: { reader: MemoryReader; file?: string }[] = []
+  const outputs: NdjsonWriter[] = []
+
+  const makeReader = (id: Term): Reader => {
+    const binding = bindings.find((b) => matches(b, id.value) && (b.kind === 'stdin' || b.kind === 'read'))
+    const [, reader] = memoryChannel(id.value)
+    if (binding) inputs.push({ reader, file: binding.file })
+    else reader.closeReader() // nothing will ever arrive on it
+    return reader
+  }
+  const makeWriter = (id: Term): Writer => {
+    const binding = bindings.find((b) => matches(b, id.value) && (b.kind === 'stdout' || b.kind === 'write'))
+    const out: Writable | 'stdout' | null = !binding
+      ? null
+      : binding.kind === 'stdout'
+        ? 'stdout'
+        : createWriteStream(binding.file!)
+    const w = new NdjsonWriter(id.value, out)
+    outputs.push(w)
+    return w
+  }
+
+  // As js-runner's Runner.handlePipeline: a channel in the description becomes
+  // a live Reader/Writer. The casts are only about rdf-lens' generic types.
+  const apply = {
+    [RDFC + 'Reader']: (x: unknown) => makeReader((x as { id: Term }).id),
+    [RDFC + 'Writer']: (x: unknown) => makeWriter((x as { id: Term }).id),
+  } as unknown as Parameters<typeof extractShapes>[1]
+  const cache = {
+    [RDFC + 'Reader']: empty(),
+    [RDFC + 'Writer']: empty(),
+  } as unknown as Parameters<typeof extractShapes>[2]
+  const shapes = extractShapes(quads, apply, cache)
+  const args = shapes.lenses[RDFL + 'TypedExtract'].execute({ id: new NamedNode(uri), quads })
+
+  // The class to instantiate, from the processor type's own declaration.
+  const type = quads.find((q) => q.subject.value === uri && q.predicate.value === RDF_TYPE)?.object.value
+  const declared = (p: string) =>
+    quads.find((q) => q.subject.value === type && q.predicate.value === RDFC + p)?.object.value
+  const file = declared('file')
+  const clazz = declared('class')
+  if (!file) throw new Error(`type ${type} does not declare rdfc:file`)
+
+  // From here the processor's own code runs: keep its stdout out of the data.
+  process.stdout.write = ((chunk: string | Uint8Array, ...rest: unknown[]) =>
+    (process.stderr.write as (...a: unknown[]) => boolean)(chunk, ...rest)) as typeof process.stdout.write
+
+  const loaded = await import(file.startsWith('file:') ? file : pathToFileURL(file).href)
+  const Cls = loaded[clazz ?? 'default']
+  if (!Cls) throw new Error(`${file} has no export '${clazz ?? 'default'}'`)
+
+  const processor = new Cls(args, stderrLogger(uri)) as Lifecycle
+
   await processor.init()
   const transform = processor.transform()
   const produce = processor.produce()
 
-  // Feed the inputs: stdin, or a file for extra readers.
   await Promise.all(
     inputs.map(async ({ reader, file }) => {
       const input = file ? createReadStream(file) : process.stdin
@@ -275,11 +315,6 @@ async function main() {
 
   await Promise.all([transform, produce])
   await Promise.all(outputs.map((w) => w.close()))
-}
-
-/** Directory of the config file, for resolving a relative module path. */
-function module_dir(configPath: string): string {
-  return resolve(configPath, '..')
 }
 
 main().catch((err) => {

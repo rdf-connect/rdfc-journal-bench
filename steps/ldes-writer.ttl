@@ -1,0 +1,17 @@
+# Publishes the fragmented stream as a static LDES on disk.
+@prefix rdfc: <https://w3id.org/rdf-connect#>.
+@prefix owl:  <http://www.w3.org/2002/07/owl#>.
+
+<> owl:imports <../node_modules/@rdfc/sds-processors-ts/configs/ldes_disk_writer.ttl>.
+
+<in> a rdfc:Reader.
+<metadataIn> a rdfc:Reader.
+
+<writer> a rdfc:LdesDiskWriter;
+  rdfc:dataInput <in>;
+  rdfc:metadataInput <metadataIn>;
+  rdfc:directory "./ldes-output";
+  rdfc:streamName [
+    rdfc:stream <https://blue-bike.be/ldes#stream>;
+    rdfc:name "bluebike";
+  ].

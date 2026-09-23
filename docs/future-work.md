@@ -134,11 +134,14 @@ each with `bikes_available` / `bikes_in_use` and a `last_seen` timestamp.
   deployment polls every 15 s) and appends one snapshot per NDJSON line:
   ~54 KB, ~330 records. A day is ~470 k records and ~78 MB, so 10³–10⁵ records
   come from a day, 10⁶ from a few days.
-- **Open: change rate.** Consecutive snapshots are often identical (some
-  `last_seen` values are years old). How much changes per minute decides
-  whether `DumpsToFeed` has enough work in B2, and whether the bulk workload
-  should be the raw snapshots or their changes. To be measured from the first
-  day of recording.
+- **Change rate (measured).** ~3.6 of 327 stations change per minute, so
+  change detection sees a low, realistic event rate: B2 measures latency on it
+  and replays the archive at speed for throughput. B1 therefore replays
+  snapshots rather than changes.
+- **Only 70 of 327 stations carry a `last_seen`**, and the deployed mapping
+  keys reports on it, so a snapshot yields ~70 members, ~100 k/day rather than
+  the ~470 k a naive count suggests. Timestamps span 2023–2025, so time-based
+  fragmentation produces year buckets.
 - **Open: reaching 10⁷.** A recorded archive of that size needs ~3 weeks. If
   the sweep must reach 10⁷, supplement with bulk trip dumps (Bluebikes Boston
   or Citi Bike, monthly CSVs of millions of trips), at the cost of a second
@@ -159,7 +162,11 @@ each with `bikes_available` / `bikes_in_use` and a `last_seen` timestamp.
 ### 3.3 What has to be built
 
 1. **A generic processor-to-CLI adapter (`rdfc-proc`).** ✅ built
-   (`bench/rdfc-proc.ts`), see below. CWL and the shell pipe
+   (`bench/rdfc-proc.ts`). A step is described in Turtle, like a pipeline, and
+   its arguments are materialised with rdf-lens through the processor's own
+   SHACL shapes, as js-runner does — which is what makes arguments such as a
+   bucketiser's fragmentation strategy (an RDF subgraph, not a value) work.
+   Channels bind to stdin/stdout/files; step descriptions are in `steps/`. CWL and the shell pipe
    need a command-line tool per stage. Instead of one wrapper per processor:
    run any JS processor as a CLI, with stdin/stdout as its reader/writer, its
    configuration from a JSON file, and experiment 1's in-memory channels
@@ -168,8 +175,17 @@ each with `bikes_available` / `bikes_in_use` and a `last_seen` timestamp.
    (`rml-map` already covers the JVM mapper.) Verified: running `Validate`
    through it produces byte-identical output to the hand-written
    `shacl-validate` CLI, which also confirms that CLI mirrors the processor.
-   `Sdsify` runs through it unchanged, including the RDF terms it takes
-   (`{"$iri": ...}` placeholders).
+   The Blue-bike chain (map → Sdsify → Bucketize → LdesDiskWriter) runs end to
+   end through it: 3 snapshots → 210 SDS members → a static LDES on disk with
+   time-based fragments.
+
+   Two things it had to handle, both worth a line in the paper as costs of
+   wrapping processors as tools:
+   - `Bucketize` logs to **stdout**, which corrupts a stdout data channel; the
+     adapter captures the real stdout for data and diverts the processor's own
+     writes to stderr.
+   - `rml-map` reads raw JSON records while every later stage reads NDJSON
+     lines that are JSON strings; the framing changes at the mapping stage.
 2. **State handling for stateful stages.** `Bucketize` keeps fragment state
    across messages; `DumpsToFeed` keeps the previous snapshot. In a stream this
    just works. In CWL-scatter, parallel chunks cannot share state, so those
