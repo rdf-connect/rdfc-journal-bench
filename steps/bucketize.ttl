@@ -2,7 +2,7 @@
 @prefix rdfc: <https://w3id.org/rdf-connect#>.
 @prefix owl:  <http://www.w3.org/2002/07/owl#>.
 @prefix tree: <https://w3id.org/tree#>.
-@prefix elements: <http://purl.org/dc/elements/1.1/>.
+@prefix as:   <https://www.w3.org/ns/activitystreams#>.
 
 <> owl:imports <../node_modules/@rdfc/sds-processors-ts/configs/bucketizer.ttl>.
 
@@ -20,7 +20,7 @@
   ];
   rdfc:bucketizeStrategy ( [
     a tree:TimebasedFragmentation;
-    tree:timestampPath elements:date;
+    tree:timestampPath as:published;
     tree:maxSize 1000;
     tree:k 4;
     tree:minBucketSpan 3600;

@@ -1,0 +1,22 @@
+# Wraps feed activities as SDS members, as the deployed DCAT-AP feeds do:
+# the member is the Activity Streams activity, timestamped by as:published.
+@prefix rdfc: <https://w3id.org/rdf-connect#>.
+@prefix owl:  <http://www.w3.org/2002/07/owl#>.
+@prefix as:   <https://www.w3.org/ns/activitystreams#>.
+
+<> owl:imports <../node_modules/@rdfc/sds-processors-ts/configs/sdsify.ttl>.
+
+<in> a rdfc:Reader.
+<out> a rdfc:Writer.
+<metadata> a rdfc:Writer.
+
+<sdsify> a rdfc:Sdsify;
+  rdfc:input <in>;
+  rdfc:output <out>;
+  rdfc:metadataOutput <metadata>;
+  rdfc:typeFilter as:Create, as:Update, as:Delete;
+  rdfc:metadataConfig [
+    rdfc:streamId <https://blue-bike.be/ldes#stream>;
+    rdfc:description "Feed of Blue-bike station availability updates.";
+    rdfc:timestampPath as:published;
+  ].

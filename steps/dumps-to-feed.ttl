@@ -1,0 +1,25 @@
+# Change detection: each mapped snapshot is a dump; the processor emits an
+# Activity Streams Create/Update/Delete per changed member. Keeps the previous
+# state of every member in a LevelDB under rdfc:dbDir — the stateful stage.
+@prefix rdfc: <https://w3id.org/rdf-connect#>.
+@prefix owl:  <http://www.w3.org/2002/07/owl#>.
+
+<> owl:imports <../node_modules/@rdfc/dumps-to-feed-processor-ts/processor.ttl>.
+
+<in> a rdfc:Reader.
+<shape> a rdfc:Reader.
+<focusNodes> a rdfc:Reader.
+<out> a rdfc:Writer.
+
+<changes> a rdfc:DumpsToFeed;
+  rdfc:dump <in>;
+  rdfc:nodeShape <shape>;
+  rdfc:output <out>;
+  rdfc:feedname "bluebike";
+  rdfc:flush false;
+  rdfc:dumpContentType "application/n-quads";
+  # "extract" only finds DCAT-AP types, so the members are selected by query.
+  rdfc:focusNodesStrategy "sparql";
+  rdfc:focusNodes <focusNodes>;
+  rdfc:nodeShapeIri "https://blue-bike.be/shapes#ResourceReportShape";
+  rdfc:dbDir "./feed-state/".

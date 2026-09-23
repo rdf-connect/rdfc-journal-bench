@@ -1,0 +1,35 @@
+# Quality gate for the Blue-bike pipeline: what a well-formed station report
+# looks like after the deployed RML mapping (anchor/bluebike.rml.ttl).
+#
+# The same node shape describes a feed member, so the change-detection stage
+# (DumpsToFeed) extracts members with it, as the deployed DCAT-AP feeds do.
+@prefix sh:   <http://www.w3.org/ns/shacl#>.
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix dct:  <http://purl.org/dc/terms/>.
+@prefix elements: <http://purl.org/dc/elements/1.1/>.
+@prefix schema: <http://schema.org/>.
+@prefix mobivoc: <http://schema.mobivoc.org/#>.
+@prefix locn: <http://www.w3.org/ns/locn#>.
+@prefix hubs: <https://purl.eu/ns/mobility/passenger-transport-hubs#>.
+@prefix ex:   <https://blue-bike.be/shapes#>.
+
+ex:ResourceReportShape a sh:NodeShape;
+  sh:targetClass hubs:ResourceReport;
+  sh:property
+    [ sh:path elements:date; sh:datatype xsd:dateTime; sh:minCount 1; sh:maxCount 1 ],
+    [ sh:path hubs:number; sh:datatype xsd:integer; sh:minCount 1; sh:maxCount 1 ],
+    [ sh:path hubs:service; sh:nodeKind sh:IRI; sh:minCount 1; sh:maxCount 1 ],
+    [ sh:path hubs:status; sh:nodeKind sh:IRI; sh:minCount 1; sh:maxCount 1 ],
+    [ sh:path dct:type; sh:nodeKind sh:IRI; sh:maxCount 1 ],
+    [ sh:path hubs:propulsion; sh:nodeKind sh:IRI; sh:maxCount 1 ],
+    [ sh:path hubs:location; sh:nodeKind sh:IRI; sh:minCount 1; sh:maxCount 1;
+      sh:node ex:StationShape ].
+
+ex:StationShape a sh:NodeShape;
+  sh:targetClass mobivoc:BicycleParkingStation;
+  sh:property
+    [ sh:path schema:name; sh:minCount 1; sh:maxCount 1 ],
+    [ sh:path dct:isVersionOf; sh:nodeKind sh:IRI; sh:minCount 1; sh:maxCount 1 ],
+    [ sh:path locn:geometry; sh:nodeKind sh:IRI; sh:minCount 1; sh:maxCount 1 ],
+    [ sh:path mobivoc:capacity; sh:nodeKind sh:IRI; sh:maxCount 1 ].

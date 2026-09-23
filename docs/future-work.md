@@ -159,6 +159,23 @@ each with `bikes_available` / `bikes_in_use` and a `last_seen` timestamp.
   Metric: per-change latency from snapshot arrival to published LDES member.
   CWL runs it as re-triggered micro-batches at 2–3 intervals.
 
+**Status (2026-09-23): the seven-stage chain runs end to end** on recorded
+snapshots, every stage a published processor driven by `rdfc-proc`:
+
+```
+snapshots → rml-map → Validate → DumpsToFeed → Sdsify → Bucketize → LdesDiskWriter
+             (JVM)     (JS)        (JS)          (JS)     (JS)        (JS)
+```
+
+5 snapshots → 5 mapped dumps → 70 feed activities → 70 SDS members → a static
+LDES on disk, in ~5 s (six process starts). Step descriptions are in `steps/`,
+shapes in `anchor/bluebike-shapes.ttl`.
+
+Configuration notes worth keeping: `DumpsToFeed`'s "extract" strategy only
+finds DCAT-AP types, so members are selected with a SPARQL query on its
+`focusNodes` channel; `Sdsify` and `Bucketize` therefore key on
+`as:published`, as the deployed DCAT-AP feeds do.
+
 ### 3.3 What has to be built
 
 1. **A generic processor-to-CLI adapter (`rdfc-proc`).** ✅ built
@@ -198,8 +215,8 @@ each with `bikes_available` / `bikes_in_use` and a `last_seen` timestamp.
 4. **A correctness reference for real data.** The generator trick no longer
    works; use a canonicalised batch output, cross-check the systems against
    each other, plus spot checks.
-5. **Non-deterministic output.** `Sdsify` stamps every member with a
-   transaction id containing a timestamp, so the deep pipeline's output is not
+5. **Non-deterministic output.** `DumpsToFeed` stamps each activity with
+   `as:published` = now, and `Sdsify` adds a transaction id with a timestamp, so the deep pipeline's output is not
    byte-identical across runs. The correctness check has to canonicalise those
    away (or compare modulo the SDS bookkeeping quads).
 6. **Wide gathers.** StreamFlow runs a step as `sh -c "<command>"`, one

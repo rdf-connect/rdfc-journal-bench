@@ -1,0 +1,16 @@
+# Quality gate over the mapped Blue-bike reports.
+@prefix rdfc: <https://w3id.org/rdf-connect#>.
+@prefix owl:  <http://www.w3.org/2002/07/owl#>.
+
+<> owl:imports <../shacl-processor-ts/processors.ttl>.
+
+<in> a rdfc:Reader.
+<out> a rdfc:Writer.
+<report> a rdfc:Writer.
+
+<validate> a rdfc:Validate;
+  rdfc:shaclPath "/home/silvius/pocs/rdfc-journal-bench/anchor/bluebike-shapes.ttl";
+  rdfc:incoming <in>;
+  rdfc:outgoing <out>;
+  rdfc:report <report>;
+  rdfc:mime "application/n-quads".
