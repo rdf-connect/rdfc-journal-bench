@@ -78,13 +78,14 @@ timed.
   warm processes, connected by the operating system instead. It answers the
   question a sceptical reader asks first: what does the declarative, validated
   description cost over piping the programs together?
-\item[CWL.] One \texttt{CommandLineTool} per stage, composed into a workflow.
-  CWL never splits files, so processing records in groups requires an explicit
-  \texttt{split} step, a scattered sub-workflow per chunk (map, then validate),
-  and a \texttt{cat} step to gather the results; all three are part of the
-  measured workflow. With one chunk the scatter workflow reduces to the batch
-  workflow a CWL user would write, plus the split and gather
-  (\res{0.3}\,s). To separate the language from one implementation of it, the
+\item[CWL.] One \texttt{CommandLineTool} per stage, composed into a workflow,
+  in two encodings. \emph{Batch} runs one task per stage over the whole input,
+  as a CWL user would write it. \emph{Scatter} splits the input into chunks and
+  runs the stateless stages once per chunk, then gathers; CWL never splits files
+  itself, so the split and the gather are steps of the measured workflow. Only
+  the stateless prefix can be scattered (\S\ref{sec:eval-capability}), and the
+  stateful stages carry their state between tasks as staged inputs and
+  outputs. To separate the language from one implementation of it, the
   identical workflow runs on three runners: \texttt{cwltool}
   \res{3.2.20260720092025}, the reference implementation; Toil \res{9.5.0}, a
   production runner; and StreamFlow \res{0.2.0rc3}. All run without
@@ -99,25 +100,59 @@ timed.
 \subsection{Workloads}
 \label{sec:eval-workloads}
 
-\paragraph{Knowledge graph construction (B1).} Sensor observations arrive as
-JSON records; each is lifted to RDF by an RML mapping (SOSA, GeoSPARQL) and
-validated against SHACL shapes; conforming data and validation reports are
-written out. The mapping runs on the JVM and the validator on Node.js, so B1
-is also the cross-environment case of the outline's B3. Records are generated
-deterministically, a fraction of them broken in one of three ways that
-violate a datatype, cardinality, or pattern constraint.
+\paragraph{Knowledge graph construction and publication (B1).} The workload is
+the pipeline behind one of the deployments of Section~5, \texttt{Blue-bike}:
+snapshots of a bike-sharing availability API are lifted to RDF, checked, turned
+into a feed of changes, annotated as a stream, fragmented and published as a
+Linked Data Event Stream.
 
-\paragraph{The swept parameter: records per unit.} A \emph{unit} is the
-amount of data one execution handles: one message in RDF-Connect, one line in
-the shell pipe, one task in CWL. At one record per unit, every system
-processes a stream of records; at all records per unit, every system processes
-one batch. Sweeping the unit between these extremes places the systems on one
-axis instead of choosing a point on it, and the crossover between them is the
-result that does not depend on which pipeline we picked.
+\begin{center}
+\begin{tabular}{llll}
+\toprule
+\# & Stage & Component & KE task (\S5.5) \\
+\midrule
+1 & semantic lifting & \texttt{RmlMapper} (JVM) & lifting \\
+2 & quality gate & \texttt{Validate} (TS) & validation \\
+3 & change detection & \texttt{DumpsToFeed} (TS) & change management \\
+4 & stream annotation & \texttt{Sdsify} (TS) & --- \\
+5 & fragmentation & \texttt{Bucketize} (TS) & fragmentation \\
+6 & publication & \texttt{LdesDiskWriter} (TS) & publication \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Nothing here was written for the benchmark. The components are the published
+processors, and the mapping is the deployed pipeline's own RML document (nine
+triples maps over the mobility vocabularies, with FnO functions), changed in
+one line so that its source is the pipeline's channel rather than the live API.
+The stages span two language runtimes, so B1 is also the cross-environment case
+of the outline's B3.
+
+The data is the API the deployment consumes, recorded once into an archive so
+that runs replay identical input: \res{330} stations per snapshot, of which
+\res{70} carry the timestamp the mapping keys reports on, and \res{3.6}
+stations change per minute.
+
+\paragraph{Correctness.} A member's IRI carries the station and the timestamp
+it was last seen, so the members a correct run publishes are exactly the
+distinct pairs in the input. Every run is checked against that, computed from
+the input rather than from any system's output; the timestamps the pipeline
+itself invents are never compared. All systems publish identical members.
+
+\paragraph{The swept parameters.} Two axes are swept rather than chosen. The
+first is the input size, the number of snapshots replayed. The second is the
+\emph{unit}: the amount of data one execution handles --- one message in
+RDF-Connect, one line in the shell pipe, one task in CWL. At one snapshot per
+unit every system streams; at all snapshots per unit every system batches.
+Sweeping between the extremes places the systems on one axis instead of
+picking a point on it, and the crossover is the result that does not depend on
+which pipeline we chose.
 
 \paragraph{Orchestration overhead.} A synthetic pipeline whose processors do a
 configurable amount of CPU work per message isolates what the orchestrator
-adds per message (\S\ref{sec:eval-overhead}).
+adds per message (\S\ref{sec:eval-overhead}). Its generator also provides
+ground truth for a calibration workload with known-invalid records, on which
+every system was first verified.
 
 \paragraph{Incremental feed (B2).} See \S\ref{sec:eval-capability}.
 
@@ -225,6 +260,18 @@ cost; for cheaper processors it dominates.
 % ----------------------------------------------------------------------------
 \subsection{Capability and portability}
 \label{sec:eval-capability}
+
+\paragraph{Stateful stages under scatter.} Three of the six stages keep state:
+change detection holds the previous state of every member, the fragmenter holds
+its buckets, and the publisher appends to a published tree. A streaming system
+keeps that state in the processor for the life of the pipeline. CWL's scatter
+runs its tasks independently and offers no way to thread a value from one task
+to the next, so the stateful stages cannot be scattered at all: in our encoding
+they run as single tasks over the gathered stream, and their state is carried
+between stages as staged directories and files. The parallelism a batch system
+offers therefore stops exactly where an incremental knowledge-engineering
+pipeline needs it, and the cost of making the state explicit is visible as
+intermediate storage. This is a structural property, not a measurement.
 
 \paragraph{Unbounded input.} An RDF-Connect pipeline can consume a source that
 never ends and emit results as they arrive. A CWL step starts when its input
