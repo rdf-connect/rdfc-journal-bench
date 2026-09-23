@@ -119,10 +119,30 @@ Seven stages over two runtimes, covering five of the six KE tasks. Stage 8 is
 an external stateful service; proposed as a variant outside the measured
 window.
 
-### 3.2 The data: bike sharing
+### 3.2 The data: Blue-bike (decided 2026-09-23)
 
-Same domain as `CA-Blue-Bike-LDES` (Table 4), and it has both a bulk and a live
-source. *URLs and sizes to be verified before committing.*
+The source of the deployed `CA-Blue-Bike-LDES` pipeline (Table 4):
+`https://api.blue-bike.be/pub/location`, ~330 Belgian stations per snapshot,
+each with `bikes_available` / `bikes_in_use` and a `last_seen` timestamp.
+
+- **The mapping is the deployed one.** `anchor/bluebike.rml.ttl` is that
+  pipeline's `bluebike.rml.ttl` (9 triples maps, GBFS/mobivoc/schema
+  vocabularies, FnO functions) with one line changed: the WoT/HTTP source
+  becomes the pipeline channel. One snapshot maps to ~2 030 quads in 1.7 s,
+  FnO functions included, so the mapping stage is a real one, not ours.
+- **The archive.** `bench/record-bluebike.ts` polls once a minute (the
+  deployment polls every 15 s) and appends one snapshot per NDJSON line:
+  ~54 KB, ~330 records. A day is ~470 k records and ~78 MB, so 10³–10⁵ records
+  come from a day, 10⁶ from a few days.
+- **Open: change rate.** Consecutive snapshots are often identical (some
+  `last_seen` values are years old). How much changes per minute decides
+  whether `DumpsToFeed` has enough work in B2, and whether the bulk workload
+  should be the raw snapshots or their changes. To be measured from the first
+  day of recording.
+- **Open: reaching 10⁷.** A recorded archive of that size needs ~3 weeks. If
+  the sweep must reach 10⁷, supplement with bulk trip dumps (Bluebikes Boston
+  or Citi Bike, monthly CSVs of millions of trips), at the cost of a second
+  operator and a CSV mapping.
 
 - **B1 (bulk): Citi Bike trip histories.** Public monthly CSV dumps of a few
   million trips each. A day, a week, a month, or several months give 10³ to

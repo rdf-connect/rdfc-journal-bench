@@ -15,3 +15,5 @@ results/*.log
 results/stages/*.log
 results/smoke-*/
 results/big/
+# Recorded source data (regenerate with bench/record-bluebike.ts)
+data/
