@@ -97,6 +97,9 @@ export type RunResult = {
   bytes: number
   /** Anchor only: peak RSS of the whole process tree. */
   peakRssMb?: number
+  /** Anchor only: CPU time over the process tree, and mean cores busy. */
+  cpuMs?: number
+  cores?: number
   /** CWL only: peak size of the intermediate files. */
   peakDiskMb?: number
   /** CWL only: wall time of named workflow steps (split, gather), from cwltool's log. */
@@ -353,6 +356,8 @@ async function runAnchor(
     messages,
     bytes: produced ? statSync(dataFile).size : 0,
     peakRssMb: run.peakRssMb,
+    cpuMs: run.cpuMs,
+    cores: run.cores,
     peakDiskMb: run.peakDiskMb,
     stepsMs,
     quads: got?.quads,
@@ -702,9 +707,9 @@ function reportAnchor(results: RunResult[]) {
   const num = (x: number, d = 1, w = 11) => (isNaN(x) ? '-'.padStart(w) : x.toFixed(d).padStart(w))
 
   console.log(
-    `\n${'workload'.padEnd(26)}${'arm'.padEnd(14)}${'wall ms'.padStart(11)}${'first out'.padStart(11)}${'ms/record'.padStart(11)}${'rec/s'.padStart(11)}${'peak MB'.padStart(11)}${'disk MB'.padStart(9)}${'quads'.padStart(9)}${'reports'.padStart(9)}${'correct'.padStart(9)}`,
+    `\n${'workload'.padEnd(26)}${'arm'.padEnd(14)}${'wall ms'.padStart(11)}${'first out'.padStart(11)}${'ms/record'.padStart(11)}${'rec/s'.padStart(11)}${'cores'.padStart(7)}${'peak MB'.padStart(11)}${'disk MB'.padStart(9)}${'quads'.padStart(9)}${'reports'.padStart(9)}${'correct'.padStart(9)}`,
   )
-  console.log('-'.repeat(131))
+  console.log('-'.repeat(138))
 
   for (const k of keys) {
     const here = results.filter((r) => tag(r.workload) === k)
@@ -727,7 +732,8 @@ function reportAnchor(results: RunResult[]) {
       console.log(
         `${k.padEnd(26)}${arm.padEnd(14)}${num(wall, 0)}${num(median(rs.map((r) => r.startupMs)), 0)}` +
           `${num(wall / count, 3)}${num(median(rs.map((r) => r.throughput)), 0)}` +
-          `${num(median(rs.map((r) => r.peakRssMb ?? NaN)), 0)}${num(median(rs.map((r) => r.peakDiskMb ?? NaN)), 1, 9)}` +
+          `${num(median(rs.map((r) => r.cores ?? NaN)), 2, 7)}${num(median(rs.map((r) => r.peakRssMb ?? NaN)), 0)}` +
+          `${num(median(rs.map((r) => r.peakDiskMb ?? NaN)), 1, 9)}` +
           `${num(median(rs.map((r) => r.quads ?? NaN)), 0, 9)}${num(median(rs.map((r) => r.reports ?? NaN)), 0, 9)}` +
           `${correct.padStart(9)}${ratio}${steps(rs)}`,
       )

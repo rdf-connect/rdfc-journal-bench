@@ -44,6 +44,9 @@ type Run = {
   rep: number
   ok: boolean
   wallMs: number
+  /** CPU time over the whole process tree, and mean cores busy. */
+  cpuMs?: number
+  cores?: number
   peakRssMb: number
   peakDiskMb?: number
   /** Members published, and how many were expected. */
@@ -106,6 +109,8 @@ async function runOnce(arm: Arm, n: number, unit: number, rep: number): Promise<
     rep,
     ok: run.code === 0 && correct,
     wallMs: run.wallMs,
+    cpuMs: run.cpuMs,
+    cores: run.cores,
     peakRssMb: run.peakRssMb,
     peakDiskMb: run.peakDiskMb,
     members: published.size,
@@ -160,10 +165,11 @@ async function main() {
   writeFileSync(outPath, JSON.stringify(runs, null, 2))
 
   console.log(
-    `\n${'snapshots'.padStart(9)}${'arm'.padStart(13)}${'wall ms'.padStart(10)}${'ms/snapshot'.padStart(12)}` +
-      `${'peak MB'.padStart(10)}${'disk MB'.padStart(10)}${'members'.padStart(10)}${'correct'.padStart(9)}`,
+    `\n${'snapshots'.padStart(9)}${'arm'.padStart(13)}${'wall ms'.padStart(10)}${'ms/snap'.padStart(9)}` +
+      `${'cpu ms'.padStart(10)}${'cores'.padStart(7)}${'peak MB'.padStart(9)}${'disk MB'.padStart(9)}` +
+      `${'members'.padStart(9)}${'correct'.padStart(9)}`,
   )
-  console.log('-'.repeat(83))
+  console.log('-'.repeat(95))
   for (const n of ns) {
     for (const arm of arms) {
       const all = runs.filter((r) => r.arm === arm && r.snapshots === n)
@@ -175,9 +181,10 @@ async function main() {
       }
       const wall = median(ok.map((r) => r.wallMs))
       console.log(
-        `${String(n).padStart(9)}${arm.padStart(13)}${fmt(wall)}${fmt(wall / n, 1, 12)}` +
-          `${fmt(median(ok.map((r) => r.peakRssMb)))}${fmt(median(ok.map((r) => r.peakDiskMb ?? NaN)), 1)}` +
-          `${fmt(median(ok.map((r) => r.members)))}${correct.padStart(9)}`,
+        `${String(n).padStart(9)}${arm.padStart(13)}${fmt(wall)}${fmt(wall / n, 1, 9)}` +
+          `${fmt(median(ok.map((r) => r.cpuMs ?? NaN)))}${fmt(median(ok.map((r) => r.cores ?? NaN)), 2, 7)}` +
+          `${fmt(median(ok.map((r) => r.peakRssMb)), 0, 9)}${fmt(median(ok.map((r) => r.peakDiskMb ?? NaN)), 1, 9)}` +
+          `${fmt(median(ok.map((r) => r.members)), 0, 9)}${correct.padStart(9)}`,
       )
     }
     console.log()

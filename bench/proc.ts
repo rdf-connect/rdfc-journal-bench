@@ -2,13 +2,19 @@
  * Running a shell pipeline as one measured unit: wall clock, a timestamp per
  * output line, and peak RSS over the whole process tree.
  *
- * Peak RSS is the largest total resident memory of the live process tree over
- * samples taken from /proc every 20 ms (VmRSS, summed over the processes alive
- * at that moment), so short spikes between samples can be missed. Peak disk, when
- * asked for, is `du` over the given directories every 250 ms.
+ * Where the kernel can account for the run, it does: the command runs inside a
+ * transient systemd scope, and CPU time and peak memory come from that cgroup's
+ * counters. They cover every descendant, including the thousands of short-lived
+ * processes a scattered CWL workflow starts, which sampling cannot see.
+ *
+ * Without systemd (or with cgroup delegation unavailable) the run falls back to
+ * sampling /proc every 20 ms: peak RSS is then the largest total resident size
+ * of the live process tree, and CPU time is unavailable. Peak disk, when asked
+ * for, is `du` over the given directories every 250 ms.
  */
-import { execFile, spawn } from 'child_process'
-import { createWriteStream, readFileSync, readdirSync } from 'fs'
+import { execFile, execFileSync, spawn } from 'child_process'
+import { createWriteStream, existsSync, readFileSync, readdirSync } from 'fs'
+import { join } from 'path'
 
 export type PipeRun = {
   code: number
@@ -16,6 +22,10 @@ export type PipeRun = {
   /** Milliseconds since spawn at which each output line arrived. */
   stamps: number[]
   peakRssMb: number
+  /** CPU time of the whole process tree, when the cgroup accounted for it. */
+  cpuMs?: number
+  /** Mean cores busy over the run: cpuMs / wallMs. */
+  cores?: number
   /** Peak size of `diskDirs`, when given. */
   peakDiskMb?: number
   /** Killed after `timeoutMs`. */
@@ -71,6 +81,74 @@ function watchRss(root: number) {
   }
 }
 
+/** True when a command can be run inside a transient user scope. */
+function cgroupAvailable(): boolean {
+  try {
+    execFileSync('systemd-run', ['--user', '--scope', '--quiet', 'true'], {
+      stdio: 'ignore',
+      timeout: 5000,
+    })
+    return true
+  } catch {
+    return false
+  }
+}
+
+const HAVE_CGROUP = cgroupAvailable()
+
+/** Distinguishes the scopes of runs within one harness process. */
+let runCounter = 0
+
+/**
+ * The cgroup directory of a named transient scope. The spawned process reports
+ * the session's cgroup, not the scope's, so the scope is named and located by
+ * that name instead.
+ */
+function scopeDir(unit: string): string | null {
+  const uid = process.getuid?.() ?? 1000
+  const path = join(
+    '/sys/fs/cgroup/user.slice',
+    `user-${uid}.slice`,
+    `user@${uid}.service/app.slice`,
+    `${unit}.scope`,
+  )
+  return existsSync(path) ? path : null
+}
+
+/**
+ * CPU time and peak memory from the scope's cgroup. Both are kernel counters
+ * over every descendant; they are sampled because the cgroup disappears when
+ * the scope exits, so the last sample before exit is what we keep.
+ */
+function watchCgroup(unit: string) {
+  let dir: string | null = null
+  let cpuUsec = 0
+  let peakBytes = 0
+
+  const sample = () => {
+    if (!dir) {
+      dir = scopeDir(unit)
+      if (!dir) return
+    }
+    try {
+      const cpu = readFileSync(join(dir, 'cpu.stat'), 'utf8').match(/usage_usec (\d+)/)
+      if (cpu) cpuUsec = Math.max(cpuUsec, Number(cpu[1]))
+      const peak = readFileSync(join(dir, 'memory.peak'), 'utf8').trim()
+      if (peak) peakBytes = Math.max(peakBytes, Number(peak))
+    } catch {
+      // The scope has gone; keep the last reading.
+    }
+  }
+
+  sample()
+  const timer = setInterval(sample, 20)
+  return () => {
+    clearInterval(timer)
+    sample()
+    return { cpuMs: cpuUsec / 1000, peakMemMb: peakBytes / (1024 * 1024) }
+  }
+}
+
 function watchDisk(dirs: string[]) {
   let peak = 0
   let busy = false
@@ -99,13 +177,22 @@ export function runPipe(
 ): Promise<PipeRun> {
   return new Promise((res) => {
     const t0 = performance.now()
-    const child = spawn('sh', ['-c', `exec < ${input}; ${cmd}`], {
+    // In a transient scope the kernel accounts for every descendant; see above.
+    const unit = `rdfcbench-${process.pid}-${runCounter++}`
+    const argv: [string, string[]] = HAVE_CGROUP
+      ? [
+          'systemd-run',
+          ['--user', '--scope', '--quiet', `--unit=${unit}`, 'sh', '-c', `exec < ${input}; ${cmd}`],
+        ]
+      : ['sh', ['-c', `exec < ${input}; ${cmd}`]]
+    const child = spawn(argv[0], argv[1], {
       stdio: ['ignore', 'pipe', 'pipe'],
       env: { ...process.env, ...opts.env },
       // Own process group, so a timeout can kill the whole tree.
       detached: true,
     })
     const stopRss = watchRss(child.pid!)
+    const stopCgroup = HAVE_CGROUP ? watchCgroup(unit) : undefined
     const stopDisk = opts.diskDirs ? watchDisk(opts.diskDirs) : undefined
     let timedOut = false
     const timer = opts.timeoutMs
@@ -135,10 +222,22 @@ export function runPipe(
     child.on('close', (code) => {
       const wallMs = performance.now() - t0
       if (timer) clearTimeout(timer)
-      const peakRssMb = stopRss()
+      const sampledRss = stopRss()
+      const cg = stopCgroup?.()
       const peakDiskMb = stopDisk?.()
       out.end(() =>
-        res({ code: code ?? -1, wallMs, stamps, peakRssMb, peakDiskMb, timedOut, stderr }),
+        res({
+          code: code ?? -1,
+          wallMs,
+          stamps,
+          // The cgroup's peak is exact; the sampled one is the fallback.
+          peakRssMb: cg && cg.peakMemMb > 0 ? cg.peakMemMb : sampledRss,
+          cpuMs: cg?.cpuMs,
+          cores: cg ? cg.cpuMs / wallMs : undefined,
+          peakDiskMb,
+          timedOut,
+          stderr,
+        }),
       )
     })
   })
