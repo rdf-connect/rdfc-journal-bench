@@ -229,6 +229,22 @@ makes, measured. Intermediate storage stays ~46.5 MB whatever the chunk size,
 so it is the state carried between stages, not the chunking, that dominates
 CWL's disk use.
 
+**Definition size** (non-comment lines; `steps/*.ttl` holds the per-stage
+configuration the CLI arms need, which the RDF-Connect pipeline carries inline):
+
+| Arm | composition | stage configuration | total |
+|---|---:|---:|---:|
+| RDF-Connect | 110 (one `pipeline.ttl`, 120 triples) | included | **110** |
+| shell | 15 (generator code) | 85 | 100 |
+| CWL | 201 (6 tools + workflow) | 85 | **286** |
+
+CWL needs 2.6× the description for the same pipeline: every stage needs a tool
+description as well as its configuration, and the stateful stages need their
+state wired explicitly through inputs and outputs. The shell pipe is shortest
+and offers no validation, typing or provenance at all, which is the honest
+framing: definition size alone is not the argument, but it is the metric
+Table~5 promises and it favours the declarative description.
+
 **Capability finding — stateful stages cannot be scattered.** Change detection
 keeps the previous state of every member, the bucketiser keeps its fragment
 state, and the writer appends to a published tree. CWL scatter runs its tasks
