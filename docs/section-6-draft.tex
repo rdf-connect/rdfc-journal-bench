@@ -213,65 +213,101 @@ directories during the run, sampled every 250\,ms.
 
 \subsubsection{Results}
 
-Table~\ref{tab:eval-size} gives the makespan by input size. Every system that
-keeps its processes alive amortises startup: per snapshot, the shell pipeline
-falls from \res{473} to \res{212}\,ms, RDF-Connect from \res{1568} to
-\res{379}\,ms, CWL-batch from \res{1186} to \res{327}\,ms. CWL-scatter stays
-between \res{1.6} and \res{1.9}\,s per snapshot, because it starts a fresh
-process per stage per snapshot.
+Table~\ref{tab:eval-systems} reports every system over \res{20} snapshots,
+with the scattered encodings at one snapshot per task. Over the range
+\res{5} to \res{20} snapshots, the systems that keep their processes alive
+amortise their startup: per snapshot, the shell pipeline falls from \res{644}
+to \res{264}\,ms, RDF-Connect from \res{1355} to \res{566}\,ms, CWL-batch
+from \res{1250} to \res{496}\,ms. The scattered encodings stay near
+\res{1.6--2.0}\,s per snapshot, since each starts fresh processes for every
+stage of every snapshot, and Toil near \res{3.6--7.5}\,s.
 
-Makespan and CPU time diverge. The shell pipeline finishes first while using
-\res{4.8} cores, its six stages running at once; RDF-Connect uses \res{2.6}.
-Their CPU times agree to within \res{2}\,\% (\res{30.1} against
-\res{29.4}\,s at \res{30} snapshots), which places the difference in
-concurrency rather than in transport: a message crosses the orchestrator in
-under a millisecond (\S\ref{sec:eval-micro}), but a channel admits one message
-at a time, so stages advance in lock-step. CWL-batch spends the least CPU
-(\res{21.8}\,s) by running one stage at a time over whole files.
+The three CWL engines bracket the cost of the description. On the scattered
+encoding, cwltool and StreamFlow agree to within \res{2}\,\% in makespan and
+to within \res{0.2}\,\% in CPU time (\res{204.7} against
+\res{204.4}\,s). Toil spends the same CPU (\res{208.1}\,s) over
+\res{2.3}$\times$ the makespan, running \res{3.0} cores where the others run
+\res{6.5}: a scheduling difference, not additional work.
+
+Makespan and CPU time diverge. The shell pipeline finishes in half
+RDF-Connect's time while using \res{5.2} cores to its \res{2.1}, and spends
+\res{16}\,\% more CPU doing so (\res{27.0} against \res{23.3}\,s). What
+separates the two is therefore concurrency rather than transport: a message
+crosses the orchestrator in under a millisecond (\S\ref{sec:eval-micro}), but
+a channel admits one message at a time, so the stages advance in lock-step.
+Running one stage at a time over whole files is cheaper still
+(\res{15.4}\,s of CPU for CWL-batch on StreamFlow), and slower to a first
+result by construction.
 
 \begin{table}[t]
-\caption{The pipeline by input size: makespan and CPU time (s), mean cores
-busy, and the intermediate storage the CWL arms write. Medians of \res{2}
-runs; all runs published the expected members.}
-\label{tab:eval-size}
-\begin{tabular}{rlrrrr}
+\caption{The pipeline over \res{20} snapshots: makespan and CPU time (s),
+mean cores busy, peak memory and intermediate storage (MB). Medians of
+\res{2} runs; every run published the expected members and activities.}
+\label{tab:eval-systems}
+\begin{tabular}{lrrrrr}
 \toprule
-snapshots & system & makespan & CPU & cores & storage \\
+System & makespan & CPU & cores & memory & storage \\
 \midrule
-5  & shell       & \res{2.4}  & \res{11.7}  & \res{5.0} & --- \\
-   & RDF-Connect & \res{7.8}  & \res{19.6}  & \res{2.5} & --- \\
-   & CWL-batch   & \res{5.9}  & \res{12.4}  & \res{2.1} & \res{4.0}\,MB \\
-   & CWL-scatter & \res{9.6}  & \res{51.1}  & \res{5.3} & \res{5.9}\,MB \\
+Shell pipeline            & \res{5.3}  & \res{27.0}  & \res{5.2} & \res{1310} & --- \\
+RDF-Connect               & \res{11.3} & \res{23.3}  & \res{2.1} & \res{1499} & --- \\
 \midrule
-30 & shell       & \res{6.4}  & \res{30.1}  & \res{4.8} & --- \\
-   & RDF-Connect & \res{11.4} & \res{29.4}  & \res{2.6} & --- \\
-   & CWL-batch   & \res{9.8}  & \res{21.8}  & \res{2.3} & \res{20.6}\,MB \\
-   & CWL-scatter & \res{48.1} & \res{319.8} & \res{6.9} & \res{32.0}\,MB \\
+CWL-batch (cwltool)       & \res{9.9}  & \res{19.2}  & \res{1.9} & \res{709}  & \res{14.2} \\
+CWL-batch (StreamFlow)    & \res{8.8}  & \res{15.4}  & \res{1.8} & \res{803}  & \res{14.4} \\
+CWL-batch (Toil)          & \res{28.5} & \res{24.8}  & \res{0.9} & \res{690}  & \res{16.4} \\
+CWL-scatter (cwltool)     & \res{31.4} & \res{204.7} & \res{6.5} & \res{1729} & \res{21.9} \\
+CWL-scatter (StreamFlow)  & \res{32.0} & \res{204.4} & \res{6.4} & \res{1626} & \res{21.9} \\
+CWL-scatter (Toil)        & \res{72.5} & \res{208.1} & \res{3.0} & \res{748}  & \res{24.1} \\
+Nextflow                  & \res{39.8} & \res{239.0} & \res{6.0} & \res{1997} & \res{31.9} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Storage grows with the input for the CWL arms and stays at zero for the
-streaming ones (\res{4.0} to \res{20.7}\,MB over this range). A file-passing system writes every stage's output, and here
-also every stage's state, to disk; a streaming system passes them in memory.
-The growth is a property of the execution model rather than of cwltool, which
-is why we report it alongside makespan.
+Storage grows with the input for every system that passes files, and stays at
+zero for the streaming ones: \res{4.1} to \res{14.2}\,MB for CWL-batch over
+this range and \res{8.7} to \res{31.9}\,MB for Nextflow, which keeps a
+working directory per task. Each writes every stage's output, and here also
+every stage's state, where a streaming system passes both in memory.
 
-How much data one execution handles is the parameter that matters most, and it
-is the one a CWL user controls by choosing a chunk size. At \res{30} snapshots,
-CWL-scatter takes \res{46.5}\,s with one snapshot per task, \res{16.6}\,s with
-five, \res{11.0}\,s with fifteen and \res{10.5}\,s with a single task, where it
-meets its own batch encoding. RDF-Connect takes \res{11.3}\,s and the shell
-pipeline \res{6.1}\,s, both processing one snapshot at a time throughout.
+How much data one execution handles is the parameter that matters most, and
+the one a workflow author sets by choosing a chunk size.
+Table~\ref{tab:eval-unit} sweeps it over \res{20} snapshots. With one snapshot
+per task, CWL-scatter spends \res{210.5}\,s of CPU and Nextflow
+\res{237.2}\,s; with the whole input as a single task, \res{18.3} and
+\res{31.4}\,s. RDF-Connect works at one snapshot per message throughout, for
+\res{23.3}\,s.
 
-CPU time separates the cost of the work from the cost of the granularity. CWL
-spends \res{310.9}\,s with one snapshot per task against \res{21.0}\,s with a
-single task, a factor of \res{15} for identical output, since each task starts
-its own JVM and Node.js runtime. RDF-Connect works at one snapshot per message
-throughout for \res{29.4}\,s: \res{1.4}$\times$ the cheapest CWL run, and a
-tenth of what CWL spends to reach the same granularity. Nextflow, whose
-channels let stages overlap, \res{tracks CWL-scatter within 10\,\%}: the
-overlap does not offset the cost of a process per item at this task size.
+\begin{table}[t]
+\caption{Granularity: CPU time and makespan (s) over \res{20} snapshots, by
+snapshots per task. RDF-Connect and the shell pipeline work a snapshot at a
+time throughout and are given for reference.}
+\label{tab:eval-unit}
+\begin{tabular}{lrrrr}
+\toprule
+snapshots per task & 1 & 5 & 10 & 20 (all) \\
+\midrule
+CWL-scatter, CPU   & \res{210.5} & \res{61.7} & \res{37.7} & \res{18.3} \\
+CWL-scatter, wall  & \res{35.8}  & \res{13.5} & \res{10.7} & \res{9.7} \\
+Nextflow, CPU      & \res{237.2} & \res{89.5} & \res{60.4} & \res{31.4} \\
+Nextflow, wall     & \res{39.1}  & \res{18.8} & \res{15.7} & \res{13.1} \\
+\midrule
+RDF-Connect, CPU / wall & \res{23.3} / \res{11.3} & \multicolumn{3}{l}{one snapshot per message} \\
+Shell pipeline, CPU / wall & \res{27.0} / \res{5.3} & \multicolumn{3}{l}{one snapshot per message} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+CPU time separates the cost of the work from the cost of the granularity.
+Across the sweep the work is identical and the output is the same, yet CWL
+spends \res{11}$\times$ the CPU at the fine end and Nextflow \res{7.6}$\times$,
+because every task starts its own JVM and Node.js runtime. RDF-Connect reaches
+that granularity for \res{1.3}$\times$ the CPU of the cheapest batch run, and
+for a ninth of what CWL spends to match it.
+
+Nextflow's channels let consumers start before their producers finish, which
+shortens its makespan relative to its own CPU time, but overlap does not
+recover the cost of a process per item: at every chunk size it spends
+\res{17--70}\,\% more CPU than CWL-scatter. Its advantage would grow with the
+work per task, and these tasks are seconds long.
 
 The descriptions can be compared as well as the runs. Describing this pipeline
 takes \res{110} lines of RDF in a single document for RDF-Connect and
