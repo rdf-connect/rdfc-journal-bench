@@ -1,0 +1,104 @@
+[
+  {
+    "arm": "shell",
+    "n": 4,
+    "arrivalMs": 3000,
+    "wallMs": 12131.848407000001,
+    "cpuMs": 17471.395,
+    "freshnessMs": [
+      2913.427734375,
+      517.230712890625,
+      318.85498046875,
+      422.92626953125
+    ],
+    "meanFreshnessMs": 1043.1099243164062,
+    "p95FreshnessMs": 2913.427734375,
+    "invocations": 1,
+    "activities": {
+      "creates": 70,
+      "updates": 8
+    },
+    "expected": {
+      "creates": 70,
+      "updates": 8
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "n": 4,
+    "arrivalMs": 3000,
+    "wallMs": 15047.117644999998,
+    "cpuMs": 18427.332,
+    "freshnessMs": [
+      1338.93798828125,
+      351.210205078125,
+      252.29296875,
+      255.051513671875
+    ],
+    "meanFreshnessMs": 549.3731689453125,
+    "p95FreshnessMs": 1338.93798828125,
+    "invocations": 1,
+    "activities": {
+      "creates": 70,
+      "updates": 8
+    },
+    "expected": {
+      "creates": 70,
+      "updates": 8
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-rebuild",
+    "interval": 4,
+    "n": 4,
+    "arrivalMs": 3000,
+    "wallMs": 14995.8369140625,
+    "cpuMs": 10442.748,
+    "freshnessMs": [
+      14867.70166015625,
+      11867.70166015625,
+      8867.70166015625,
+      5867.70166015625
+    ],
+    "meanFreshnessMs": 10367.70166015625,
+    "p95FreshnessMs": 14867.70166015625,
+    "invocations": 1,
+    "activities": {
+      "creates": 70,
+      "updates": 8
+    },
+    "expected": {
+      "creates": 70,
+      "updates": 8
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-incremental",
+    "interval": 4,
+    "n": 4,
+    "arrivalMs": 3000,
+    "wallMs": 15234.49658203125,
+    "cpuMs": 10868.844,
+    "freshnessMs": [
+      15102.646728515625,
+      12102.646728515625,
+      9102.646728515625,
+      6102.646728515625
+    ],
+    "meanFreshnessMs": 10602.646728515625,
+    "p95FreshnessMs": 15102.646728515625,
+    "invocations": 1,
+    "activities": {
+      "creates": 70,
+      "updates": 8
+    },
+    "expected": {
+      "creates": 70,
+      "updates": 8
+    },
+    "correct": true
+  }
+]

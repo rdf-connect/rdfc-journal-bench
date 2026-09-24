@@ -39,7 +39,11 @@ export type Station = {
 }
 type Snapshot = { fetchedAt: string; stations: Station[] }
 
-/** The recorded archive, newest recording first. */
+/**
+ * The recording to replay: the most recent file, not all of them together, so
+ * that a recorder which rolls over at midnight does not silently change the
+ * workload under a running sweep.
+ */
 export function archive(): string {
   const files = readdirSync(DATA)
     .filter((f) => f.startsWith('bluebike-') && f.endsWith('.ndjson'))

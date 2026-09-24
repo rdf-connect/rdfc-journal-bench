@@ -148,6 +148,9 @@ bench:BluebikeSource rdfc:jsImplementationOf rdfc:Processor;
     sh:path bench:input; sh:name "input";
     sh:datatype xsd:string; sh:minCount 1; sh:maxCount 1;
   ], [
+    sh:path bench:arrivalMs; sh:name "arrivalMs";
+    sh:datatype xsd:integer; sh:maxCount 1;
+  ], [
     sh:path bench:resultPath; sh:name "resultPath";
     sh:datatype xsd:string; sh:minCount 1; sh:maxCount 1;
   ].

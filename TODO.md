@@ -209,7 +209,10 @@ deployed Blue-bike chain; see `docs/future-work.md` for the full state.
       while keeping granularity.
 - [x] Definition size and change effort measured (`docs/change-effort/`).
 - [ ] Re-run at scale when the 24 h recording finishes (~1 440 snapshots).
-- [ ] B2: latency under a continuous source (the streaming claim).
+- [x] B2: latency under a continuous source (`bench/run-freshness.ts`).
+      Streaming against the batch workflow re-run on a schedule; freshness
+      against CPU. The curve is U-shaped: below the run duration the runs queue
+      and freshness degrades. See docs/future-work.md for numbers and caveats.
 - [ ] CPU time and cores; pinned server; 5+ interleaved reps.
 - [ ] Decide how to treat log relaying (13 k lines for 5 snapshots in rdfc).
 

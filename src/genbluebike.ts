@@ -21,6 +21,8 @@ export type BluebikePipelineConfig = {
   focusQuery: string
   /** Run directory: LDES output, feed state and the source's timings go here. */
   resultDir: string
+  /** Milliseconds between snapshots, for the freshness experiment. */
+  arrivalMs?: number
 }
 
 export function renderBluebikePipeline(cfg: BluebikePipelineConfig): string {
@@ -72,7 +74,9 @@ export function renderBluebikePipeline(cfg: BluebikePipelineConfig): string {
   bench:mappingPath "${cfg.mapping}";
   bench:shapePath "${cfg.shapes}";
   bench:focusPath "${cfg.focusQuery}";
-  bench:input "${cfg.input}";
+  bench:input "${cfg.input}";${
+    cfg.arrivalMs ? `\n  bench:arrivalMs "${cfg.arrivalMs}"^^<http://www.w3.org/2001/XMLSchema#integer>;` : ''
+  }
   bench:resultPath "${cfg.resultDir}/source.json".
 
 <mapper> a rdfc:RmlMapper;

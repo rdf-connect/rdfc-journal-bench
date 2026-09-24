@@ -1,23 +1,26 @@
 % ============================================================================
-% Section 6 (Comparative evaluation) -- draft
+% Section 6 (Comparative evaluation) -- draft for discussion
 %
-% Order: why two benchmarks, then the microbenchmark (RDF-Connect against
-% itself), then the pipeline benchmark (against workflow managers and a shell
-% pipe).
+% Structure:
+%   6.1 Why two experiments
+%   6.2 What the framework costs against itself   (microbenchmark)
+%   6.3 The same pipeline, five ways              (composition)
+%   6.4 Keeping the output current                (freshness against cost)
+%   6.5 What cannot be expressed                  (capability)
+%   6.6 Threats to validity
 %
-% \res{} marks a number to be replaced by the final measurement. Current values
-% come from rdfc-journal-bench (see docs/future-work.md for provenance).
+% \res{} marks a number to be replaced by the final measurement. Present values
+% come from a laptop with few repetitions; the server runs replace them.
+% Provenance for every number is in docs/future-work.md.
 %
-% Open before polishing:
-%  (a) Table 1 lists "CWL (cwltool)"; the benchmark uses three CWL runners.
-%  (b) Toil and StreamFlow have run the two-stage calibration workload, not yet
-%      the six-stage pipeline. Either run them or scope the claim.
-%  (c) B2 (continuous input) is a capability boundary here, not a measurement.
-%  (d) CPU time and cores are not collected yet; both matter because CWL-scatter
-%      uses 8 cores where RDF-Connect uses about 2.
-%  (e) Numbers below are from a laptop and few repetitions. Rerun pinned.
-%  (f) \cite{slaughter2020} (Task Bench, SC'20) is not yet in the paper's
-%      bibliography; add it or drop the attribution of METG.
+% Deliberately kept out of the running text:
+%   - the three CWL engines are one sentence plus a footnote, not a matrix;
+%   - scatter appears only as the fine end of the granularity axis, never as
+%     "how you would write it";
+%   - the incremental variant of scheduled re-execution is two sentences.
+%
+% Open: \cite{slaughter2020} (Task Bench, SC'20) is not yet in the paper's
+% bibliography; add it or drop the attribution of METG.
 % ============================================================================
 
 \newcommand{\res}[1]{\textbf{[#1]}}
@@ -25,35 +28,41 @@
 \section{Comparative evaluation}
 \label{sec:eval}
 
+\subsection{Why two experiments}
+\label{sec:eval-why}
+
 Table~1 says what each framework can express. It says nothing about what the
-expressiveness costs, and that is the question a practitioner has when choosing
-between RDF-Connect and a workflow system they already run.
+expressiveness costs, which is the question facing someone who already runs a
+workflow system and is asked to adopt another.
 
-Two costs are worth separating. The first is the price of the architecture
-itself: every message travels from a processor to its runner, through the
-orchestrator, and out to another runner, where a program calling the same
-functions in one process would have passed a pointer. The second is the price
-of the architecture in use, against a system built on other principles, over a
-pipeline someone actually deploys.
+Two costs are worth separating. The first belongs to the architecture: every
+message leaves a processor, crosses the orchestrator and enters another runner,
+where a program calling the same functions in one process would have passed a
+pointer. The second belongs to the architecture in use: what it costs to run a
+real pipeline this way rather than as scheduled tasks over files.
 
-We measure them separately, because a single experiment would confound them.
-A comparison against another framework alone cannot say how much of any
-difference is orchestration and how much is the workload; a microbenchmark alone says
-nothing about whether the overhead matters once real processors run. Section
-\ref{sec:eval-micro} therefore compares RDF-Connect against itself, with the
-framework removed and nothing else changed. Section~\ref{sec:eval-pipeline}
-compares it against workflow managers and against a shell pipeline on a
-deployed knowledge graph publication pipeline.
+A single experiment would confound them. A comparison against another framework
+cannot separate orchestration from workload, and a microbenchmark cannot say
+whether the overhead matters once real processors run.
+Section~\ref{sec:eval-micro} therefore removes the framework and changes
+nothing else. Section~\ref{sec:eval-pipeline} takes a deployed pipeline and
+runs it under five systems.
 
-Three rules apply to both experiments. Every system runs the same
-implementations: the published processors, or command-line tools that
-instantiate those same processor classes. No system shares warm state between
-invocations, since that is part of what distinguishes them. And every run is
-checked against expected output computed from the input, so a system that runs
-fast by doing less work is reported as failed rather than fast.
+Three rules hold throughout. Every system runs the same implementations: the
+published processors, or command-line tools that instantiate those same
+classes. No system shares warm state between invocations, since that is part of
+what distinguishes them. Every run is checked against output computed from the
+input, so a system that is fast because it did less work is reported as failed
+rather than fast.
+
+One claim we do not make. There is no single correct way to express a streaming
+workload in a batch system, and we have not searched for an optimal encoding.
+Instead we name the parameter that separates the encodings --- how much data one
+invocation handles --- and measure across its range, so that a reader can locate
+their own deployment on the curve.
 
 % ----------------------------------------------------------------------------
-\subsection{The cost of the architecture}
+\subsection{What the framework costs against itself}
 \label{sec:eval-micro}
 
 The first experiment holds the processors fixed and removes the framework. Both
@@ -70,7 +79,7 @@ microseconds of CPU work each processor spends per message. The work parameter
 is the interesting one. With no work per message, everything measured is
 overhead; as the work grows, overhead becomes a shrinking share of a real cost.
 
-With processors that do nothing, a message costs \res{0.23}\,ms through
+With processors that do nothing, a message costs \res{0.234}\,ms through
 RDF-Connect and \res{0.002}\,ms in process. The ratio is large but not the
 useful number, because no processor does nothing. Adding work per message gives
 the shape in Table~\ref{tab:eval-micro}: the framework adds a roughly constant
@@ -109,15 +118,12 @@ for hours this disappears; for a pipeline invoked per file in a CI job it does
 not.
 
 % ----------------------------------------------------------------------------
-\subsection{A deployed pipeline against workflow managers}
+\subsection{The same pipeline, five ways}
 \label{sec:eval-pipeline}
 
-The second experiment takes one of the pipelines of Section~5 and runs it under
-RDF-Connect, a shell pipeline, three CWL engines and Nextflow.
+\subsubsection{The pipeline and the data}
 
-\subsubsection{The pipeline}
-
-\texttt{CA-Blue-Bike-LDES} publishes the availability of a Belgian
+\texttt{CA-Blue-Bike-LDES} (Section~5) publishes the availability of a Belgian
 bike-sharing service as a Linked Data Event Stream. It polls an HTTP API for
 the state of every station, lifts each snapshot to RDF, detects which stations
 changed, annotates the changes as stream members, fragments them by time and
@@ -143,13 +149,13 @@ processors; five of the six KE tasks of Section~5.5 appear.}
 \end{table}
 
 The RML mapping is the deployment's own document: nine triples maps over
-mobility vocabularies, with FnO functions. One line changed, so that the
-mapping reads the pipeline's channel instead of the live API. The shapes that
-gate the data also describe the feed's members, which is how the deployed
-DCAT-AP feeds are configured.
+mobility vocabularies, with FnO functions. One line changed, so that the mapping
+reads the pipeline's channel instead of the live API. The shapes that gate the
+data also describe the feed's members, which is how the deployed DCAT-AP feeds
+are configured.
 
 The input is recorded from the API the deployment consumes, so that every run
-replays the same data: \res{330} stations per snapshot, \res{70} of which carry
+replays the same data: \res{327} stations per snapshot, \res{70} of which carry
 the timestamp the mapping keys its reports on, and \res{3.6} stations changing
 per minute.
 
@@ -163,28 +169,34 @@ per minute.
   processes as the RDF-Connect deployment with the operating system in place of
   the orchestrator, and so bounds what mediated channels and a declarative
   description can cost.
-\item[CWL-batch.] One \texttt{CommandLineTool} per stage, one task each, which
-  is how a CWL user writes this pipeline.
-\item[CWL-scatter.] The same tools, with the input split into chunks and the
+\item[CWL, batch.] One \texttt{CommandLineTool} per stage, one task each, over
+  the whole input.
+\item[CWL, scattered.] The same tools, with the input split into chunks and the
   stateless stages run once per chunk. CWL does not split files, so the split
   and the concatenation are steps of the workflow and are measured with it.
 \item[Nextflow.] The same tools again, composed with channels. A process still
-  runs once per item, but consumers start as items arrive, so the mapping of
-  one snapshot overlaps the validation of the previous one. Among the workflow
-  managers this is the closest to a streaming execution model.
+  runs once per item, but consumers start as items arrive, so the mapping of one
+  snapshot overlaps the validation of the previous one.
 \end{description}
 
-Both CWL encodings run on three engines --- \texttt{cwltool}
-\res{3.2.20260720092025}, Toil \res{9.5.0} and StreamFlow \res{0.2.0rc3} ---
-from the same workflow documents, so that a difference between them is a
-property of the engine rather than of the description. None uses containers.
-
-The command-line tools are not reimplementations. A small adapter instantiates
-a published processor from an RDF description of the step, materialises its
+The command-line tools are not reimplementations. A small adapter instantiates a
+published processor from an RDF description of the step, materialises its
 arguments through the processor's own SHACL shapes exactly as the runner does,
-and connects its channels to standard input and output. Every arm therefore
+and connects its channels to standard input and output. Every system therefore
 runs the same processor code with the same configuration; what differs is what
 carries messages between stages.
+
+Both CWL encodings run on three engines,\footnote{\texttt{cwltool}
+\res{3.2.20260720092025}, Toil \res{9.5.0} and StreamFlow \res{0.2.0rc3}, from
+the same workflow documents, without containers. On the scattered encoding
+cwltool and StreamFlow agree to within \res{0.2}\,\% of CPU time; Toil spends
+the same CPU over \res{2.3}$\times$ the makespan, running \res{3.0} cores where
+the others run \res{6.5}, which is a scheduling difference rather than
+additional work. Per-engine figures are in the artefact.} so that a difference
+between them is a property of the engine rather than of the description. Unless
+stated otherwise, the reported CWL figures are cwltool's.
+
+\subsubsection{Correctness}
 
 Each run is checked against output derived from the input rather than from
 another system. A member is created the first time a station is observed with a
@@ -204,138 +216,178 @@ Node.js \res{26.4.0}, OpenJDK \res{22.0.1}, Nextflow \res{26.04.6}. Working
 directories are on tmpfs, so the file-passing systems are not measured against
 the disk. Each configuration runs \res{5} times and we report medians.
 
-Each run executes inside a transient cgroup, from which CPU time and peak
-memory are read. Sampling would not do here: a scattered workflow starts
-thousands of processes that live for well under a second, and a process that
-begins and ends between two samples contributes nothing to the total.
-Intermediate storage is the largest total size of a system's working
-directories during the run, sampled every 250\,ms.
+Each run executes inside a transient cgroup, from which CPU time and peak memory
+are read. Sampling would not do here: a scattered workflow starts thousands of
+processes that live for well under a second, and a process that begins and ends
+between two samples contributes nothing to the total. Intermediate storage is
+the largest total size of a system's working directories during the run, sampled
+every 250\,ms.
 
 \subsubsection{Results}
 
-Table~\ref{tab:eval-systems} reports every system over \res{20} snapshots,
-with the scattered encodings at one snapshot per task. Over the range
-\res{5} to \res{20} snapshots, the systems that keep their processes alive
-amortise their startup: per snapshot, the shell pipeline falls from \res{644}
-to \res{264}\,ms, RDF-Connect from \res{1355} to \res{566}\,ms, CWL-batch
-from \res{1250} to \res{496}\,ms. The scattered encodings stay near
-\res{1.6--2.0}\,s per snapshot, since each starts fresh processes for every
-stage of every snapshot, and Toil near \res{3.6--7.5}\,s.
-
-The three CWL engines bracket the cost of the description. On the scattered
-encoding, cwltool and StreamFlow agree to within \res{2}\,\% in makespan and
-to within \res{0.2}\,\% in CPU time (\res{204.7} against
-\res{204.4}\,s). Toil spends the same CPU (\res{208.1}\,s) over
-\res{2.3}$\times$ the makespan, running \res{3.0} cores where the others run
-\res{6.5}: a scheduling difference, not additional work.
-
-Makespan and CPU time diverge. The shell pipeline finishes in half
-RDF-Connect's time while using \res{5.2} cores to its \res{2.1}, and spends
-\res{16}\,\% more CPU doing so (\res{27.0} against \res{23.3}\,s). What
-separates the two is therefore concurrency rather than transport: a message
-crosses the orchestrator in under a millisecond (\S\ref{sec:eval-micro}), but
-a channel admits one message at a time, so the stages advance in lock-step.
-Running one stage at a time over whole files is cheaper still
-(\res{15.4}\,s of CPU for CWL-batch on StreamFlow), and slower to a first
-result by construction.
-
 \begin{table}[t]
-\caption{The pipeline over \res{20} snapshots: makespan and CPU time (s),
-mean cores busy, peak memory and intermediate storage (MB). Medians of
-\res{2} runs; every run published the expected members and activities.}
+\caption{The pipeline over \res{20} snapshots: makespan and CPU time (s), mean
+cores busy, peak memory and intermediate storage (MB). The scattered encoding
+is at its finest setting, one snapshot per task. Medians of \res{2} runs; every
+run published the expected members and activities.}
 \label{tab:eval-systems}
 \begin{tabular}{lrrrrr}
 \toprule
 System & makespan & CPU & cores & memory & storage \\
 \midrule
-Shell pipeline            & \res{5.3}  & \res{27.0}  & \res{5.2} & \res{1310} & --- \\
-RDF-Connect               & \res{11.3} & \res{23.3}  & \res{2.1} & \res{1499} & --- \\
+Shell pipeline & \res{5.3}  & \res{27.0}  & \res{5.2} & \res{1310} & --- \\
+RDF-Connect    & \res{11.3} & \res{23.3}  & \res{2.1} & \res{1499} & --- \\
 \midrule
-CWL-batch (cwltool)       & \res{9.9}  & \res{19.2}  & \res{1.9} & \res{709}  & \res{14.2} \\
-CWL-batch (StreamFlow)    & \res{8.8}  & \res{15.4}  & \res{1.8} & \res{803}  & \res{14.4} \\
-CWL-batch (Toil)          & \res{28.5} & \res{24.8}  & \res{0.9} & \res{690}  & \res{16.4} \\
-CWL-scatter (cwltool)     & \res{31.4} & \res{204.7} & \res{6.5} & \res{1729} & \res{21.9} \\
-CWL-scatter (StreamFlow)  & \res{32.0} & \res{204.4} & \res{6.4} & \res{1626} & \res{21.9} \\
-CWL-scatter (Toil)        & \res{72.5} & \res{208.1} & \res{3.0} & \res{748}  & \res{24.1} \\
-Nextflow                  & \res{39.8} & \res{239.0} & \res{6.0} & \res{1997} & \res{31.9} \\
+CWL, batch     & \res{9.9}  & \res{19.2}  & \res{1.9} & \res{709}  & \res{14.2} \\
+CWL, scattered & \res{31.4} & \res{204.7} & \res{6.5} & \res{1729} & \res{21.9} \\
+Nextflow       & \res{39.8} & \res{239.0} & \res{6.0} & \res{1997} & \res{31.9} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
+Table~\ref{tab:eval-systems} reports every system over \res{20} snapshots. Over
+the range \res{5} to \res{20} snapshots, the systems that keep their processes
+alive amortise their startup: per snapshot, the shell pipeline falls from
+\res{644} to \res{264}\,ms, RDF-Connect from \res{1355} to \res{566}\,ms, and
+the batch workflow from \res{1250} to \res{496}\,ms. The scattered encoding
+stays near \res{1.6--2.0}\,s per snapshot, since it starts fresh processes for
+every stage of every snapshot.
+
+Makespan and CPU time diverge. The shell pipeline finishes in half
+RDF-Connect's time while using \res{5.2} cores to its \res{2.1}, and spends
+\res{16}\,\% more CPU doing so (\res{27.0} against \res{23.3}\,s). What
+separates the two is therefore concurrency rather than transport: a message
+crosses the orchestrator in under a millisecond (\S\ref{sec:eval-micro}), but a
+channel admits one message at a time, so the stages advance in lock-step.
+Running one stage at a time over whole files is cheaper still (\res{19.2}\,s of
+CPU), and slower to a first result by construction.
+
 Storage grows with the input for every system that passes files, and stays at
-zero for the streaming ones: \res{4.1} to \res{14.2}\,MB for CWL-batch over
-this range and \res{8.7} to \res{31.9}\,MB for Nextflow, which keeps a
+zero for the streaming ones: \res{4.1} to \res{14.2}\,MB for the batch workflow
+over this range and \res{8.7} to \res{31.9}\,MB for Nextflow, which keeps a
 working directory per task. Each writes every stage's output, and here also
 every stage's state, where a streaming system passes both in memory.
 
-How much data one execution handles is the parameter that matters most, and
-the one a workflow author sets by choosing a chunk size.
-Table~\ref{tab:eval-unit} sweeps it over \res{20} snapshots. With one snapshot
-per task, CWL-scatter spends \res{210.5}\,s of CPU and Nextflow
-\res{237.2}\,s; with the whole input as a single task, \res{18.3} and
-\res{31.4}\,s. RDF-Connect works at one snapshot per message throughout, for
-\res{23.3}\,s.
+\paragraph{Granularity.} How much data one invocation handles is the parameter
+that distinguishes the encodings, and the one a workflow author sets by choosing
+a chunk size. Table~\ref{tab:eval-unit} sweeps it over \res{20} snapshots, from
+the whole input in one task to one snapshot per task. Across the sweep the work
+is identical and the output is the same, yet CWL spends \res{11}$\times$ the CPU
+at the fine end and Nextflow \res{7.6}$\times$, because every task starts its own
+JVM and Node.js runtime. RDF-Connect works at one snapshot per message
+throughout, for \res{1.3}$\times$ the CPU of the cheapest batch run and a ninth
+of what CWL spends to match its granularity.
 
 \begin{table}[t]
 \caption{Granularity: CPU time and makespan (s) over \res{20} snapshots, by
-snapshots per task. RDF-Connect and the shell pipeline work a snapshot at a
-time throughout and are given for reference.}
+snapshots per task. RDF-Connect and the shell pipeline work a snapshot at a time
+throughout and are given for reference.}
 \label{tab:eval-unit}
 \begin{tabular}{lrrrr}
 \toprule
 snapshots per task & 1 & 5 & 10 & 20 (all) \\
 \midrule
-CWL-scatter, CPU   & \res{210.5} & \res{61.7} & \res{37.7} & \res{18.3} \\
-CWL-scatter, wall  & \res{35.8}  & \res{13.5} & \res{10.7} & \res{9.7} \\
-Nextflow, CPU      & \res{237.2} & \res{89.5} & \res{60.4} & \res{31.4} \\
-Nextflow, wall     & \res{39.1}  & \res{18.8} & \res{15.7} & \res{13.1} \\
+CWL, CPU        & \res{210.5} & \res{61.7} & \res{37.7} & \res{18.3} \\
+CWL, makespan   & \res{35.8}  & \res{13.5} & \res{10.7} & \res{9.7} \\
+Nextflow, CPU   & \res{237.2} & \res{89.5} & \res{60.4} & \res{31.4} \\
+Nextflow, makespan & \res{39.1} & \res{18.8} & \res{15.7} & \res{13.1} \\
 \midrule
-RDF-Connect, CPU / wall & \res{23.3} / \res{11.3} & \multicolumn{3}{l}{one snapshot per message} \\
-Shell pipeline, CPU / wall & \res{27.0} / \res{5.3} & \multicolumn{3}{l}{one snapshot per message} \\
+RDF-Connect, CPU / makespan & \res{23.3} / \res{11.3} & \multicolumn{3}{l}{one snapshot per message} \\
+Shell pipeline, CPU / makespan & \res{27.0} / \res{5.3} & \multicolumn{3}{l}{one snapshot per message} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-CPU time separates the cost of the work from the cost of the granularity.
-Across the sweep the work is identical and the output is the same, yet CWL
-spends \res{11}$\times$ the CPU at the fine end and Nextflow \res{7.6}$\times$,
-because every task starts its own JVM and Node.js runtime. RDF-Connect reaches
-that granularity for \res{1.3}$\times$ the CPU of the cheapest batch run, and
-for a ninth of what CWL spends to match it.
-
 Nextflow's channels let consumers start before their producers finish, which
-shortens its makespan relative to its own CPU time, but overlap does not
-recover the cost of a process per item: at every chunk size it spends
-\res{17--70}\,\% more CPU than CWL-scatter. Its advantage would grow with the
-work per task, and these tasks are seconds long.
+shortens its makespan relative to its own CPU time, but overlap does not recover
+the cost of a process per item: at every chunk size it spends \res{17--70}\,\%
+more CPU than the scattered CWL workflow. Its advantage would grow with the work
+per task, and these tasks are seconds long.
 
-The descriptions can be compared as well as the runs. Describing this pipeline
-takes \res{110} lines of RDF in a single document for RDF-Connect and
-\res{286} lines across seven files for CWL, where every stage needs a tool
-description besides its configuration and every stateful stage needs its state
-wired between tasks. Inserting a further processor, skolemisation, changes
-\res{10} lines of the one document against \res{31} lines across three files.
-Both modified pipelines were executed rather than only counted.
+\paragraph{The descriptions.} Describing this pipeline takes \res{110} lines of
+RDF in a single document for RDF-Connect and \res{286} lines across seven files
+for CWL, where every stage needs a tool description besides its configuration
+and every stateful stage needs its state wired between tasks. Inserting a
+further processor, skolemisation, changes \res{10} lines of the one document
+against \res{31} lines across three files. Both modified pipelines were executed
+rather than only counted.
 
 % ----------------------------------------------------------------------------
-\subsection{What the systems cannot do}
+\subsection{Keeping the output current}
+\label{sec:eval-fresh}
+
+The pipeline of Section~\ref{sec:eval-pipeline} exists to keep a published
+stream current. Its deployment polls every fifteen seconds and publishes
+continuously. A batch system cannot do that: a step begins when its inputs exist
+as complete files, and a source that never ends has no complete input file. What
+it can do is run again, and the usual arrangement is a scheduled job that
+rebuilds from the data accumulated so far --- the idiom of a cron entry or a
+scheduled CI workflow, which needs no state to travel between runs and leaves
+every invocation self-contained.
+
+We measure that arrangement against the streaming one. Snapshots arrive at a
+fixed rate; the streaming systems consume them as they arrive, and the batch
+workflow is re-run every $k$ arrivals over the whole history. Freshness is the
+time from a snapshot's arrival to the publication of the activities it causes;
+cost is the CPU spent over the window.
+
+\begin{table}[t]
+\caption{Freshness and cost over \res{12} snapshots arriving every \res{3}\,s.
+The scheduled runs rebuild from the whole history each time. \res{Arrivals are
+accelerated relative to the deployment's fifteen-second poll; the shape, not the
+absolute latency, is what transfers.}}
+\label{tab:eval-fresh}
+\begin{tabular}{lrrr}
+\toprule
+& runs & mean freshness & CPU \\
+\midrule
+RDF-Connect, continuous    & 1 & \res{0.3}\,s  & \res{17.5}\,s \\
+Shell pipeline, continuous & 1 & \res{0.4}\,s  & \res{15.0}\,s \\
+Rebuild every 2 arrivals   & 6 & \res{10.7}\,s & \res{86.5}\,s \\
+Rebuild every 4 arrivals   & 3 & \res{11.5}\,s & \res{38.7}\,s \\
+Rebuild every 6 arrivals   & 2 & \res{14.0}\,s & \res{23.6}\,s \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Two things follow. A scheduled rebuild cannot be fresher than its own run takes,
+so its freshness has a floor that streaming does not have: RDF-Connect publishes
+\res{0.3}\,s after a snapshot arrives, while spending less CPU than any of the
+schedules that come closest to it. And the rebuild's cost grows with the
+history: running every $k$ arrivals reprocesses about $n^2/2k$ snapshots where
+streaming processes $n$, so the penalty widens as the day goes on ---
+\res{18\,000 snapshot-processings against 1\,440 over a day of this feed with
+hourly runs}. A deployment that resets its history daily bounds that growth,
+which is a reasonable thing to do and worth saying: the rebuild idiom is
+workable exactly when history is bounded by a cycle of that kind.
+
+The alternative is to carry the state between runs and process only what is new.
+We measured that too: it removes the quadratic term, at \res{11--44}\,\% less
+CPU here, and in exchange the state of three stages must travel between
+invocations as files, which is the arrangement
+Section~\ref{sec:eval-capability} describes. A rebuild also re-mints the
+publication timestamps of members it has already published, so consumers of an
+append-only stream see the whole feed change.
+
+% ----------------------------------------------------------------------------
+\subsection{What cannot be expressed}
 \label{sec:eval-capability}
 
-Some differences are not measurable because one system cannot express the
+Some differences are not a matter of cost, because one system cannot express the
 workload at all. We report these as boundaries.
 
 \paragraph{State across tasks.} Three of the six stages keep state: change
 detection remembers the previous version of every member, the fragmenter
 remembers its buckets, and the publisher appends to a tree it has already
-written. A streaming processor holds that state for the life of the pipeline.
-A scattered task, by contrast, is an isolated execution over staged inputs, and
+written. A streaming processor holds that state for the life of the pipeline. A
+scattered task, by contrast, is an isolated execution over staged inputs, and
 neither CWL nor Nextflow can pass a value from one such task to the next. These
 three stages therefore run as single tasks over the gathered stream in both
-systems, and their state travels between stages as staged directories and
-files. Only the two stateless stages at the front of the pipeline can be
-distributed, and the state a streaming processor holds in memory appears in the
-other systems as intermediate storage. This follows from the execution model,
-so it holds for workflow managers of this kind generally.
+systems, and their state travels between stages as staged directories and files.
+Only the two stateless stages at the front of the pipeline can be distributed,
+and the state a streaming processor holds in memory appears in the other systems
+as intermediate storage. This follows from the execution model, so it holds for
+workflow managers of this kind generally.
 
 \paragraph{Order.} Change detection compares each snapshot against the one
 before it, which presumes the stream arrives in order. A shell pipe and an
@@ -345,51 +397,47 @@ occurred. The workflow is correct once the gather is sorted explicitly, but the
 failure is silent: the output remains well-formed RDF and the member count is
 unchanged.
 
-\paragraph{Unbounded input.} A CWL step begins when its input files are
-complete. A source that never ends has no complete input file, so the pipeline
-of Section~\ref{sec:eval-pipeline} cannot run in CWL in the mode its deployment
-actually uses, where it polls an API every fifteen seconds and publishes
-continuously. What can be run instead is a scheduled re-execution over
-accumulated dumps, which is a different program with different freshness
-characteristics.
-
 \paragraph{Portability of a valid description.} The same valid CWL workflow did
-not behave identically on three runners. StreamFlow wrote a tool's standard
+not behave identically on three engines. StreamFlow wrote a tool's standard
 error into the file capturing its standard output, and staged a gathered array
 of files into one directory, where files with the same name overwrote each
-other; both silently produced wrong output. It also passes a step's command
-line to \texttt{sh} as a single argument, so a gather over \res{1\,000} files
-exceeds the operating system's limit and fails after every task has run. Toil
-retries a failed job with more memory by default, which hides failures in
-timings. The workarounds were small, and harmless on the other runners, but a
-portable description did not give us portable execution.
+other; both silently produced wrong output. It also passes a step's command line
+to \texttt{sh} as a single argument, so a gather over \res{1\,000} files exceeds
+the operating system's limit and fails after every task has run. Toil retries a
+failed job with more memory by default, which hides failures in timings. The
+workarounds were small, and harmless on the other engines, but a portable
+description did not give us portable execution.
 
 % ----------------------------------------------------------------------------
 \subsection{Threats to validity}
 \label{sec:eval-threats}
 
-\emph{One implementation is not a paradigm.} The identical workflow ran on
-three CWL engines, of which \res{two agree within 10\,\%}, and the same
-pipeline ran on Nextflow, whose execution model differs. The costs we report
-are therefore properties of executing a pipeline as scheduled tasks over files,
-not of any one engine.
+\emph{One implementation is not a paradigm.} The identical workflow ran on three
+CWL engines, two of which agree to within \res{0.2}\,\% of CPU time, and the
+same pipeline ran on Nextflow, whose execution model differs. The costs we
+report are therefore properties of executing a pipeline as scheduled tasks over
+files, not of any one engine.
 
-\emph{We wrote RDF-Connect.} The parameter grid was fixed before the final
-runs; the benchmark, the recorded input and all raw measurements are published;
-and the cases where RDF-Connect loses are reported: the shell pipeline is
-faster everywhere, and CWL is faster once its tasks are large.
+\emph{We wrote RDF-Connect.} The parameter grid was fixed before the final runs;
+the benchmark, the recorded input and all raw measurements are published; and
+the cases where RDF-Connect loses are reported: the shell pipeline is faster
+everywhere, and a batch workflow is cheaper in CPU whenever the whole input can
+be processed at once.
 
 \emph{Parallelism differs.} The systems take different shares of the machine:
-\res{4.8} cores for the shell pipeline, \res{6.9} for CWL-scatter, \res{2.6}
-for RDF-Connect. Makespan alone would flatter whichever takes more, so we
-report CPU time from the kernel's cgroup accounting alongside it, covering
+\res{5.2} cores for the shell pipeline, \res{6.5} for the scattered workflow,
+\res{2.1} for RDF-Connect. Makespan alone would flatter whichever takes more, so
+we report CPU time from the kernel's cgroup accounting alongside it, covering
 every descendant process including the short-lived ones a scattered workflow
 starts.
 
+\emph{Encoding choice.} There is no canonical way to run a streaming workload in
+a batch system. We report a family of encodings along one parameter rather than
+a single point, and the granularity sweep shows what the choice is worth.
+
 \emph{One machine, one dataset.} The pipeline is one deployment among the
-several of Section~5, and the recorded input covers \res{24}\,h of one API.
-Its stations change slowly, so the feed is dominated by first observations
-rather than updates; a faster-moving source would put more load on the stages
-after change detection.
-The microbenchmark of Section~\ref{sec:eval-micro} is what generalises the
-per-message cost beyond it.
+several of Section~5, and the recorded input covers \res{24}\,h of one API. Its
+stations change slowly, so the feed is dominated by first observations rather
+than updates; a faster-moving source would put more load on the stages after
+change detection. The microbenchmark of Section~\ref{sec:eval-micro} is what
+generalises the per-message cost beyond it.

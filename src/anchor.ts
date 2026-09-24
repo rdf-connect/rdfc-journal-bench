@@ -84,6 +84,8 @@ type BluebikeSourceArgs = {
   focusPath: string
   input: string
   resultPath: string
+  /** Milliseconds between snapshots; 0 sends them as fast as they are read. */
+  arrivalMs?: number
 }
 
 /**
@@ -107,10 +109,22 @@ export class BluebikeSource extends Processor<BluebikeSourceArgs> {
 
     let count = 0
     let firstAbs = 0
+    // When the source is paced, each snapshot's arrival is recorded, so that
+    // the freshness experiment can measure publication against arrival.
+    const arrivals: number[] = []
+    const pace = Number(this.arrivalMs ?? 0)
+    const started = nowAbs()
+
     const lines = createInterface({ input: createReadStream(this.input), crlfDelay: Infinity })
     for await (const line of lines) {
       if (!line.trim()) continue
+      if (pace > 0) {
+        const due = started + count * pace
+        const wait = due - nowAbs()
+        if (wait > 0) await new Promise((res) => setTimeout(res, wait))
+      }
       if (count === 0) firstAbs = nowAbs()
+      arrivals.push(nowAbs())
       await this.shapeWriter.buffer(shape)
       await this.focusWriter.buffer(focus)
       await this.writer.buffer(encoder.encode(asArray(line)))
@@ -121,7 +135,7 @@ export class BluebikeSource extends Processor<BluebikeSourceArgs> {
 
     writeFileSync(
       this.resultPath,
-      JSON.stringify({ role: 'source', count, firstAbs, endAbs }, null, 2),
+      JSON.stringify({ role: 'source', count, firstAbs, endAbs, arrivals }, null, 2),
     )
   }
 }

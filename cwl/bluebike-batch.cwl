@@ -10,6 +10,8 @@ inputs:
   shape: File
   focus: File
   feedState: Directory
+  # A scheduled re-run appends to what it published last time.
+  ldes: [ "null", Directory ]
   validateStep: string
   changesStep: string
   sdsifyStep: string
@@ -53,5 +55,9 @@ steps:
     out: [bucketed, metadataOut, newState]
   write:
     run: bb-writer.cwl
-    in: { bucketed: bucketize/bucketed, metadata: bucketize/metadataOut, step: writerStep }
+    in:
+      bucketed: bucketize/bucketed
+      metadata: bucketize/metadataOut
+      step: writerStep
+      ldes: ldes
     out: [published]

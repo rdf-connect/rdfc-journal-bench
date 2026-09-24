@@ -289,6 +289,82 @@ snapshot is mapped while the previous one is validated.
   process per task. Whether the overlap pays off at larger n is the open
   question.
 
+**Freshness against cost, measured (2026-09-24).** `bench/run-freshness.ts`.
+Snapshots arrive every 1.5 s; the streaming arms consume them as they arrive,
+and the batch workflow is re-run every k arrivals over what accumulated since
+its last run, carrying the feed state and the published tree forward. 12
+snapshots, all arms publishing the expected 70 creates and 27 updates:
+
+| Arm | runs | mean freshness | p95 | CPU |
+|---|---:|---:|---:|---:|
+| rdfc, continuous | 1 | 0.3 s | 0.9 s | 17.1 s |
+| shell, continuous | 1 | 0.4 s | 1.9 s | 15.0 s |
+| cwl-batch every 1 arrival | 12 | 20.0 s | 37.2 s | 94.5 s |
+| cwl-batch every 2 | 6 | 10.6 s | 16.5 s | 54.4 s |
+| cwl-batch every 4 | 3 | 7.6 s | 10.1 s | 29.3 s |
+| cwl-batch every 6 | 2 | 9.2 s | 13.0 s | 19.6 s |
+| cwl-batch every 12 | 1 | 15.3 s | 23.5 s | 12.7 s |
+
+- **The curve is U-shaped.** A run of this pipeline takes about 5 s, so
+  scheduling below that interval makes freshness *worse*: the runs queue and a
+  backlog builds. At one run per arrival the mean freshness is 20 s, worse than
+  running once over everything, for 7× the CPU.
+- **Scheduled re-execution has a freshness floor** set by its own run time.
+  RDF-Connect is below that floor (0.3 s) while spending less CPU than the
+  schedules that come closest (every 2: 54.4 s, every 4: 29.3 s).
+- This is the comparison a reviewer accepts as fair: nobody writes
+  scatter-per-record, but everybody recognises a cron job.
+
+**Full rebuild versus incremental scheduling** (12 snapshots every 3 s, so runs
+fit between arrivals; all runs published the expected 70 creates / 27 updates):
+
+| Schedule | runs | mean freshness | CPU | vs incremental |
+|---|---:|---:|---:|---:|
+| rdfc, continuous | 1 | 0.3 s | 17.5 s | — |
+| incremental, every 2 | 6 | 7.5 s | 60.1 s | — |
+| rebuild, every 2 | 6 | 10.7 s | 86.5 s | +44 % |
+| incremental, every 4 | 3 | 10.1 s | 30.3 s | — |
+| rebuild, every 4 | 3 | 11.5 s | 38.7 s | +28 % |
+| incremental, every 6 | 2 | 13.4 s | 21.3 s | — |
+| rebuild, every 6 | 2 | 14.0 s | 23.6 s | +11 % |
+
+Rebuilding from the whole history each time is the natural batch idiom: no
+state travels between runs, every invocation is self-contained and
+reproducible, and the workflow needs none of the state wiring. It produces the
+same output. It costs more, and the gap grows with how much history has
+accumulated: +11 % at two runs, +44 % at six.
+
+**The scaling matters more than these numbers.** Rebuilding every k arrivals
+processes about n²/2k snapshots where streaming processes n. At this size the
+per-run startup still dominates, which is why the penalty is tens of per cent
+rather than several times. Over a day of the real feed (1 440 snapshots,
+hourly runs) it is 18 000 snapshot-processings against 1 440, and each run is
+slower than the last, so freshness degrades through the day as well.
+
+**Caveats to fix before this goes in the paper:**
+- The scheduler waits for the previous run to finish, modelling a job with a
+  concurrency guard. A scheduler that overlaps runs would trade CPU for
+  freshness differently, and cannot share the feed state.
+- The shell arm's arrival clock starts at spawn, so the JVM's startup is
+  charged to its first snapshots (p95 1.9 s against rdfc's 0.9 s). Warm up
+  before pacing begins.
+- 12 snapshots is small; the p95 rests on few samples. Run longer on the
+  server, and with more than one repetition.
+- The replay is accelerated (12 snapshots of a once-a-minute feed replayed
+  every 1.5--3 s, i.e. 20--40×). Freshness should be reported in units of the
+  arrival interval, or measured at a rate where a run fits comfortably between
+  arrivals, which is the deployment's regime.
+- The U-shape reported for the 1.5 s replay (more frequent scheduling giving
+  *worse* freshness) is the overload regime: it appears when a run takes longer
+  than the gap between arrivals. Report it as its own case, not as the general
+  behaviour.
+- A rebuild re-mints `as:published` for members it has already published, so
+  consumers of an append-only stream would see the whole feed change. Worth
+  stating alongside the cost, since it is a correctness argument rather than a
+  performance one.
+- The quadratic cost of rebuilding is a projection beyond n = 12; measure it at
+  a few hundred snapshots on the server to show the curve.
+
 **Capability finding — stateful stages cannot be scattered.** Change detection
 keeps the previous state of every member, the bucketiser keeps its fragment
 state, and the writer appends to a published tree. CWL scatter runs its tasks

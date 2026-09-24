@@ -1,17 +1,25 @@
 [
   {
-    "arm": "cwl-scatter",
-    "snapshots": 30,
-    "unit": 30,
+    "arm": "nextflow",
+    "snapshots": 5,
+    "unit": 5,
     "rep": 0,
     "ok": true,
-    "wallMs": 9059.756597,
-    "cpuMs": 20997.187,
-    "cores": 2.317632573810305,
-    "peakRssMb": 839.4453125,
-    "peakDiskMb": 31.92922878265381,
+    "wallMs": 11252.069828,
+    "cpuMs": 31208.211,
+    "cores": 2.773552908669347,
+    "peakRssMb": 599.02734375,
+    "peakDiskMb": 8.588574409484863,
     "members": 70,
     "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
     "correct": true
   }
 ]

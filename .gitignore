@@ -18,3 +18,8 @@ results/big/
 # Recorded source data (regenerate with bench/record-bluebike.ts)
 data/
 results/runs-bluebike/
+# Scratch left behind by ad-hoc runs outside the harness
+ldes-output/
+bucket-state.json
+testing/
+test.sh
