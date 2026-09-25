@@ -13,7 +13,9 @@
  *
  * Freshness is measured per snapshot, from its arrival to the moment its
  * activities are published. The streaming arms are polled; a scheduled run
- * publishes when it finishes, so its snapshots become visible together.
+ * publishes when it finishes, so its snapshots become visible together. A
+ * snapshot that causes no activity has nothing to publish and no freshness:
+ * it is recorded as NaN and left out of the summaries.
  *
  * Cost is the CPU the arm spends over the whole window (bench/proc.ts).
  *
@@ -55,6 +57,7 @@ type Result = {
   /** Per snapshot, arrival to publication. */
   freshnessMs: number[]
   meanFreshnessMs: number
+  medianFreshnessMs: number
   p95FreshnessMs: number
   invocations: number
   activities: { creates: number; updates: number }
@@ -66,10 +69,18 @@ const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms))
 const now = () => performance.timeOrigin + performance.now()
 
 const mean = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : NaN)
-const p95 = (xs: number[]) => {
+const quantile = (q: number) => (xs: number[]) => {
   if (!xs.length) return NaN
   const s = [...xs].sort((a, b) => a - b)
-  return s[Math.min(s.length - 1, Math.floor(0.95 * s.length))]
+  return s[Math.min(s.length - 1, Math.floor(q * s.length))]
+}
+const median = quantile(0.5)
+const p95 = quantile(0.95)
+
+/** Summary statistics over the snapshots that caused an activity. */
+function summarise(freshness: number[]) {
+  const xs = freshness.filter((x) => !isNaN(x))
+  return { meanFreshnessMs: mean(xs), medianFreshnessMs: median(xs), p95FreshnessMs: p95(xs) }
 }
 
 /** Cumulative activities expected once snapshot i has been processed. */
@@ -83,11 +94,21 @@ function cumulativeExpected(n: number): number[] {
 }
 
 /**
+ * Whether snapshot i causes any activity. Publication is matched by count, so
+ * a snapshot that adds nothing would otherwise be credited with the moment the
+ * previous one was published, a full arrival interval before it arrived.
+ */
+function causesActivity(cumulative: number[]): boolean[] {
+  return cumulative.map((c, i) => c > (i > 0 ? cumulative[i - 1] : 0))
+}
+
+/**
  * Watches the published LDES and records when each snapshot's activities
  * appear, by matching the published count against what each prefix implies.
  */
 function watchPublication(dir: string, cumulative: number[], arrivals: () => number[]) {
   const published: number[] = new Array(cumulative.length).fill(NaN)
+  const causes = causesActivity(cumulative)
   let next = 0
   const timer = setInterval(() => {
     if (next >= cumulative.length) return
@@ -95,7 +116,7 @@ function watchPublication(dir: string, cumulative: number[], arrivals: () => num
     const total = a.creates + a.updates
     const t = now()
     while (next < cumulative.length && total >= cumulative[next]) {
-      published[next] = t
+      if (causes[next]) published[next] = t
       next++
     }
   }, 100)
@@ -171,8 +192,7 @@ async function runStreaming(
     wallMs: run.wallMs,
     cpuMs: run.cpuMs,
     freshnessMs: freshness,
-    meanFreshnessMs: mean(freshness.filter((x) => !isNaN(x))),
-    p95FreshnessMs: p95(freshness.filter((x) => !isNaN(x))),
+    ...summarise(freshness),
     invocations: 1,
     activities: acts,
     expected,
@@ -198,6 +218,7 @@ async function runScheduled(
   const all = snapshots(n).map((s) => JSON.stringify(s.stations))
   const arrivals: number[] = []
   const freshness: number[] = new Array(n).fill(NaN)
+  const causes = causesActivity(cumulativeExpected(n))
   let cpuMs = 0
   let invocations = 0
   let done = 0
@@ -246,7 +267,7 @@ async function runScheduled(
     invocations++
 
     const finished = now()
-    for (let i = done; i < batchEnd; i++) freshness[i] = finished - arrivals[i]
+    for (let i = done; i < batchEnd; i++) if (causes[i]) freshness[i] = finished - arrivals[i]
     done = batchEnd
   }
 
@@ -261,8 +282,7 @@ async function runScheduled(
     wallMs: now() - start,
     cpuMs,
     freshnessMs: freshness,
-    meanFreshnessMs: mean(freshness),
-    p95FreshnessMs: p95(freshness),
+    ...summarise(freshness),
     invocations,
     activities: acts,
     expected,
@@ -302,14 +322,15 @@ async function main() {
 
   const fmt = (x: number, d = 1, w = 12) => (isNaN(x) ? '-'.padStart(w) : x.toFixed(d).padStart(w))
   console.log(
-    `\n${'arm'.padEnd(22)}${'runs'.padStart(6)}${'mean fresh s'.padStart(14)}${'p95 fresh s'.padStart(13)}` +
+    `\n${'arm'.padEnd(22)}${'runs'.padStart(6)}${'mean fresh s'.padStart(14)}${'median s'.padStart(10)}${'p95 fresh s'.padStart(13)}` +
       `${'CPU s'.padStart(9)}${'C/U'.padStart(10)}${'correct'.padStart(9)}`,
   )
-  console.log('-'.repeat(83))
+  console.log('-'.repeat(93))
   for (const r of results) {
     const label = r.interval ? `${r.arm} every ${r.interval}` : `${r.arm} (continuous)`
     console.log(
       `${label.padEnd(22)}${String(r.invocations).padStart(6)}${fmt(r.meanFreshnessMs / 1000, 1, 14)}` +
+        `${fmt(r.medianFreshnessMs / 1000, 1, 10)}` +
         `${fmt(r.p95FreshnessMs / 1000, 1, 13)}${fmt((r.cpuMs ?? NaN) / 1000, 1, 9)}` +
         `${`${r.activities.creates}/${r.activities.updates}`.padStart(10)}${(r.correct ? 'yes' : 'NO').padStart(9)}`,
     )
