@@ -72,11 +72,13 @@ node dist/bench/run-bluebike.js --ns="$SIZES" --reps="$REPS" --arms="$ARMS" \
 echo
 echo "== 2/3 granularity: snapshots per task $UNITS at ${LARGEST} snapshots"
 : > results/server-granularity.log
+# Each call writes its own raw file: results/bluebike.json is the size sweep's.
+mkdir -p results/granularity
 for u in ${UNITS//,/ }; do
   for arm in cwl-scatter nextflow; do
     [ "$arm" = nextflow ] && [ ! -x vendor/nextflow ] && continue
     node dist/bench/run-bluebike.js --ns="$LARGEST" --reps="$REPS" --arms="$arm" --unit="$u" \
-      2>/dev/null | grep -E "^ +$LARGEST " | sed "s/^/unit=$u /" | tee -a results/server-granularity.log
+      --out="results/granularity/u$u-$arm.json" 2>/dev/null | grep -E "^ +$LARGEST " | sed "s/^/unit=$u /" | tee -a results/server-granularity.log
   done
 done
 
@@ -88,5 +90,5 @@ node dist/bench/run-freshness.js --n="$FRESH_N" --arrival="$ARRIVAL" \
 
 echo
 echo "== done. results/server-{size,granularity,freshness}.log"
-echo "   raw: results/bluebike.json, results/freshness.json"
+echo "   raw: results/bluebike.json, results/granularity/*.json, results/freshness.json"
 echo "   every run reports 'correct'; a run that is not correct is not a result."

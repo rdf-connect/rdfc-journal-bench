@@ -13,7 +13,7 @@
  * for, is `du` over the given directories every 250 ms.
  */
 import { execFile, execFileSync, spawn } from 'child_process'
-import { createWriteStream, existsSync, readFileSync, readdirSync } from 'fs'
+import { createWriteStream, existsSync, readFileSync, readdirSync, statSync } from 'fs'
 import { join } from 'path'
 
 export type PipeRun = {
@@ -30,6 +30,8 @@ export type PipeRun = {
   peakDiskMb?: number
   /** Killed after `timeoutMs`. */
   timedOut?: boolean
+  /** Killed because `stallFile` stopped growing for `stallMs`. */
+  stalled?: boolean
   stderr: string
 }
 
@@ -40,6 +42,13 @@ export type PipeOptions = {
   env?: Record<string, string>
   /** Directories whose peak total size to report (intermediate files). */
   diskDirs?: string[]
+  /**
+   * Kill the tree once this file has not grown for `stallMs`. For commands
+   * that log continuously while they work, so a hang is caught in minutes
+   * rather than at `timeoutMs`.
+   */
+  stallFile?: string
+  stallMs?: number
 }
 
 function children(pid: number): number[] {
@@ -203,6 +212,28 @@ export function runPipe(
           } catch {}
         }, opts.timeoutMs)
       : undefined
+    let stalled = false
+    let lastSize = -1
+    let lastChange = performance.now()
+    const stallTimer =
+      opts.stallFile && opts.stallMs
+        ? setInterval(() => {
+            let size = -1
+            try {
+              size = statSync(opts.stallFile!).size
+            } catch {}
+            if (size !== lastSize) {
+              lastSize = size
+              lastChange = performance.now()
+            } else if (performance.now() - lastChange > opts.stallMs!) {
+              stalled = true
+              clearInterval(stallTimer)
+              try {
+                process.kill(-child.pid!, 'SIGKILL')
+              } catch {}
+            }
+          }, 1000)
+        : undefined
     const out = createWriteStream(outFile)
 
     const stamps: number[] = []
@@ -222,6 +253,7 @@ export function runPipe(
     child.on('close', (code) => {
       const wallMs = performance.now() - t0
       if (timer) clearTimeout(timer)
+      if (stallTimer) clearInterval(stallTimer)
       const sampledRss = stopRss()
       const cg = stopCgroup?.()
       const peakDiskMb = stopDisk?.()
@@ -236,6 +268,7 @@ export function runPipe(
           cores: cg ? cg.cpuMs / wallMs : undefined,
           peakDiskMb,
           timedOut,
+          stalled,
           stderr,
         }),
       )

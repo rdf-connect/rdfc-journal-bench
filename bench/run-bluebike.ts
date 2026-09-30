@@ -3,7 +3,7 @@
  * Experiment 2, deep pipeline: the Blue-bike chain in every arm.
  *
  *   node dist/bench/run-bluebike.js [--ns=5,10,20] [--reps=3]
- *        [--arms=shell,rdfc,cwl-batch,cwl-scatter] [--unit=1]
+ *        [--arms=shell,rdfc,cwl-batch,cwl-scatter] [--unit=1] [--out=results/bluebike.json]
  *
  * Every arm runs the same six published processors over the same recorded
  * snapshots (bench/bluebike.ts) and is checked against an oracle derived from
@@ -41,6 +41,12 @@ const RESULTS = join(ROOT, 'results')
 const RUNS = process.env.BENCH_RUNS ?? join(RESULTS, 'runs-bluebike')
 const PIPELINES = join(ROOT, 'pipelines')
 const TIMEOUT_MS = 30 * 60 * 1000
+/**
+ * A healthy rdfc run never goes more than a few seconds without a log line;
+ * one that hangs on shutdown (a close lost between runners) goes silent. Kill
+ * it after this long rather than waiting for TIMEOUT_MS.
+ */
+const STALL_MS = 120 * 1000
 
 type Run = {
   arm: Arm
@@ -74,6 +80,7 @@ async function runOnce(arm: Arm, n: number, unit: number, rep: number): Promise<
   const expected = expectedMembers(n)
 
   let cmd: string
+  let stallFile: string | undefined
   let path = join(ROOT, 'cwl', 'bin')
   const diskDirs: string[] = []
   switch (arm) {
@@ -92,6 +99,7 @@ async function runOnce(arm: Arm, n: number, unit: number, rep: number): Promise<
       writeFileSync(ttlPath, ttl)
       // From the repo root: the JVM runner's command resolves ./vendor relatively.
       cmd = `npx rdfc ${ttlPath} > ${runDir}/log.txt 2>&1`
+      stallFile = join(runDir, 'log.txt')
       break
     }
     case 'nextflow':
@@ -119,6 +127,8 @@ async function runOnce(arm: Arm, n: number, unit: number, rep: number): Promise<
     env: { PATH: `${path}:${process.env.PATH}`, JAVA_OPTS },
     diskDirs: diskDirs.length ? diskDirs : undefined,
     timeoutMs: TIMEOUT_MS,
+    stallFile,
+    stallMs: STALL_MS,
   })
 
   const dir = ldesDir(arm, runDir)
@@ -149,11 +159,13 @@ async function runOnce(arm: Arm, n: number, unit: number, rep: number): Promise<
     correct,
     stderr: run.timedOut
       ? `timed out after ${TIMEOUT_MS / 60000} min`
-      : run.code !== 0
-        ? run.stderr.trim().slice(-500) || `exit ${run.code}; logs in ${runDir}`
-        : correct
-          ? undefined
-          : `published ${published.size} members (${acts.creates}C/${acts.updates}U), ` +
+      : run.stalled
+        ? `hung: no log output for ${STALL_MS / 1000} s, killed after ${(run.wallMs / 1000).toFixed(0)} s`
+        : run.code !== 0
+          ? run.stderr.trim().slice(-500) || `exit ${run.code}; logs in ${runDir}`
+          : correct
+            ? undefined
+            : `published ${published.size} members (${acts.creates}C/${acts.updates}U), ` +
             `expected ${expected.size} (${wantActs.creates}C/${wantActs.updates}U)`,
   }
 }
@@ -171,6 +183,7 @@ async function main() {
       reps: { type: 'string', default: '3' },
       arms: { type: 'string', default: 'shell,rdfc,cwl-batch,cwl-scatter' },
       unit: { type: 'string', default: '1' },
+      out: { type: 'string' },
     },
   })
   const ns = values.ns!.split(',').map(Number)
@@ -193,7 +206,7 @@ async function main() {
   }
   process.stderr.write('\n')
 
-  const outPath = join(RESULTS, 'bluebike.json')
+  const outPath = values.out ? resolve(values.out) : join(RESULTS, 'bluebike.json')
   writeFileSync(outPath, JSON.stringify(runs, null, 2))
 
   console.log(
