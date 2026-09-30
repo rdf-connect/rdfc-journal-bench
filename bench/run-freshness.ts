@@ -157,28 +157,35 @@ async function runStreaming(
     cmd = `npx rdfc ${ttlPath} > ${runDir}/log.txt 2>&1`
   } else {
     // The shell arm is paced through a FIFO: the pipeline reads it as an
-    // ordinary file while a writer feeds it one snapshot at a time.
+    // ordinary file while a writer feeds it one snapshot at a time. Like the
+    // RDF-Connect source, the writer paces on a fixed schedule and records when
+    // it hands each snapshot over, so both arms measure from the same event.
     const fifo = join(runDir, 'arrivals.fifo')
     const pacer =
       `node -e 'const fs=require("fs");const ls=fs.readFileSync(process.argv[1],"utf8")` +
-      `.split("\\n").filter(Boolean);const out=fs.createWriteStream(process.argv[2]);let i=0;` +
-      `const w=()=>{if(i>=ls.length){out.end();return};out.write(ls[i++]+"\\n");` +
-      `setTimeout(w,${arrivalMs})};w()' ${input} ${fifo}`
+      `.split("\\n").filter(Boolean);const fd=fs.openSync(process.argv[2],"w");` +
+      `const now=()=>performance.timeOrigin+performance.now();const t0=now();const at=[];` +
+      `const w=(i)=>{if(i>=ls.length){fs.writeFileSync(process.argv[3],JSON.stringify(at));` +
+      `fs.closeSync(fd);return};at.push(now());fs.writeSync(fd,ls[i]+"\\n");` +
+      `setTimeout(()=>w(i+1),Math.max(0,t0+(i+1)*${arrivalMs}-now()))};w(0)'` +
+      ` ${input} ${fifo} ${join(runDir, 'arrivals.json')}`
     cmd = `rm -f ${fifo}; mkfifo ${fifo}; { ${pacer} & } ; ${shellCommand(fifo, runDir)}`
   }
 
-  const arrivalsOf = () => {
+  // When each snapshot was handed to the pipeline: recorded by the RDF-Connect
+  // source, or by the shell arm's pacer.
+  const arrivalsOf = (): number[] => {
     try {
-      const src = JSON.parse(readFileSync(join(runDir, 'source.json'), 'utf8'))
-      return src.arrivals as number[]
+      return JSON.parse(readFileSync(join(runDir, 'source.json'), 'utf8')).arrivals
+    } catch {}
+    try {
+      return JSON.parse(readFileSync(join(runDir, 'arrivals.json'), 'utf8'))
     } catch {
-      // The shell arm has no source processor: arrivals are the pacer's clock.
-      return Array.from({ length: n }, (_, i) => start + i * arrivalMs)
+      return []
     }
   }
 
   const stop = watchPublication(ldesDir(arm as never, runDir), cumulative, arrivalsOf)
-  const start = now()
   const run = await runPipe(cmd, '/dev/null', join(runDir, 'stdout.txt'), { env: { JAVA_OPTS } })
   await sleep(300) // let the watcher see the last write
   const freshness = stop()
@@ -298,6 +305,7 @@ async function main() {
       arms: { type: 'string', default: 'shell,rdfc' },
       intervals: { type: 'string', default: '5,20' },
       modes: { type: 'string', default: 'incremental' },
+      out: { type: 'string', default: join(RESULTS, 'freshness.json') },
     },
   })
   const n = Number(values.n)
@@ -306,19 +314,21 @@ async function main() {
   mkdirSync(PIPELINES, { recursive: true })
 
   const results: Result[] = []
-  for (const arm of values.arms!.split(',')) {
+  // An empty list skips that part: --modes= runs the streaming arms only.
+  const list = (s: string) => s.split(',').filter(Boolean)
+  for (const arm of list(values.arms!)) {
     process.stderr.write(`  ${arm}, continuous\r`)
     results.push(await runStreaming(arm as 'rdfc' | 'shell', n, arrivalMs))
   }
-  for (const mode of values.modes!.split(',') as ('incremental' | 'rebuild')[]) {
-    for (const interval of values.intervals!.split(',').map(Number)) {
+  for (const mode of list(values.modes!) as ('incremental' | 'rebuild')[]) {
+    for (const interval of list(values.intervals!).map(Number)) {
       process.stderr.write(`  cwl ${mode}, every ${interval} arrivals\r`)
       results.push(await runScheduled(n, arrivalMs, interval, mode))
     }
   }
   process.stderr.write('\n')
 
-  writeFileSync(join(RESULTS, 'freshness.json'), JSON.stringify(results, null, 2))
+  writeFileSync(values.out!, JSON.stringify(results, null, 2))
 
   const fmt = (x: number, d = 1, w = 12) => (isNaN(x) ? '-'.padStart(w) : x.toFixed(d).padStart(w))
   console.log(
