@@ -1,0 +1,117 @@
+[
+  {
+    "arm": "nextflow",
+    "snapshots": 60,
+    "unit": 30,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 59155.34095699999,
+    "cpuMs": 138483.851,
+    "cores": 2.341020248715393,
+    "peakRssMb": 1662.609375,
+    "peakDiskMb": 94.15145969390869,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 60,
+    "unit": 30,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 59263.319476000004,
+    "cpuMs": 136252.906,
+    "cores": 2.299110262549141,
+    "peakRssMb": 1627.0703125,
+    "peakDiskMb": 94.15145969390869,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 60,
+    "unit": 30,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 58120.615569,
+    "cpuMs": 137669.326,
+    "cores": 2.3686832056443183,
+    "peakRssMb": 1660.984375,
+    "peakDiskMb": 94.15145969390869,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 60,
+    "unit": 30,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 57635.41844500002,
+    "cpuMs": 134569.997,
+    "cores": 2.3348489632016234,
+    "peakRssMb": 1686.80078125,
+    "peakDiskMb": 94.15145969390869,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 60,
+    "unit": 30,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 58620.629724,
+    "cpuMs": 136790.948,
+    "cores": 2.333495028013937,
+    "peakRssMb": 1665.45703125,
+    "peakDiskMb": 94.15145969390869,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  }
+]

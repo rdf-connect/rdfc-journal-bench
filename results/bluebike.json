@@ -1,15 +1,14 @@
 [
   {
-    "arm": "nextflow",
+    "arm": "shell",
     "snapshots": 5,
-    "unit": 5,
+    "unit": 1,
     "rep": 0,
     "ok": true,
-    "wallMs": 11252.069828,
-    "cpuMs": 31208.211,
-    "cores": 2.773552908669347,
-    "peakRssMb": 599.02734375,
-    "peakDiskMb": 8.588574409484863,
+    "wallMs": 11579.109959,
+    "cpuMs": 33172.15,
+    "cores": 2.864827272342859,
+    "peakRssMb": 974.59375,
     "members": 70,
     "expected": 70,
     "activities": {
@@ -19,6 +18,5109 @@
     "expectedActivities": {
       "creates": 70,
       "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 10574.954055,
+    "cpuMs": 30015.159,
+    "cores": 2.8383252394187353,
+    "peakRssMb": 1012.83984375,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 9189.563289999998,
+    "cpuMs": 28663.981,
+    "cores": 3.119188594216647,
+    "peakRssMb": 945.06640625,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 9784.501128000004,
+    "cpuMs": 30440.537,
+    "cores": 3.111097500197456,
+    "peakRssMb": 936.5078125,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 10921.221329,
+    "cpuMs": 32815.072,
+    "cores": 3.0047071670330032,
+    "peakRssMb": 985.16796875,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 27680.654714000004,
+    "cpuMs": 47861.065,
+    "cores": 1.7290438211995536,
+    "peakRssMb": 1371.87890625,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 22711.741524000012,
+    "cpuMs": 42740.085,
+    "cores": 1.8818497452005423,
+    "peakRssMb": 1306.83984375,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 27103.62301000001,
+    "cpuMs": 48261.235,
+    "cores": 1.780619328353032,
+    "peakRssMb": 1392.9765625,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 22956.455912000005,
+    "cpuMs": 43027.006,
+    "cores": 1.874287832796897,
+    "peakRssMb": 1387.23828125,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 26886.635935,
+    "cpuMs": 49019.038,
+    "cores": 1.8231748337168834,
+    "peakRssMb": 1391.6015625,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 20301.31609400001,
+    "cpuMs": 31904.832,
+    "cores": 1.5715647129611154,
+    "peakRssMb": 400.48828125,
+    "peakDiskMb": 4.137503623962402,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 19771.540169999993,
+    "cpuMs": 31041.379,
+    "cores": 1.5700030818590502,
+    "peakRssMb": 391.25390625,
+    "peakDiskMb": 4.127743721008301,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 22426.507389999984,
+    "cpuMs": 35856.671,
+    "cores": 1.5988522143215464,
+    "peakRssMb": 378.6484375,
+    "peakDiskMb": 4.1160430908203125,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 19669.68435700002,
+    "cpuMs": 31147.724,
+    "cores": 1.5835395949765299,
+    "peakRssMb": 381.79296875,
+    "peakDiskMb": 4.20157527923584,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 19711.259128000005,
+    "cpuMs": 31525.523,
+    "cores": 1.5993662705807432,
+    "peakRssMb": 376.07421875,
+    "peakDiskMb": 4.236503601074219,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 34503.08076899999,
+    "cpuMs": 83724.426,
+    "cores": 2.4265782687795214,
+    "peakRssMb": 693.046875,
+    "peakDiskMb": 6.1513824462890625,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 34271.489607000025,
+    "cpuMs": 82837.572,
+    "cores": 2.4170986715173375,
+    "peakRssMb": 731.8671875,
+    "peakDiskMb": 6.1513824462890625,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 31900.563762000005,
+    "cpuMs": 78614.528,
+    "cores": 2.464361714310696,
+    "peakRssMb": 745.5390625,
+    "peakDiskMb": 5.998630523681641,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 34767.96371100005,
+    "cpuMs": 82171.178,
+    "cores": 2.3634164681897176,
+    "peakRssMb": 801.59375,
+    "peakDiskMb": 6.078512191772461,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 31444.100902000035,
+    "cpuMs": 77953.22,
+    "cores": 2.479104753001276,
+    "peakRssMb": 698.8828125,
+    "peakDiskMb": 5.99394416809082,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 48302.602026999986,
+    "cpuMs": 48559.574,
+    "cores": 1.005320044101483,
+    "peakRssMb": 447.83203125,
+    "peakDiskMb": 6.042913436889648,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 47256.818478,
+    "cpuMs": 47171.829,
+    "cores": 0.9982015404181395,
+    "peakRssMb": 458.52734375,
+    "peakDiskMb": 5.8514556884765625,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 48394.326856,
+    "cpuMs": 48512.301,
+    "cores": 1.0024377680539092,
+    "peakRssMb": 455.52734375,
+    "peakDiskMb": 5.7816162109375,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 46383.133323000045,
+    "cpuMs": 45395.479,
+    "cores": 0.9787066062113079,
+    "peakRssMb": 440.53125,
+    "peakDiskMb": 5.7757768630981445,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 46441.70120599994,
+    "cpuMs": 46444.726,
+    "cores": 1.0000651309905002,
+    "peakRssMb": 442.96484375,
+    "peakDiskMb": 5.9009552001953125,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 97981.19686299993,
+    "cpuMs": 123228.417,
+    "cores": 1.2576741348883649,
+    "peakRssMb": 337.89453125,
+    "peakDiskMb": 8.28403091430664,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 95636.54283199995,
+    "cpuMs": 123655.982,
+    "cores": 1.292978377702553,
+    "peakRssMb": 314.515625,
+    "peakDiskMb": 8.254831314086914,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 96605.33183500008,
+    "cpuMs": 122156.955,
+    "cores": 1.2644949577797795,
+    "peakRssMb": 312.1328125,
+    "peakDiskMb": 8.552373886108398,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 98652.10897199996,
+    "cpuMs": 127017.102,
+    "cores": 1.2875254601607227,
+    "peakRssMb": 314.296875,
+    "peakDiskMb": 8.380970001220703,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 95591.05351300002,
+    "cpuMs": 124037.335,
+    "cores": 1.2975830942498336,
+    "peakRssMb": 312.3671875,
+    "peakDiskMb": 8.332658767700195,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 21844.09446900012,
+    "cpuMs": 33906.969,
+    "cores": 1.5522258909893845,
+    "peakRssMb": 434.72265625,
+    "peakDiskMb": 4.242440223693848,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 20740.260778999887,
+    "cpuMs": 32102.819,
+    "cores": 1.5478503063232951,
+    "peakRssMb": 439.26171875,
+    "peakDiskMb": 4.237459182739258,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 23497.149573999923,
+    "cpuMs": 36581.744,
+    "cores": 1.5568587962038787,
+    "peakRssMb": 436.890625,
+    "peakDiskMb": 4.237459182739258,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 20576.78983299993,
+    "cpuMs": 31358.504,
+    "cores": 1.5239745487271754,
+    "peakRssMb": 439.02734375,
+    "peakDiskMb": 4.237459182739258,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 23022.761551999953,
+    "cpuMs": 34999.97,
+    "cores": 1.5202333534553594,
+    "peakRssMb": 452.8203125,
+    "peakDiskMb": 4.237459182739258,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 32261.222054000013,
+    "cpuMs": 78555.38,
+    "cores": 2.434978435364635,
+    "peakRssMb": 747.98046875,
+    "peakDiskMb": 6.154095649719238,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 36126.55979700014,
+    "cpuMs": 84452.4,
+    "cores": 2.3376817630726276,
+    "peakRssMb": 803.18359375,
+    "peakDiskMb": 6.149114608764648,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 32249.872315000044,
+    "cpuMs": 77072.062,
+    "cores": 2.3898408417621018,
+    "peakRssMb": 656.16796875,
+    "peakDiskMb": 6.149114608764648,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 35839.576144999824,
+    "cpuMs": 84629.401,
+    "cores": 2.3613393377646603,
+    "peakRssMb": 832.9375,
+    "peakDiskMb": 6.149114608764648,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 31517.817326000193,
+    "cpuMs": 76668.118,
+    "cores": 2.4325325959914643,
+    "peakRssMb": 697.2890625,
+    "peakDiskMb": 6.149114608764648,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 44752.27263000002,
+    "cpuMs": 114886.513,
+    "cores": 2.567166006290929,
+    "peakRssMb": 900.88671875,
+    "peakDiskMb": 8.617217063903809,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 48874.391769000096,
+    "cpuMs": 122724.676,
+    "cores": 2.511022062024748,
+    "peakRssMb": 1042.30078125,
+    "peakDiskMb": 8.617217063903809,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 45699.22953299992,
+    "cpuMs": 117822.292,
+    "cores": 2.578211781774553,
+    "peakRssMb": 1011.33203125,
+    "peakDiskMb": 8.617217063903809,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 45473.39321499993,
+    "cpuMs": 116054.274,
+    "cores": 2.5521357830345095,
+    "peakRssMb": 1047.81640625,
+    "peakDiskMb": 8.617217063903809,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 5,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 41968.57556200004,
+    "cpuMs": 111494.803,
+    "cores": 2.656625856536138,
+    "peakRssMb": 965.796875,
+    "peakDiskMb": 8.617217063903809,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 9
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 13862.403746000025,
+    "cpuMs": 40924.1,
+    "cores": 2.9521647724196884,
+    "peakRssMb": 1193.72265625,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 11812.26579900016,
+    "cpuMs": 37620.858,
+    "cores": 3.1848976851828366,
+    "peakRssMb": 1149.64453125,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 10876.668715999927,
+    "cpuMs": 34589.173,
+    "cores": 3.180125634342271,
+    "peakRssMb": 1182.5703125,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 12227.822208999889,
+    "cpuMs": 39482.44,
+    "cores": 3.228902033833976,
+    "peakRssMb": 1152.1953125,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 12213.171854000073,
+    "cpuMs": 37479.866,
+    "cores": 3.0688068953786605,
+    "peakRssMb": 1182.3125,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 25956.500639999984,
+    "cpuMs": 51638.348,
+    "cores": 1.989418709254794,
+    "peakRssMb": 1408.875,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 27275.847829999868,
+    "cpuMs": 55179.594,
+    "cores": 2.0230203051400535,
+    "peakRssMb": 1443.1953125,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 30417.743550000014,
+    "cpuMs": 58252.359,
+    "cores": 1.9150782471502548,
+    "peakRssMb": 1509.97265625,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 27618.799058999866,
+    "cpuMs": 53928.697,
+    "cores": 1.9526083261186111,
+    "peakRssMb": 1419.65625,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 28150.1301719998,
+    "cpuMs": 54167.831,
+    "cores": 1.924247975729765,
+    "peakRssMb": 1472.1171875,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 23708.247678000014,
+    "cpuMs": 38919.65,
+    "cores": 1.6416080398938702,
+    "peakRssMb": 500.375,
+    "peakDiskMb": 7.623927116394043,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 26954.656303999946,
+    "cpuMs": 43164.37,
+    "cores": 1.601369704483845,
+    "peakRssMb": 502.5859375,
+    "peakDiskMb": 7.691666603088379,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 22965.85608700011,
+    "cpuMs": 38041.31,
+    "cores": 1.6564289985921052,
+    "peakRssMb": 499.5625,
+    "peakDiskMb": 7.629748344421387,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 25510.787123000016,
+    "cpuMs": 42169.513,
+    "cores": 1.653007129755742,
+    "peakRssMb": 505.296875,
+    "peakDiskMb": 7.629748344421387,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 22953.684023999842,
+    "cpuMs": 38145.709,
+    "cores": 1.6618556289315358,
+    "peakRssMb": 501.14453125,
+    "peakDiskMb": 7.639432907104492,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 54705.59540500003,
+    "cpuMs": 156174.13,
+    "cores": 2.8548108990278145,
+    "peakRssMb": 792.83984375,
+    "peakDiskMb": 11.4204683303833,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 54732.40584400017,
+    "cpuMs": 155334.57,
+    "cores": 2.8380731233108762,
+    "peakRssMb": 792.67578125,
+    "peakDiskMb": 11.377655982971191,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 54893.432435000315,
+    "cpuMs": 154171.98,
+    "cores": 2.8085687697258885,
+    "peakRssMb": 731.36328125,
+    "peakDiskMb": 11.478644371032715,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 53496.743390999734,
+    "cpuMs": 151630.649,
+    "cores": 2.834390271044242,
+    "peakRssMb": 670.50390625,
+    "peakDiskMb": 11.381564140319824,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 53520.663184999954,
+    "cpuMs": 149580.083,
+    "cores": 2.7948099686836896,
+    "peakRssMb": 781.73828125,
+    "peakDiskMb": 11.511677742004395,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 50600.22497199988,
+    "cpuMs": 54802.523,
+    "cores": 1.0830489988992242,
+    "peakRssMb": 535.65234375,
+    "peakDiskMb": 9.396337509155273,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 49099.94576999964,
+    "cpuMs": 54105.614,
+    "cores": 1.1019485490564198,
+    "peakRssMb": 560.21484375,
+    "peakDiskMb": 9.390671730041504,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 52015.34310200019,
+    "cpuMs": 55589.232,
+    "cores": 1.0687083595890456,
+    "peakRssMb": 535.10546875,
+    "peakDiskMb": 9.780661582946777,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 52429.54296500003,
+    "cpuMs": 57002.043,
+    "cores": 1.0872122810235518,
+    "peakRssMb": 534.53125,
+    "peakDiskMb": 9.5049467086792,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 50299.45768899983,
+    "cpuMs": 54420.511,
+    "cores": 1.081930372619135,
+    "peakRssMb": 527.0078125,
+    "peakDiskMb": 9.4502592086792,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 148664.98649600009,
+    "cpuMs": 224502.452,
+    "cores": 1.510123246175658,
+    "peakRssMb": 356.421875,
+    "peakDiskMb": 13.66209602355957,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 149755.05266499985,
+    "cpuMs": 225447.397,
+    "cores": 1.5054410050812974,
+    "peakRssMb": 360.4609375,
+    "peakDiskMb": 13.763449668884277,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 141847.89099900005,
+    "cpuMs": 216034.12,
+    "cores": 1.5229984632025506,
+    "peakRssMb": 355.91015625,
+    "peakDiskMb": 13.702802658081055,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 146243.69284099992,
+    "cpuMs": 220111.613,
+    "cores": 1.505101578905774,
+    "peakRssMb": 356.91796875,
+    "peakDiskMb": 13.747695922851562,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 146665.33399800025,
+    "cpuMs": 222499.153,
+    "cores": 1.5170534640655693,
+    "peakRssMb": 356.87109375,
+    "peakDiskMb": 13.762856483459473,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 28008.779782999773,
+    "cpuMs": 45986.645,
+    "cores": 1.6418653492328175,
+    "peakRssMb": 550.19921875,
+    "peakDiskMb": 7.6928300857543945,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 23780.690033999737,
+    "cpuMs": 38564.842,
+    "cores": 1.6216872573866887,
+    "peakRssMb": 553.16796875,
+    "peakDiskMb": 7.6928300857543945,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 25967.561828000005,
+    "cpuMs": 41862.791,
+    "cores": 1.6121186608617475,
+    "peakRssMb": 552.3828125,
+    "peakDiskMb": 7.6928300857543945,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 23838.230486000422,
+    "cpuMs": 38093.618,
+    "cores": 1.5980052723448328,
+    "peakRssMb": 550.8046875,
+    "peakDiskMb": 7.6928300857543945,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 26313.59906399995,
+    "cpuMs": 41987.635,
+    "cores": 1.5956629459116425,
+    "peakRssMb": 552.62109375,
+    "peakDiskMb": 7.6928300857543945,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 53879.969328999985,
+    "cpuMs": 148852.384,
+    "cores": 2.7626664575676125,
+    "peakRssMb": 800.91796875,
+    "peakDiskMb": 11.516386985778809,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 53103.04501600005,
+    "cpuMs": 147629.619,
+    "cores": 2.7800593912367724,
+    "peakRssMb": 792.25,
+    "peakDiskMb": 11.516386985778809,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 54250.64173299959,
+    "cpuMs": 153997.091,
+    "cores": 2.838622476724116,
+    "peakRssMb": 799.171875,
+    "peakDiskMb": 11.516386985778809,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 56084.79531800002,
+    "cpuMs": 153182.058,
+    "cores": 2.7312582159114576,
+    "peakRssMb": 778.265625,
+    "peakDiskMb": 11.516386985778809,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 55116.36450699996,
+    "cpuMs": 152973.312,
+    "cores": 2.7754608521135657,
+    "peakRssMb": 838.23828125,
+    "peakDiskMb": 11.516386985778809,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 67721.98226099974,
+    "cpuMs": 190364.391,
+    "cores": 2.810968974096739,
+    "peakRssMb": 1059.84375,
+    "peakDiskMb": 16.44452476501465,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 65140.98210299993,
+    "cpuMs": 186586.745,
+    "cores": 2.86435265444681,
+    "peakRssMb": 985.7734375,
+    "peakDiskMb": 16.44452953338623,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 67521.04200999998,
+    "cpuMs": 188666.963,
+    "cores": 2.7941950743600508,
+    "peakRssMb": 922.27734375,
+    "peakDiskMb": 16.44452953338623,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 67065.67068900028,
+    "cpuMs": 190965.556,
+    "cores": 2.8474412324235665,
+    "peakRssMb": 942.96484375,
+    "peakDiskMb": 16.44452953338623,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 10,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 67636.06811499968,
+    "cpuMs": 193375.402,
+    "cores": 2.859057414029587,
+    "peakRssMb": 1078.078125,
+    "peakDiskMb": 16.44452953338623,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 22
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 15735.637825999875,
+    "cpuMs": 50316.288,
+    "cores": 3.1976007935860586,
+    "peakRssMb": 1359.99609375,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 16426.202827999834,
+    "cpuMs": 48803.612,
+    "cores": 2.9710830014110243,
+    "peakRssMb": 1297.74609375,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 14227.14613199979,
+    "cpuMs": 46699.962,
+    "cores": 3.282454651601711,
+    "peakRssMb": 1341.5390625,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 14941.240060000215,
+    "cpuMs": 49267.449,
+    "cores": 3.297413655235742,
+    "peakRssMb": 1346.05859375,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 15083.665185000282,
+    "cpuMs": 49270.806,
+    "cores": 3.2665009064903265,
+    "peakRssMb": 1380.3515625,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 33537.71587199997,
+    "cpuMs": 61731.942,
+    "cores": 1.8406722221515055,
+    "peakRssMb": 1579.56640625,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 37538.26138000004,
+    "cpuMs": 65876.814,
+    "cores": 1.7549244844647605,
+    "peakRssMb": 1626.01171875,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 32867.40509099979,
+    "cpuMs": 61594.946,
+    "cores": 1.8740434734492255,
+    "peakRssMb": 1728.71484375,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 37080.17641600035,
+    "cpuMs": 69359.379,
+    "cores": 1.8705245148205647,
+    "peakRssMb": 1608.92578125,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 33156.915839000605,
+    "cpuMs": 61838.43,
+    "cores": 1.8650235836248361,
+    "peakRssMb": 1603.6328125,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 30181.28133200016,
+    "cpuMs": 50312.707,
+    "cores": 1.6670169316719896,
+    "peakRssMb": 595.44140625,
+    "peakDiskMb": 14.64933967590332,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 31334.640188999474,
+    "cpuMs": 53050.596,
+    "cores": 1.6930335143476214,
+    "peakRssMb": 602.515625,
+    "peakDiskMb": 14.628117561340332,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 28693.729388999753,
+    "cpuMs": 49205.773,
+    "cores": 1.7148615411025623,
+    "peakRssMb": 544.16015625,
+    "peakDiskMb": 14.616402626037598,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 30535.081933999434,
+    "cpuMs": 50864.471,
+    "cores": 1.6657715577754748,
+    "peakRssMb": 590.46875,
+    "peakDiskMb": 14.649543762207031,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 30045.711380000226,
+    "cpuMs": 50968.476,
+    "cores": 1.6963644280337096,
+    "peakRssMb": 639.7890625,
+    "peakDiskMb": 14.548362731933594,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 98995.89301200025,
+    "cpuMs": 298391.181,
+    "cores": 3.0141773756597066,
+    "peakRssMb": 689.4375,
+    "peakDiskMb": 22.222949981689453,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 90758.22823399957,
+    "cpuMs": 280772.695,
+    "cores": 3.093633497076332,
+    "peakRssMb": 798.8515625,
+    "peakDiskMb": 22.25407600402832,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 94342.13151399978,
+    "cpuMs": 287965.162,
+    "cores": 3.0523495428685306,
+    "peakRssMb": 723.671875,
+    "peakDiskMb": 22.178285598754883,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 95149.01702600066,
+    "cpuMs": 289961.62,
+    "cores": 3.0474473521966536,
+    "peakRssMb": 777.53515625,
+    "peakDiskMb": 22.285244941711426,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 91090.90212500002,
+    "cpuMs": 278758.359,
+    "cores": 3.060221740009471,
+    "peakRssMb": 706.32421875,
+    "peakDiskMb": 22.170533180236816,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 55149.8314229995,
+    "cpuMs": 65596.057,
+    "cores": 1.1894153673268353,
+    "peakRssMb": 657.94140625,
+    "peakDiskMb": 17.4993257522583,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 57272.55488299951,
+    "cpuMs": 66868.108,
+    "cores": 1.1675419079278542,
+    "peakRssMb": 662.41796875,
+    "peakDiskMb": 17.937660217285156,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 56230.15661200043,
+    "cpuMs": 66307.999,
+    "cores": 1.1792248678505155,
+    "peakRssMb": 645.13671875,
+    "peakDiskMb": 17.93768310546875,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 56097.632751000114,
+    "cpuMs": 65373.684,
+    "cores": 1.165355484609723,
+    "peakRssMb": 749.4765625,
+    "peakDiskMb": 17.93757152557373,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 56261.851327999495,
+    "cpuMs": 66546.332,
+    "cores": 1.182796698459908,
+    "peakRssMb": 669.6796875,
+    "peakDiskMb": 21.451239585876465,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 239952.49193500075,
+    "cpuMs": 402877.41,
+    "cores": 1.6789882311750817,
+    "peakRssMb": 395.24609375,
+    "peakDiskMb": 24.530521392822266,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 239864.2358860001,
+    "cpuMs": 405613.616,
+    "cores": 1.691013312183711,
+    "peakRssMb": 398.69921875,
+    "peakDiskMb": 24.57348346710205,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 240883.00867599994,
+    "cpuMs": 405809.842,
+    "cores": 1.6846760767001012,
+    "peakRssMb": 397.0234375,
+    "peakDiskMb": 24.573111534118652,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 250014.97087099962,
+    "cpuMs": 421320.206,
+    "cores": 1.6851799095558515,
+    "peakRssMb": 403.76171875,
+    "peakDiskMb": 24.447280883789062,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 242920.50388699956,
+    "cpuMs": 406167.323,
+    "cores": 1.6720174563318817,
+    "peakRssMb": 414.55859375,
+    "peakDiskMb": 24.837903022766113,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 32243.2518389998,
+    "cpuMs": 51665.896,
+    "cores": 1.6023785770115022,
+    "peakRssMb": 592.0703125,
+    "peakDiskMb": 14.650503158569336,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 28996.48407000024,
+    "cpuMs": 47848.152,
+    "cores": 1.6501363366844775,
+    "peakRssMb": 601.22265625,
+    "peakDiskMb": 14.650503158569336,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 33172.697472000495,
+    "cpuMs": 56263.703,
+    "cores": 1.6960846505620935,
+    "peakRssMb": 669.375,
+    "peakDiskMb": 14.650503158569336,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 28983.04580900073,
+    "cpuMs": 48352.88,
+    "cores": 1.668316032712612,
+    "peakRssMb": 626.97265625,
+    "peakDiskMb": 14.650503158569336,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 32054.906587999314,
+    "cpuMs": 52474.394,
+    "cores": 1.6370159699559166,
+    "peakRssMb": 625.79296875,
+    "peakDiskMb": 14.650503158569336,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 99152.29096200038,
+    "cpuMs": 294717.29,
+    "cores": 2.9723699486978967,
+    "peakRssMb": 784.29296875,
+    "peakDiskMb": 22.29782009124756,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 94045.58330800012,
+    "cpuMs": 284480.504,
+    "cores": 3.0249214688617947,
+    "peakRssMb": 720.96875,
+    "peakDiskMb": 22.29782009124756,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 97498.46960800048,
+    "cpuMs": 285641.113,
+    "cores": 2.9296984265336716,
+    "peakRssMb": 745.21484375,
+    "peakDiskMb": 22.29782009124756,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 94036.62105900049,
+    "cpuMs": 280885.007,
+    "cores": 2.98697468961339,
+    "peakRssMb": 795.15234375,
+    "peakDiskMb": 22.297815322875977,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 96766.55387300067,
+    "cpuMs": 287475.513,
+    "cores": 2.970814826962749,
+    "peakRssMb": 860.21875,
+    "peakDiskMb": 22.29782009124756,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 112298.70183899999,
+    "cpuMs": 328974.94,
+    "cores": 2.929463427561644,
+    "peakRssMb": 935.03125,
+    "peakDiskMb": 32.146483421325684,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 111747.4050359996,
+    "cpuMs": 330166.951,
+    "cores": 2.9545827117295134,
+    "peakRssMb": 1027.11328125,
+    "peakDiskMb": 32.146483421325684,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 114397.25961099938,
+    "cpuMs": 338008.078,
+    "cores": 2.9546868443297942,
+    "peakRssMb": 1060.91796875,
+    "peakDiskMb": 32.146483421325684,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 125475.8122689994,
+    "cpuMs": 361130.371,
+    "cores": 2.878087533123883,
+    "peakRssMb": 1003.59375,
+    "peakDiskMb": 32.146483421325684,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 20,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 119097.99860499986,
+    "cpuMs": 350021.996,
+    "cores": 2.9389410409899677,
+    "peakRssMb": 1044.43359375,
+    "peakDiskMb": 32.146483421325684,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 52
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 17019.044394000433,
+    "cpuMs": 54132.647,
+    "cores": 3.18071013546935,
+    "peakRssMb": 1636.890625,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 18997.47328099981,
+    "cpuMs": 58113.573,
+    "cores": 3.0590159091378686,
+    "peakRssMb": 1514.9375,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 16702.76207299996,
+    "cpuMs": 53877.167,
+    "cores": 3.225644163793276,
+    "peakRssMb": 1714.23828125,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 16291.841041999869,
+    "cpuMs": 53108.594,
+    "cores": 3.2598276562536834,
+    "peakRssMb": 1565.2109375,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 18072.338422999717,
+    "cpuMs": 55833.41,
+    "cores": 3.0894402646280543,
+    "peakRssMb": 1606.7578125,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 41085.53075799998,
+    "cpuMs": 71731.514,
+    "cores": 1.745906957427653,
+    "peakRssMb": 1693.1796875,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 41181.51099800039,
+    "cpuMs": 71527.049,
+    "cores": 1.7368728651912035,
+    "peakRssMb": 1696.60546875,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 40017.54880400002,
+    "cpuMs": 68920.773,
+    "cores": 1.722263733282707,
+    "peakRssMb": 1719.3984375,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 37962.517899000086,
+    "cpuMs": 69140.127,
+    "cores": 1.8212734778011421,
+    "peakRssMb": 1660.6015625,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 38316.90269200038,
+    "cpuMs": 67989.531,
+    "cores": 1.7744004922974772,
+    "peakRssMb": 1695.96484375,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 37892.397618999705,
+    "cpuMs": 62456.556,
+    "cores": 1.6482608629833317,
+    "peakRssMb": 807.2421875,
+    "peakDiskMb": 21.414408683776855,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 34972.137206000276,
+    "cpuMs": 58230.846,
+    "cores": 1.665063980991392,
+    "peakRssMb": 774.14453125,
+    "peakDiskMb": 21.490159034729004,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 36154.40072199982,
+    "cpuMs": 58487.08,
+    "cores": 1.61770293054286,
+    "peakRssMb": 761.45703125,
+    "peakDiskMb": 21.35414218902588,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 35496.63193000015,
+    "cpuMs": 59386.359,
+    "cores": 1.6730139106468107,
+    "peakRssMb": 875.33203125,
+    "peakDiskMb": 21.46891689300537,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 35968.98949300032,
+    "cpuMs": 59795.111,
+    "cores": 1.6624073081518265,
+    "peakRssMb": 717.78515625,
+    "peakDiskMb": 21.463107109069824,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 139488.94024299923,
+    "cpuMs": 433603.919,
+    "cores": 3.108518268506682,
+    "peakRssMb": 807.78125,
+    "peakDiskMb": 32.84270095825195,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 141229.55557899922,
+    "cpuMs": 436565.8,
+    "cores": 3.091178742368833,
+    "peakRssMb": 812.87890625,
+    "peakDiskMb": 32.88550281524658,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 135979.6457240004,
+    "cpuMs": 421710.768,
+    "cores": 3.101278619713068,
+    "peakRssMb": 735.78125,
+    "peakDiskMb": 32.80966854095459,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 137986.4881840013,
+    "cpuMs": 425828.876,
+    "cores": 3.086018650117166,
+    "peakRssMb": 779.69921875,
+    "peakDiskMb": 32.93810749053955,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 137958.27988400124,
+    "cpuMs": 428145.37,
+    "cores": 3.1034409124265343,
+    "peakRssMb": 776.73828125,
+    "peakDiskMb": 32.94005489349365,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 63152.20845500007,
+    "cpuMs": 75346.594,
+    "cores": 1.1930951560259242,
+    "peakRssMb": 834.83203125,
+    "peakDiskMb": 26.09447193145752,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 65265.50270600058,
+    "cpuMs": 77414.229,
+    "cores": 1.186143150520504,
+    "peakRssMb": 819.76171875,
+    "peakDiskMb": 25.764068603515625,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 65334.376496000215,
+    "cpuMs": 76841.115,
+    "cores": 1.1761207364503468,
+    "peakRssMb": 868.9921875,
+    "peakDiskMb": 25.56641674041748,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 64269.56469699927,
+    "cpuMs": 75901.754,
+    "cores": 1.1809906346470687,
+    "peakRssMb": 851.7421875,
+    "peakDiskMb": 25.764066696166992,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 64063.13835199922,
+    "cpuMs": 76967.961,
+    "cores": 1.2014391267735645,
+    "peakRssMb": 818.359375,
+    "peakDiskMb": 25.710142135620117,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 361386.66467599943,
+    "cpuMs": 635049.108,
+    "cores": 1.7572566175604518,
+    "peakRssMb": 435.54296875,
+    "peakDiskMb": 35.2062406539917,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 364563.4817899987,
+    "cpuMs": 640543.028,
+    "cores": 1.7570136889601444,
+    "peakRssMb": 464.09375,
+    "peakDiskMb": 35.22162914276123,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 352384.02892300114,
+    "cpuMs": 620245.792,
+    "cores": 1.7601416099806524,
+    "peakRssMb": 433.12109375,
+    "peakDiskMb": 35.12124061584473,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 347332.0950509999,
+    "cpuMs": 610280.194,
+    "cores": 1.7570509684985793,
+    "peakRssMb": 434.984375,
+    "peakDiskMb": 35.13064002990723,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 353249.5908040013,
+    "cpuMs": 618671.062,
+    "cores": 1.7513709232950434,
+    "peakRssMb": 435.90625,
+    "peakDiskMb": 35.20796585083008,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 35363.569575000554,
+    "cpuMs": 56638.949,
+    "cores": 1.6016185492778867,
+    "peakRssMb": 797.4609375,
+    "peakDiskMb": 21.49132251739502,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 37018.564689999446,
+    "cpuMs": 57936.228,
+    "cores": 1.5650587343180125,
+    "peakRssMb": 961.96484375,
+    "peakDiskMb": 21.49132251739502,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 38436.007584998384,
+    "cpuMs": 62728.533,
+    "cores": 1.6320252008817642,
+    "peakRssMb": 943.71484375,
+    "peakDiskMb": 21.49132251739502,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 36370.000127000734,
+    "cpuMs": 59994.904,
+    "cores": 1.649571179282465,
+    "peakRssMb": 854.46484375,
+    "peakDiskMb": 21.49132251739502,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 35052.47858899832,
+    "cpuMs": 57887.21,
+    "cores": 1.6514441297788471,
+    "peakRssMb": 834.48046875,
+    "peakDiskMb": 21.49132251739502,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 138025.80608799867,
+    "cpuMs": 425717.999,
+    "cores": 3.084336263383838,
+    "peakRssMb": 764.5078125,
+    "peakDiskMb": 32.96238708496094,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 139590.48547600023,
+    "cpuMs": 425294.483,
+    "cores": 3.046729736269316,
+    "peakRssMb": 833.77734375,
+    "peakDiskMb": 32.96238708496094,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 140641.6879989989,
+    "cpuMs": 432680.688,
+    "cores": 3.0764753620070304,
+    "peakRssMb": 783.01953125,
+    "peakDiskMb": 32.96238708496094,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 142051.90358299948,
+    "cpuMs": 430049.065,
+    "cores": 3.0274079695716765,
+    "peakRssMb": 791.54296875,
+    "peakDiskMb": 32.96238708496094,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 138194.19786600024,
+    "cpuMs": 424214.172,
+    "cores": 3.069695968070516,
+    "peakRssMb": 773.546875,
+    "peakDiskMb": 32.96238708496094,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 161585.36448800005,
+    "cpuMs": 487304.019,
+    "cores": 3.0157682940164365,
+    "peakRssMb": 1011.453125,
+    "peakDiskMb": 47.731879234313965,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 161126.30947499909,
+    "cpuMs": 489001.549,
+    "cores": 3.034895732381155,
+    "peakRssMb": 1081.484375,
+    "peakDiskMb": 47.731879234313965,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 165684.15577000007,
+    "cpuMs": 498141.999,
+    "cores": 3.00657595582955,
+    "peakRssMb": 1008.19140625,
+    "peakDiskMb": 47.731879234313965,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 157926.91284999996,
+    "cpuMs": 481235.316,
+    "cores": 3.047202704817516,
+    "peakRssMb": 1063.37890625,
+    "peakDiskMb": 47.731879234313965,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 30,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 159961.9256480001,
+    "cpuMs": 482935.944,
+    "cores": 3.0190680816303233,
+    "peakRssMb": 1006.59765625,
+    "peakDiskMb": 47.731879234313965,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 72
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 25508.32898800075,
+    "cpuMs": 72601.012,
+    "cores": 2.8461688742587525,
+    "peakRssMb": 2131.734375,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 21819.54188699834,
+    "cpuMs": 66519.332,
+    "cores": 3.048612676860875,
+    "peakRssMb": 2013.83984375,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 25769.34974399954,
+    "cpuMs": 73917.508,
+    "cores": 2.8684273656230648,
+    "peakRssMb": 2112.90625,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 21811.496758999303,
+    "cpuMs": 68233.314,
+    "cores": 3.1283187373121155,
+    "peakRssMb": 2055.015625,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "shell",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 24803.60425600037,
+    "cpuMs": 70528.33,
+    "cores": 2.843471024294307,
+    "peakRssMb": 1984.31640625,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 55470.33950099908,
+    "cpuMs": 88902.597,
+    "cores": 1.6027051177214946,
+    "peakRssMb": 1954.48046875,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 58693.04264299944,
+    "cpuMs": 94526.577,
+    "cores": 1.6105243951137125,
+    "peakRssMb": 1936.58203125,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 56178.45020900108,
+    "cpuMs": 89715.887,
+    "cores": 1.5969804554278262,
+    "peakRssMb": 1863.7109375,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 53883.82822799869,
+    "cpuMs": 89028.143,
+    "cores": 1.6522237919565614,
+    "peakRssMb": 1976.8203125,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "rdfc",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 57803.65000000037,
+    "cpuMs": 93943.953,
+    "cores": 1.6252252755664978,
+    "peakRssMb": 1902.46875,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 49270.46540999971,
+    "cpuMs": 73899.475,
+    "cores": 1.4998736948200555,
+    "peakRssMb": 1159.703125,
+    "peakDiskMb": 42.09247398376465,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 54539.54494899884,
+    "cpuMs": 82207.604,
+    "cores": 1.5073027117639906,
+    "peakRssMb": 1364.75,
+    "peakDiskMb": 42.09247398376465,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 49709.85656799935,
+    "cpuMs": 75072.279,
+    "cores": 1.510209125172324,
+    "peakRssMb": 1215.2890625,
+    "peakDiskMb": 41.92545986175537,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 50047.843723999336,
+    "cpuMs": 73725.436,
+    "cores": 1.4730991490178147,
+    "peakRssMb": 1153.13671875,
+    "peakDiskMb": 42.084903717041016,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-batch",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 50379.2212310005,
+    "cpuMs": 75115.572,
+    "cores": 1.491003039836157,
+    "peakRssMb": 1071.5,
+    "peakDiskMb": 42.038246154785156,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 263466.3989070002,
+    "cpuMs": 842539.676,
+    "cores": 3.1979018178230927,
+    "peakRssMb": 746.62109375,
+    "peakDiskMb": 64.93766117095947,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 268892.76674799994,
+    "cpuMs": 850105.871,
+    "cores": 3.1615051653535162,
+    "peakRssMb": 698.109375,
+    "peakDiskMb": 65.01152038574219,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 276205.70493800007,
+    "cpuMs": 857999.891,
+    "cores": 3.1063800481333117,
+    "peakRssMb": 705.7421875,
+    "peakDiskMb": 64.86764240264893,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 266207.9528129995,
+    "cpuMs": 850263.624,
+    "cores": 3.1939828056048962,
+    "peakRssMb": 807.05859375,
+    "peakDiskMb": 65.0076379776001,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "cwl-scatter",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 267869.397739999,
+    "cpuMs": 850775.082,
+    "cores": 3.176081662100814,
+    "peakRssMb": 800.26953125,
+    "peakDiskMb": 64.93960762023926,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 85548.83013599925,
+    "cpuMs": 99490.544,
+    "cores": 1.162967907823371,
+    "peakRssMb": 1149.4609375,
+    "peakDiskMb": 50.5651912689209,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 84701.69898200035,
+    "cpuMs": 99447.78,
+    "cores": 1.1740942766819031,
+    "peakRssMb": 1121.49609375,
+    "peakDiskMb": 50.234787940979004,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 84589.30542200059,
+    "cpuMs": 102577.907,
+    "cores": 1.2126581071715576,
+    "peakRssMb": 1051.625,
+    "peakDiskMb": 50.5651912689209,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 85570.26773900166,
+    "cpuMs": 102194.483,
+    "cores": 1.1942756017978575,
+    "peakRssMb": 1100.60546875,
+    "peakDiskMb": 50.565303802490234,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-batch",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 83449.85108199902,
+    "cpuMs": 97670.487,
+    "cores": 1.1704093624328649,
+    "peakRssMb": 1279.64453125,
+    "peakDiskMb": 50.56519031524658,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 687496.5180930011,
+    "cpuMs": 1270151.249,
+    "cores": 1.8475020826624469,
+    "peakRssMb": 555.46875,
+    "peakDiskMb": 67.41415882110596,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 691909.2268070001,
+    "cpuMs": 1270736.703,
+    "cores": 1.8365656270608701,
+    "peakRssMb": 552.92578125,
+    "peakDiskMb": 67.36713600158691,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 701981.4876299985,
+    "cpuMs": 1285156.181,
+    "cores": 1.830755089196002,
+    "peakRssMb": 549.88671875,
+    "peakDiskMb": 67.42130088806152,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 699699.8746629991,
+    "cpuMs": 1287888.885,
+    "cores": 1.840630435471057,
+    "peakRssMb": 549.8984375,
+    "peakDiskMb": 67.3449878692627,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "toil-scatter",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 711692.5789100006,
+    "cpuMs": 1302169.881,
+    "cores": 1.8296802855445682,
+    "peakRssMb": 547.2890625,
+    "peakDiskMb": 84.80254650115967,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 55315.55844799802,
+    "cpuMs": 82466.45,
+    "cores": 1.4908364357837307,
+    "peakRssMb": 1241.7109375,
+    "peakDiskMb": 42.093637466430664,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 54808.120054997504,
+    "cpuMs": 78463.176,
+    "cores": 1.4315976523417644,
+    "peakRssMb": 1304.85546875,
+    "peakDiskMb": 42.093637466430664,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 52142.52846400067,
+    "cpuMs": 78395.928,
+    "cores": 1.5034930278481746,
+    "peakRssMb": 1080.30078125,
+    "peakDiskMb": 42.09363269805908,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 52817.265358000994,
+    "cpuMs": 78172.342,
+    "cores": 1.4800528098177674,
+    "peakRssMb": 1210.03125,
+    "peakDiskMb": 42.093637466430664,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-batch",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 53082.676924001426,
+    "cpuMs": 78773.828,
+    "cores": 1.4839837130440998,
+    "peakRssMb": 1218.4296875,
+    "peakDiskMb": 42.093637466430664,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 271341.22588799894,
+    "cpuMs": 854047.344,
+    "cores": 3.1475030792133434,
+    "peakRssMb": 808.06640625,
+    "peakDiskMb": 65.03597068786621,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 271326.32873800024,
+    "cpuMs": 853829.502,
+    "cores": 3.1468730143932326,
+    "peakRssMb": 736.53125,
+    "peakDiskMb": 65.03597068786621,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 271020.89103300124,
+    "cpuMs": 854853.981,
+    "cores": 3.1541995812267754,
+    "peakRssMb": 731.1953125,
+    "peakDiskMb": 65.03597068786621,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 274702.57608100027,
+    "cpuMs": 863398.454,
+    "cores": 3.1430300593373897,
+    "peakRssMb": 756.1484375,
+    "peakDiskMb": 65.03597068786621,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "streamflow-scatter",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 278132.9885880016,
+    "cpuMs": 873683.416,
+    "cores": 3.1412434045865276,
+    "peakRssMb": 761.08984375,
+    "peakDiskMb": 65.03597068786621,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 0,
+    "ok": true,
+    "wallMs": 328980.1315359995,
+    "cpuMs": 988583.835,
+    "cores": 3.004995561234438,
+    "peakRssMb": 1040.6953125,
+    "peakDiskMb": 94.56872272491455,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 1,
+    "ok": true,
+    "wallMs": 319393.1155500002,
+    "cpuMs": 971595.49,
+    "cores": 3.04200511124636,
+    "peakRssMb": 1039.2421875,
+    "peakDiskMb": 94.56872272491455,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 2,
+    "ok": true,
+    "wallMs": 319866.8853700012,
+    "cpuMs": 965789.837,
+    "cores": 3.0193492392400585,
+    "peakRssMb": 1075.515625,
+    "peakDiskMb": 94.56872272491455,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 3,
+    "ok": true,
+    "wallMs": 316464.26373399794,
+    "cpuMs": 960474.894,
+    "cores": 3.035018496771949,
+    "peakRssMb": 1018.94921875,
+    "peakDiskMb": 94.56872272491455,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "correct": true
+  },
+  {
+    "arm": "nextflow",
+    "snapshots": 60,
+    "unit": 1,
+    "rep": 4,
+    "ok": true,
+    "wallMs": 324268.9575770013,
+    "cpuMs": 981826.169,
+    "cores": 3.0278142451142718,
+    "peakRssMb": 1091.34765625,
+    "peakDiskMb": 94.56872272491455,
+    "members": 70,
+    "expected": 70,
+    "activities": {
+      "creates": 70,
+      "updates": 139
+    },
+    "expectedActivities": {
+      "creates": 70,
+      "updates": 139
     },
     "correct": true
   }
