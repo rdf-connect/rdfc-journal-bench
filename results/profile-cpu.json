@@ -1,0 +1,6938 @@
+[
+ {
+  "arm": "shell",
+  "n": 5,
+  "rep": 0,
+  "code": 0,
+  "wallMs": 11911.620595,
+  "cgCpuMs": 35401.045,
+  "sampledCpuMs": 34700,
+  "correct": true,
+  "activities": {
+   "creates": 70,
+   "updates": 9
+  },
+  "expected": {
+   "creates": 70,
+   "updates": 9
+  },
+  "perProcess": [
+   {
+    "pid": "759633",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "systemd-run --user --scope --quiet --unit=rdfc-profile-759604-shell-5-0 sh -c exec < /dev/null; cd /dev/shm/rdfc-profile/shell__n5__r0; rm -f /dev/shm/rdfc-profile/shell__n5__r0/meta.fifo /dev/shm/rdf",
+    "firstSeenMs": 38.41415000000006,
+    "lastSeenMs": 11901.260263,
+    "cpuMs": 10,
+    "byClass": {
+     "app": 10
+    },
+    "threads": [
+     {
+      "comm": "sh",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "759636",
+    "kind": "rml-map",
+    "cmd": "java -Dlogback.configurationFile=/home/silvius/rdfc-journal-bench/bench/logback-quiet.xml -jar /home/silvius/rdfc-journal-bench/rml-processor-jvm/bin/../build/libs/rml-map.jar --mapping /home/silvius/",
+    "firstSeenMs": 92.51741000000004,
+    "lastSeenMs": 11337.66216,
+    "cpuMs": 17840,
+    "byClass": {
+     "app": 6770,
+     "gc/vm": 280,
+     "jit": 10790
+    },
+    "threads": [
+     {
+      "comm": "java",
+      "ms": 10
+     },
+     {
+      "comm": "java",
+      "ms": 6760
+     },
+     {
+      "comm": "GC Thread#0",
+      "ms": 60
+     },
+     {
+      "comm": "G1 Conc#0",
+      "ms": 30
+     },
+     {
+      "comm": "G1 Refine#0",
+      "ms": 20
+     },
+     {
+      "comm": "VM Thread",
+      "ms": 10
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 5090
+     },
+     {
+      "comm": "C1 CompilerThre",
+      "ms": 2080
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 10
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 10
+     },
+     {
+      "comm": "GC Thread#1",
+      "ms": 60
+     },
+     {
+      "comm": "GC Thread#2",
+      "ms": 60
+     },
+     {
+      "comm": "GC Thread#3",
+      "ms": 40
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 640
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 10
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 2950
+     }
+    ]
+   },
+   {
+    "pid": "759637",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/validate-bluebike.ttl --stdin in --stdout out --write report=/dev/shm/rdfc-profile/shell__",
+    "firstSeenMs": 92.51741000000004,
+    "lastSeenMs": 11616.205985999999,
+    "cpuMs": 4220,
+    "byClass": {
+     "app": 4220
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 2940
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 300
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 370
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 330
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 270
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "759638",
+    "kind": "rdfc-proc:dumps-to-feed",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/dumps-to-feed.ttl --stdin in --read shape=/dev/shm/rdfc-profile/shell__n5__r0/shape.ndjson",
+    "firstSeenMs": 92.51741000000004,
+    "lastSeenMs": 11742.668576,
+    "cpuMs": 7890,
+    "byClass": {
+     "app": 7890
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 6900
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 220
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 240
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 310
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 210
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "759639",
+    "kind": "rdfc-proc:sdsify-feed",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/sdsify-feed.ttl --stdin in --stdout out --write metadata=/dev/shm/rdfc-profile/shell__n5__",
+    "firstSeenMs": 92.51741000000004,
+    "lastSeenMs": 11793.199528,
+    "cpuMs": 1670,
+    "byClass": {
+     "app": 1670
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1320
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 80
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 100
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 70
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 90
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "759640",
+    "kind": "rdfc-proc:bucketize",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/bucketize.ttl --stdin in --read metadataIn=/dev/shm/rdfc-profile/shell__n5__r0/meta.fifo -",
+    "firstSeenMs": 92.51741000000004,
+    "lastSeenMs": 11847.762818,
+    "cpuMs": 1860,
+    "byClass": {
+     "app": 1860
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1520
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 70
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 100
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 90
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 70
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "759641",
+    "kind": "rdfc-proc:ldes-writer",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/ldes-writer.ttl --stdin in --read metadataIn=/dev/shm/rdfc-profile/shell__n5__r0/bmeta.fif",
+    "firstSeenMs": 92.51741000000004,
+    "lastSeenMs": 11901.260263,
+    "cpuMs": 1210,
+    "byClass": {
+     "app": 1210
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1020
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "759642",
+    "kind": "other",
+    "cmd": "/bin/sh /home/silvius/rdfc-journal-bench/rml-processor-jvm/bin/rml-map --mapping /home/silvius/rdfc-journal-bench/anchor/bluebike.rml.ttl",
+    "firstSeenMs": 92.51741000000004,
+    "lastSeenMs": 92.51741000000004,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "759643",
+    "kind": "other",
+    "cmd": "",
+    "firstSeenMs": 92.51741000000004,
+    "lastSeenMs": 92.51741000000004,
+    "cpuMs": 0,
+    "byClass": {},
+    "threads": []
+   }
+  ],
+  "stderr": ""
+ },
+ {
+  "arm": "rdfc",
+  "n": 5,
+  "rep": 0,
+  "code": 0,
+  "wallMs": 26194.306547,
+  "cgCpuMs": 48336.038,
+  "sampledCpuMs": 47510,
+  "correct": true,
+  "activities": {
+   "creates": 70,
+   "updates": 9
+  },
+  "expected": {
+   "creates": 70,
+   "updates": 9
+  },
+  "perProcess": [
+   {
+    "pid": "760055",
+    "kind": "npx",
+    "cmd": "/usr/bin/sh -c exec < /dev/null; npx rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n5_r0.ttl > /dev/shm/rdfc-profile/rdfc__n5__r0/log.txt 2>&1",
+    "firstSeenMs": 55.54662100000132,
+    "lastSeenMs": 26168.910786,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "760056",
+    "kind": "npx",
+    "cmd": "npm exec rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n5_r0.ttl",
+    "firstSeenMs": 55.54662100000132,
+    "lastSeenMs": 26168.910786,
+    "cpuMs": 920,
+    "byClass": {
+     "app": 920
+    },
+    "threads": [
+     {
+      "comm": "npm exec rdfc /",
+      "ms": 760
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 50
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "npm exec rdfc /",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "760069",
+    "kind": "other",
+    "cmd": "sh -c 'rdfc' /home/silvius/rdfc-journal-bench/pipelines/profile__n5_r0.ttl",
+    "firstSeenMs": 816.2687880000012,
+    "lastSeenMs": 26142.977740000002,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "760070",
+    "kind": "orchestrator",
+    "cmd": "node /home/silvius/rdfc-journal-bench/node_modules/.bin/rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n5_r0.ttl",
+    "firstSeenMs": 816.2687880000012,
+    "lastSeenMs": 26018.481424999998,
+    "cpuMs": 10070,
+    "byClass": {
+     "app": 10070
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 6950
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 620
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 600
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 760
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 740
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 100
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 100
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 100
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 100
+     }
+    ]
+   },
+   {
+    "pid": "760269",
+    "kind": "jvm-runner",
+    "cmd": "java -Dlogback.configurationFile=./bench/logback-quiet.xml -jar ./vendor/jvm-runner.jar localhost:50051 https://w3id.org/rdf-connect/bench#JvmRunner",
+    "firstSeenMs": 8001.733853,
+    "lastSeenMs": 26193.258509,
+    "cpuMs": 22160,
+    "byClass": {
+     "app": 7710,
+     "gc/vm": 520,
+     "jit": 13930
+    },
+    "threads": [
+     {
+      "comm": "java",
+      "ms": 40
+     },
+     {
+      "comm": "java",
+      "ms": 1260
+     },
+     {
+      "comm": "GC Thread#0",
+      "ms": 120
+     },
+     {
+      "comm": "G1 Conc#0",
+      "ms": 70
+     },
+     {
+      "comm": "VM Periodic Tas",
+      "ms": 50
+     },
+     {
+      "comm": "VM Thread",
+      "ms": 20
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 7330
+     },
+     {
+      "comm": "C1 CompilerThre",
+      "ms": 2440
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 40
+     },
+     {
+      "comm": "GC Thread#1",
+      "ms": 90
+     },
+     {
+      "comm": "GC Thread#2",
+      "ms": 110
+     },
+     {
+      "comm": "GC Thread#3",
+      "ms": 60
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 10
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 5950
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 10
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 150
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 440
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1050
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 230
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1940
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 750
+     }
+    ]
+   },
+   {
+    "pid": "760272",
+    "kind": "other",
+    "cmd": "",
+    "firstSeenMs": 8027.096721,
+    "lastSeenMs": 8027.096721,
+    "cpuMs": 0,
+    "byClass": {},
+    "threads": []
+   },
+   {
+    "pid": "760273",
+    "kind": "npx",
+    "cmd": "npm exec js-runner localhost:50051 https://w3id.org/rdf-connect#NodeRunner",
+    "firstSeenMs": 8027.096721,
+    "lastSeenMs": 26042.100162000002,
+    "cpuMs": 890,
+    "byClass": {
+     "app": 890
+    },
+    "threads": [
+     {
+      "comm": "npm exec js-run",
+      "ms": 760
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 20
+     }
+    ]
+   },
+   {
+    "pid": "760275",
+    "kind": "other",
+    "cmd": "",
+    "firstSeenMs": 8052.059679,
+    "lastSeenMs": 8052.059679,
+    "cpuMs": 0,
+    "byClass": {},
+    "threads": []
+   },
+   {
+    "pid": "760309",
+    "kind": "js-runner",
+    "cmd": "sh -c 'js-runner' localhost:50051 'https://w3id.org/rdf-connect#NodeRunner'",
+    "firstSeenMs": 8900.766009,
+    "lastSeenMs": 25991.977238,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "760310",
+    "kind": "js-runner",
+    "cmd": "node /home/silvius/rdfc-journal-bench/node_modules/.bin/js-runner localhost:50051 https://w3id.org/rdf-connect#NodeRunner",
+    "firstSeenMs": 8900.766009,
+    "lastSeenMs": 25915.692730000002,
+    "cpuMs": 13470,
+    "byClass": {
+     "app": 13470
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 10170
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 690
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 760
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 820
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 970
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 20
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 20
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     }
+    ]
+   }
+  ],
+  "stderr": ""
+ },
+ {
+  "arm": "shell",
+  "n": 5,
+  "rep": 1,
+  "code": 0,
+  "wallMs": 14052.998010999996,
+  "cgCpuMs": 40816.674,
+  "sampledCpuMs": 40030,
+  "correct": true,
+  "activities": {
+   "creates": 70,
+   "updates": 9
+  },
+  "expected": {
+   "creates": 70,
+   "updates": 9
+  },
+  "perProcess": [
+   {
+    "pid": "760793",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "/usr/bin/sh -c exec < /dev/null; cd /dev/shm/rdfc-profile/shell__n5__r1; rm -f /dev/shm/rdfc-profile/shell__n5__r1/meta.fifo /dev/shm/rdfc-profile/shell__n5__r1/bmeta.fifo; mkfifo /dev/shm/rdfc-profil",
+    "firstSeenMs": 59.48078600000008,
+    "lastSeenMs": 14030.971688999998,
+    "cpuMs": 10,
+    "byClass": {
+     "app": 10
+    },
+    "threads": [
+     {
+      "comm": "sh",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "760797",
+    "kind": "rml-map",
+    "cmd": "java -Dlogback.configurationFile=/home/silvius/rdfc-journal-bench/bench/logback-quiet.xml -jar /home/silvius/rdfc-journal-bench/rml-processor-jvm/bin/../build/libs/rml-map.jar --mapping /home/silvius/",
+    "firstSeenMs": 59.48078600000008,
+    "lastSeenMs": 13457.195502999995,
+    "cpuMs": 22170,
+    "byClass": {
+     "app": 7950,
+     "gc/vm": 350,
+     "jit": 13870
+    },
+    "threads": [
+     {
+      "comm": "java",
+      "ms": 10
+     },
+     {
+      "comm": "java",
+      "ms": 7940
+     },
+     {
+      "comm": "GC Thread#0",
+      "ms": 70
+     },
+     {
+      "comm": "G1 Conc#0",
+      "ms": 30
+     },
+     {
+      "comm": "G1 Refine#0",
+      "ms": 30
+     },
+     {
+      "comm": "G1 Service",
+      "ms": 10
+     },
+     {
+      "comm": "VM Thread",
+      "ms": 10
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 6120
+     },
+     {
+      "comm": "C1 CompilerThre",
+      "ms": 2360
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 200
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 200
+     },
+     {
+      "comm": "GC Thread#1",
+      "ms": 70
+     },
+     {
+      "comm": "GC Thread#2",
+      "ms": 90
+     },
+     {
+      "comm": "GC Thread#3",
+      "ms": 40
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 230
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 270
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 4490
+     }
+    ]
+   },
+   {
+    "pid": "760798",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/validate-bluebike.ttl --stdin in --stdout out --write report=/dev/shm/rdfc-profile/shell__",
+    "firstSeenMs": 59.48078600000008,
+    "lastSeenMs": 13771.154780999997,
+    "cpuMs": 5060,
+    "byClass": {
+     "app": 5060
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 3460
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 390
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 380
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 400
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 420
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "760799",
+    "kind": "rdfc-proc:dumps-to-feed",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/dumps-to-feed.ttl --stdin in --read shape=/dev/shm/rdfc-profile/shell__n5__r1/shape.ndjson",
+    "firstSeenMs": 59.48078600000008,
+    "lastSeenMs": 13905.189513999998,
+    "cpuMs": 7500,
+    "byClass": {
+     "app": 7500
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 6350
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 350
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 300
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 260
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 230
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "760800",
+    "kind": "rdfc-proc:sdsify-feed",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/sdsify-feed.ttl --stdin in --stdout out --write metadata=/dev/shm/rdfc-profile/shell__n5__",
+    "firstSeenMs": 59.48078600000008,
+    "lastSeenMs": 13954.661330999996,
+    "cpuMs": 1830,
+    "byClass": {
+     "app": 1830
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1450
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 90
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 100
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 90
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 90
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "760801",
+    "kind": "rdfc-proc:bucketize",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/bucketize.ttl --stdin in --read metadataIn=/dev/shm/rdfc-profile/shell__n5__r1/meta.fifo -",
+    "firstSeenMs": 59.48078600000008,
+    "lastSeenMs": 14004.949251999999,
+    "cpuMs": 2260,
+    "byClass": {
+     "app": 2260
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1840
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 100
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 110
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 110
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 90
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "760802",
+    "kind": "rdfc-proc:ldes-writer",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/ldes-writer.ttl --stdin in --read metadataIn=/dev/shm/rdfc-profile/shell__n5__r1/bmeta.fif",
+    "firstSeenMs": 59.48078600000008,
+    "lastSeenMs": 14030.971688999998,
+    "cpuMs": 1200,
+    "byClass": {
+     "app": 1200
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 990
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 50
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 50
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 70
+     }
+    ]
+   },
+   {
+    "pid": "760803",
+    "kind": "other",
+    "cmd": "dirname /home/silvius/rdfc-journal-bench/rml-processor-jvm/bin/rml-map",
+    "firstSeenMs": 59.48078600000008,
+    "lastSeenMs": 59.48078600000008,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "760804",
+    "kind": "other",
+    "cmd": "",
+    "firstSeenMs": 59.48078600000008,
+    "lastSeenMs": 59.48078600000008,
+    "cpuMs": 0,
+    "byClass": {},
+    "threads": []
+   }
+  ],
+  "stderr": ""
+ },
+ {
+  "arm": "rdfc",
+  "n": 5,
+  "rep": 1,
+  "code": 0,
+  "wallMs": 29077.419662000008,
+  "cgCpuMs": 54697.933,
+  "sampledCpuMs": 53740,
+  "correct": true,
+  "activities": {
+   "creates": 70,
+   "updates": 9
+  },
+  "expected": {
+   "creates": 70,
+   "updates": 9
+  },
+  "perProcess": [
+   {
+    "pid": "761228",
+    "kind": "npx",
+    "cmd": "/usr/bin/sh -c exec < /dev/null; npx rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n5_r1.ttl > /dev/shm/rdfc-profile/rdfc__n5__r1/log.txt 2>&1",
+    "firstSeenMs": 57.368883000002825,
+    "lastSeenMs": 29057.944399000007,
+    "cpuMs": 10,
+    "byClass": {
+     "app": 10
+    },
+    "threads": [
+     {
+      "comm": "sh",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "761229",
+    "kind": "npx",
+    "cmd": "npm exec rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n5_r1.ttl",
+    "firstSeenMs": 57.368883000002825,
+    "lastSeenMs": 29032.664926999998,
+    "cpuMs": 1120,
+    "byClass": {
+     "app": 1120
+    },
+    "threads": [
+     {
+      "comm": "npm exec rdfc /",
+      "ms": 900
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 70
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "npm exec rdfc /",
+      "ms": 20
+     }
+    ]
+   },
+   {
+    "pid": "761259",
+    "kind": "other",
+    "cmd": "sh -c 'rdfc' /home/silvius/rdfc-journal-bench/pipelines/profile__n5_r1.ttl",
+    "firstSeenMs": 1017.9461640000009,
+    "lastSeenMs": 29032.664926999998,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "761260",
+    "kind": "orchestrator",
+    "cmd": "node /home/silvius/rdfc-journal-bench/node_modules/.bin/rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n5_r1.ttl",
+    "firstSeenMs": 1044.6852080000026,
+    "lastSeenMs": 28955.886443000003,
+    "cpuMs": 11500,
+    "byClass": {
+     "app": 11500
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 7830
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 810
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 880
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 680
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 760
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 140
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 140
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 130
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 130
+     }
+    ]
+   },
+   {
+    "pid": "761506",
+    "kind": "jvm-runner",
+    "cmd": "java -Dlogback.configurationFile=./bench/logback-quiet.xml -jar ./vendor/jvm-runner.jar localhost:50053 https://w3id.org/rdf-connect/bench#JvmRunner",
+    "firstSeenMs": 8903.957062000001,
+    "lastSeenMs": 29076.337604000008,
+    "cpuMs": 24810,
+    "byClass": {
+     "app": 8780,
+     "gc/vm": 470,
+     "jit": 15560
+    },
+    "threads": [
+     {
+      "comm": "java",
+      "ms": 40
+     },
+     {
+      "comm": "java",
+      "ms": 1730
+     },
+     {
+      "comm": "GC Thread#0",
+      "ms": 130
+     },
+     {
+      "comm": "G1 Conc#0",
+      "ms": 50
+     },
+     {
+      "comm": "VM Periodic Tas",
+      "ms": 10
+     },
+     {
+      "comm": "VM Thread",
+      "ms": 20
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 6810
+     },
+     {
+      "comm": "C1 CompilerThre",
+      "ms": 2570
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 40
+     },
+     {
+      "comm": "GC Thread#1",
+      "ms": 90
+     },
+     {
+      "comm": "GC Thread#2",
+      "ms": 90
+     },
+     {
+      "comm": "GC Thread#3",
+      "ms": 80
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 10
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 6500
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 50
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 10
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 440
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1680
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1230
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 2490
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 380
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 360
+     }
+    ]
+   },
+   {
+    "pid": "761509",
+    "kind": "other",
+    "cmd": "",
+    "firstSeenMs": 8955.761724000004,
+    "lastSeenMs": 8955.761724000004,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "761510",
+    "kind": "npx",
+    "cmd": "npm exec js-runner localhost:50053 https://w3id.org/rdf-connect#NodeRunner",
+    "firstSeenMs": 8955.761724000004,
+    "lastSeenMs": 28955.886443000003,
+    "cpuMs": 1060,
+    "byClass": {
+     "app": 1060
+    },
+    "threads": [
+     {
+      "comm": "npm exec js-run",
+      "ms": 890
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 50
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 50
+     }
+    ]
+   },
+   {
+    "pid": "761566",
+    "kind": "js-runner",
+    "cmd": "sh -c 'js-runner' localhost:50053 'https://w3id.org/rdf-connect#NodeRunner'",
+    "firstSeenMs": 10083.080468000007,
+    "lastSeenMs": 28955.886443000003,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "761568",
+    "kind": "js-runner",
+    "cmd": "node /home/silvius/rdfc-journal-bench/node_modules/.bin/js-runner localhost:50053 https://w3id.org/rdf-connect#NodeRunner",
+    "firstSeenMs": 10108.521230999999,
+    "lastSeenMs": 28842.015842,
+    "cpuMs": 15240,
+    "byClass": {
+     "app": 15240
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 11580
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 980
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 850
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 890
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 880
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 20
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 20
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     }
+    ]
+   }
+  ],
+  "stderr": ""
+ },
+ {
+  "arm": "shell",
+  "n": 5,
+  "rep": 2,
+  "code": 0,
+  "wallMs": 12006.611877999996,
+  "cgCpuMs": 36118.99,
+  "sampledCpuMs": 35330,
+  "correct": true,
+  "activities": {
+   "creates": 70,
+   "updates": 9
+  },
+  "expected": {
+   "creates": 70,
+   "updates": 9
+  },
+  "perProcess": [
+   {
+    "pid": "762039",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "/usr/bin/sh -c exec < /dev/null; cd /dev/shm/rdfc-profile/shell__n5__r2; rm -f /dev/shm/rdfc-profile/shell__n5__r2/meta.fifo /dev/shm/rdfc-profile/shell__n5__r2/bmeta.fifo; mkfifo /dev/shm/rdfc-profil",
+    "firstSeenMs": 61.743267999991076,
+    "lastSeenMs": 11970.980584999998,
+    "cpuMs": 10,
+    "byClass": {
+     "app": 10
+    },
+    "threads": [
+     {
+      "comm": "sh",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "762042",
+    "kind": "rml-map",
+    "cmd": "java -Dlogback.configurationFile=/home/silvius/rdfc-journal-bench/bench/logback-quiet.xml -jar /home/silvius/rdfc-journal-bench/rml-processor-jvm/bin/../build/libs/rml-map.jar --mapping /home/silvius/",
+    "firstSeenMs": 61.743267999991076,
+    "lastSeenMs": 11351.070200999995,
+    "cpuMs": 18950,
+    "byClass": {
+     "app": 6800,
+     "gc/vm": 310,
+     "jit": 11840
+    },
+    "threads": [
+     {
+      "comm": "java",
+      "ms": 6800
+     },
+     {
+      "comm": "GC Thread#0",
+      "ms": 100
+     },
+     {
+      "comm": "G1 Conc#0",
+      "ms": 20
+     },
+     {
+      "comm": "G1 Refine#0",
+      "ms": 10
+     },
+     {
+      "comm": "VM Thread",
+      "ms": 10
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 5240
+     },
+     {
+      "comm": "C1 CompilerThre",
+      "ms": 2190
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 30
+     },
+     {
+      "comm": "GC Thread#1",
+      "ms": 90
+     },
+     {
+      "comm": "GC Thread#2",
+      "ms": 50
+     },
+     {
+      "comm": "GC Thread#3",
+      "ms": 30
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 790
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 3590
+     }
+    ]
+   },
+   {
+    "pid": "762043",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/validate-bluebike.ttl --stdin in --stdout out --write report=/dev/shm/rdfc-profile/shell__",
+    "firstSeenMs": 61.743267999991076,
+    "lastSeenMs": 11739.022473999998,
+    "cpuMs": 4390,
+    "byClass": {
+     "app": 4390
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 3040
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 280
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 320
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 360
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 380
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "762044",
+    "kind": "rdfc-proc:dumps-to-feed",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/dumps-to-feed.ttl --stdin in --read shape=/dev/shm/rdfc-profile/shell__n5__r2/shape.ndjson",
+    "firstSeenMs": 61.743267999991076,
+    "lastSeenMs": 11816.045420999988,
+    "cpuMs": 6970,
+    "byClass": {
+     "app": 6970
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 5870
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 260
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 260
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 330
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 240
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "762045",
+    "kind": "rdfc-proc:sdsify-feed",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/sdsify-feed.ttl --stdin in --stdout out --write metadata=/dev/shm/rdfc-profile/shell__n5__",
+    "firstSeenMs": 61.743267999991076,
+    "lastSeenMs": 11898.351077999992,
+    "cpuMs": 1780,
+    "byClass": {
+     "app": 1780
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1420
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 100
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 80
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 110
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "762046",
+    "kind": "rdfc-proc:bucketize",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/bucketize.ttl --stdin in --read metadataIn=/dev/shm/rdfc-profile/shell__n5__r2/meta.fifo -",
+    "firstSeenMs": 61.743267999991076,
+    "lastSeenMs": 11920.282567999995,
+    "cpuMs": 1980,
+    "byClass": {
+     "app": 1980
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1590
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 100
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 70
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 110
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 100
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "762047",
+    "kind": "rdfc-proc:ldes-writer",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/ldes-writer.ttl --stdin in --read metadataIn=/dev/shm/rdfc-profile/shell__n5__r2/bmeta.fif",
+    "firstSeenMs": 61.743267999991076,
+    "lastSeenMs": 11970.980584999998,
+    "cpuMs": 1250,
+    "byClass": {
+     "app": 1250
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1020
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 50
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 80
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   }
+  ],
+  "stderr": ""
+ },
+ {
+  "arm": "rdfc",
+  "n": 5,
+  "rep": 2,
+  "code": 0,
+  "wallMs": 33733.65253899999,
+  "cgCpuMs": 59063.467,
+  "sampledCpuMs": 58250,
+  "correct": true,
+  "activities": {
+   "creates": 70,
+   "updates": 9
+  },
+  "expected": {
+   "creates": 70,
+   "updates": 9
+  },
+  "perProcess": [
+   {
+    "pid": "762520",
+    "kind": "npx",
+    "cmd": "/usr/bin/sh -c exec < /dev/null; npx rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n5_r2.ttl > /dev/shm/rdfc-profile/rdfc__n5__r2/log.txt 2>&1",
+    "firstSeenMs": 87.7679749999952,
+    "lastSeenMs": 33729.22251499999,
+    "cpuMs": 20,
+    "byClass": {
+     "app": 20
+    },
+    "threads": [
+     {
+      "comm": "sh",
+      "ms": 20
+     }
+    ]
+   },
+   {
+    "pid": "762521",
+    "kind": "npx",
+    "cmd": "npm exec rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n5_r2.ttl",
+    "firstSeenMs": 87.7679749999952,
+    "lastSeenMs": 33705.028297,
+    "cpuMs": 1000,
+    "byClass": {
+     "app": 1000
+    },
+    "threads": [
+     {
+      "comm": "npm exec rdfc /",
+      "ms": 820
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 50
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     }
+    ]
+   },
+   {
+    "pid": "762554",
+    "kind": "other",
+    "cmd": "sh -c 'rdfc' /home/silvius/rdfc-journal-bench/pipelines/profile__n5_r2.ttl",
+    "firstSeenMs": 930.1203329999989,
+    "lastSeenMs": 33679.142149999985,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "762555",
+    "kind": "orchestrator",
+    "cmd": "node /home/silvius/rdfc-journal-bench/node_modules/.bin/rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n5_r2.ttl",
+    "firstSeenMs": 930.1203329999989,
+    "lastSeenMs": 33603.916239,
+    "cpuMs": 11810,
+    "byClass": {
+     "app": 11810
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 8170
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 700
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 910
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 660
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 650
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 180
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 190
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 160
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 180
+     }
+    ]
+   },
+   {
+    "pid": "762733",
+    "kind": "jvm-runner",
+    "cmd": "java -Dlogback.configurationFile=./bench/logback-quiet.xml -jar ./vendor/jvm-runner.jar localhost:50053 https://w3id.org/rdf-connect/bench#JvmRunner",
+    "firstSeenMs": 9293.916002999991,
+    "lastSeenMs": 33732.258984,
+    "cpuMs": 26990,
+    "byClass": {
+     "app": 10200,
+     "gc/vm": 460,
+     "jit": 16330
+    },
+    "threads": [
+     {
+      "comm": "java",
+      "ms": 20
+     },
+     {
+      "comm": "java",
+      "ms": 2730
+     },
+     {
+      "comm": "GC Thread#0",
+      "ms": 120
+     },
+     {
+      "comm": "G1 Conc#0",
+      "ms": 50
+     },
+     {
+      "comm": "VM Periodic Tas",
+      "ms": 30
+     },
+     {
+      "comm": "VM Thread",
+      "ms": 20
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 7300
+     },
+     {
+      "comm": "C1 CompilerThre",
+      "ms": 3080
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 10
+     },
+     {
+      "comm": "GC Thread#1",
+      "ms": 70
+     },
+     {
+      "comm": "GC Thread#2",
+      "ms": 100
+     },
+     {
+      "comm": "GC Thread#3",
+      "ms": 70
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 20
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 6910
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 70
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 110
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 440
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 10
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1150
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1000
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1350
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 2330
+     }
+    ]
+   },
+   {
+    "pid": "762740",
+    "kind": "other",
+    "cmd": "",
+    "firstSeenMs": 9293.916002999991,
+    "lastSeenMs": 9293.916002999991,
+    "cpuMs": 0,
+    "byClass": {},
+    "threads": []
+   },
+   {
+    "pid": "762743",
+    "kind": "npx",
+    "cmd": "npm exec js-runner localhost:50053 https://w3id.org/rdf-connect#NodeRunner",
+    "firstSeenMs": 9320.903399000003,
+    "lastSeenMs": 33603.916239,
+    "cpuMs": 2200,
+    "byClass": {
+     "app": 2200
+    },
+    "threads": [
+     {
+      "comm": "npm exec js-run",
+      "ms": 1760
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 110
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 140
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 90
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 90
+     },
+     {
+      "comm": "npm exec js-run",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "762839",
+    "kind": "js-runner",
+    "cmd": "sh -c 'js-runner' localhost:50053 'https://w3id.org/rdf-connect#NodeRunner'",
+    "firstSeenMs": 11922.528051999994,
+    "lastSeenMs": 33579.23550699999,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "762840",
+    "kind": "js-runner",
+    "cmd": "node /home/silvius/rdfc-journal-bench/node_modules/.bin/js-runner localhost:50053 https://w3id.org/rdf-connect#NodeRunner",
+    "firstSeenMs": 11922.528051999994,
+    "lastSeenMs": 33579.23550699999,
+    "cpuMs": 16230,
+    "byClass": {
+     "app": 16230
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 12580
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 880
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 890
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 890
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 940
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     }
+    ]
+   }
+  ],
+  "stderr": ""
+ },
+ {
+  "arm": "shell",
+  "n": 5,
+  "rep": 3,
+  "code": 0,
+  "wallMs": 11412.7157,
+  "cgCpuMs": 33738.801,
+  "sampledCpuMs": 33000,
+  "correct": true,
+  "activities": {
+   "creates": 70,
+   "updates": 9
+  },
+  "expected": {
+   "creates": 70,
+   "updates": 9
+  },
+  "perProcess": [
+   {
+    "pid": "763414",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "systemd-run --user --scope --quiet --unit=rdfc-profile-759604-shell-5-3 sh -c exec < /dev/null; cd /dev/shm/rdfc-profile/shell__n5__r3; rm -f /dev/shm/rdfc-profile/shell__n5__r3/meta.fifo /dev/shm/rdf",
+    "firstSeenMs": 47.74690399999963,
+    "lastSeenMs": 11403.50093900002,
+    "cpuMs": 10,
+    "byClass": {
+     "app": 10
+    },
+    "threads": [
+     {
+      "comm": "sh",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "763433",
+    "kind": "rml-map",
+    "cmd": "java -Dlogback.configurationFile=/home/silvius/rdfc-journal-bench/bench/logback-quiet.xml -jar /home/silvius/rdfc-journal-bench/rml-processor-jvm/bin/../build/libs/rml-map.jar --mapping /home/silvius/",
+    "firstSeenMs": 73.60833200000343,
+    "lastSeenMs": 10828.372926000011,
+    "cpuMs": 18020,
+    "byClass": {
+     "app": 6670,
+     "gc/vm": 260,
+     "jit": 11090
+    },
+    "threads": [
+     {
+      "comm": "java",
+      "ms": 10
+     },
+     {
+      "comm": "java",
+      "ms": 6660
+     },
+     {
+      "comm": "GC Thread#0",
+      "ms": 70
+     },
+     {
+      "comm": "G1 Conc#0",
+      "ms": 20
+     },
+     {
+      "comm": "G1 Refine#0",
+      "ms": 10
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 4890
+     },
+     {
+      "comm": "C1 CompilerThre",
+      "ms": 1980
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 10
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 20
+     },
+     {
+      "comm": "GC Thread#1",
+      "ms": 50
+     },
+     {
+      "comm": "GC Thread#2",
+      "ms": 50
+     },
+     {
+      "comm": "GC Thread#3",
+      "ms": 60
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 640
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 3550
+     }
+    ]
+   },
+   {
+    "pid": "763434",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/validate-bluebike.ttl --stdin in --stdout out --write report=/dev/shm/rdfc-profile/shell__",
+    "firstSeenMs": 73.60833200000343,
+    "lastSeenMs": 11173.217013000016,
+    "cpuMs": 4120,
+    "byClass": {
+     "app": 4120
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 2750
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 390
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 310
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 310
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 350
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "763435",
+    "kind": "rdfc-proc:dumps-to-feed",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/dumps-to-feed.ttl --stdin in --read shape=/dev/shm/rdfc-profile/shell__n5__r3/shape.ndjson",
+    "firstSeenMs": 73.60833200000343,
+    "lastSeenMs": 11275.341028000024,
+    "cpuMs": 6130,
+    "byClass": {
+     "app": 6130
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 5170
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 230
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 250
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 240
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 230
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "763436",
+    "kind": "rdfc-proc:sdsify-feed",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/sdsify-feed.ttl --stdin in --stdout out --write metadata=/dev/shm/rdfc-profile/shell__n5__",
+    "firstSeenMs": 73.60833200000343,
+    "lastSeenMs": 11326.931594000023,
+    "cpuMs": 1740,
+    "byClass": {
+     "app": 1740
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1370
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 70
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 100
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 120
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 80
+     }
+    ]
+   },
+   {
+    "pid": "763437",
+    "kind": "rdfc-proc:bucketize",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/bucketize.ttl --stdin in --read metadataIn=/dev/shm/rdfc-profile/shell__n5__r3/meta.fifo -",
+    "firstSeenMs": 73.60833200000343,
+    "lastSeenMs": 11351.707271000021,
+    "cpuMs": 1810,
+    "byClass": {
+     "app": 1810
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1460
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 100
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 100
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 80
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 70
+     }
+    ]
+   },
+   {
+    "pid": "763438",
+    "kind": "rdfc-proc:ldes-writer",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/ldes-writer.ttl --stdin in --read metadataIn=/dev/shm/rdfc-profile/shell__n5__r3/bmeta.fif",
+    "firstSeenMs": 73.60833200000343,
+    "lastSeenMs": 11403.50093900002,
+    "cpuMs": 1170,
+    "byClass": {
+     "app": 1170
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 940
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 50
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 90
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "763439",
+    "kind": "other",
+    "cmd": "dirname /home/silvius/rdfc-journal-bench/rml-processor-jvm/bin/rml-map",
+    "firstSeenMs": 73.60833200000343,
+    "lastSeenMs": 73.60833200000343,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   }
+  ],
+  "stderr": ""
+ },
+ {
+  "arm": "rdfc",
+  "n": 5,
+  "rep": 3,
+  "code": 0,
+  "wallMs": 27680.758578000008,
+  "cgCpuMs": 50740.477,
+  "sampledCpuMs": 49840,
+  "correct": true,
+  "activities": {
+   "creates": 70,
+   "updates": 9
+  },
+  "expected": {
+   "creates": 70,
+   "updates": 9
+  },
+  "perProcess": [
+   {
+    "pid": "763778",
+    "kind": "npx",
+    "cmd": "/usr/bin/sh -c exec < /dev/null; npx rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n5_r3.ttl > /dev/shm/rdfc-profile/rdfc__n5__r3/log.txt 2>&1",
+    "firstSeenMs": 56.157291000010446,
+    "lastSeenMs": 27670.348526999995,
+    "cpuMs": 10,
+    "byClass": {
+     "app": 10
+    },
+    "threads": [
+     {
+      "comm": "sh",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "763779",
+    "kind": "npx",
+    "cmd": "npm exec rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n5_r3.ttl",
+    "firstSeenMs": 56.157291000010446,
+    "lastSeenMs": 27644.775809000013,
+    "cpuMs": 1060,
+    "byClass": {
+     "app": 1060
+    },
+    "threads": [
+     {
+      "comm": "npm exec rdfc /",
+      "ms": 870
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 50
+     },
+     {
+      "comm": "npm exec rdfc /",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "763832",
+    "kind": "other",
+    "cmd": "sh -c 'rdfc' /home/silvius/rdfc-journal-bench/pipelines/profile__n5_r3.ttl",
+    "firstSeenMs": 964.0317830000131,
+    "lastSeenMs": 27616.299440000003,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "763833",
+    "kind": "orchestrator",
+    "cmd": "node /home/silvius/rdfc-journal-bench/node_modules/.bin/rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n5_r3.ttl",
+    "firstSeenMs": 964.0317830000131,
+    "lastSeenMs": 27487.844385000004,
+    "cpuMs": 10220,
+    "byClass": {
+     "app": 10220
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 6960
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 730
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 680
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 690
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 510
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 170
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 160
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 160
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 160
+     }
+    ]
+   },
+   {
+    "pid": "764002",
+    "kind": "jvm-runner",
+    "cmd": "java -Dlogback.configurationFile=./bench/logback-quiet.xml -jar ./vendor/jvm-runner.jar localhost:50053 https://w3id.org/rdf-connect/bench#JvmRunner",
+    "firstSeenMs": 8074.8189980000025,
+    "lastSeenMs": 27670.348526999995,
+    "cpuMs": 23570,
+    "byClass": {
+     "app": 7930,
+     "gc/vm": 460,
+     "jit": 15180
+    },
+    "threads": [
+     {
+      "comm": "java",
+      "ms": 30
+     },
+     {
+      "comm": "java",
+      "ms": 1290
+     },
+     {
+      "comm": "GC Thread#0",
+      "ms": 110
+     },
+     {
+      "comm": "G1 Conc#0",
+      "ms": 60
+     },
+     {
+      "comm": "VM Periodic Tas",
+      "ms": 20
+     },
+     {
+      "comm": "VM Thread",
+      "ms": 20
+     },
+     {
+      "comm": "Service Thread",
+      "ms": 10
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 7470
+     },
+     {
+      "comm": "C1 CompilerThre",
+      "ms": 2410
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 260
+     },
+     {
+      "comm": "GC Thread#1",
+      "ms": 70
+     },
+     {
+      "comm": "GC Thread#2",
+      "ms": 80
+     },
+     {
+      "comm": "GC Thread#3",
+      "ms": 100
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 10
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 340
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 10
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 10
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 5810
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 420
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1040
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1710
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 2290
+     }
+    ]
+   },
+   {
+    "pid": "764016",
+    "kind": "other",
+    "cmd": "/usr/bin/locale-check C.UTF-8",
+    "firstSeenMs": 8074.8189980000025,
+    "lastSeenMs": 8074.8189980000025,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "764019",
+    "kind": "npx",
+    "cmd": "npm exec js-runner localhost:50053 https://w3id.org/rdf-connect#NodeRunner",
+    "firstSeenMs": 8101.996513999999,
+    "lastSeenMs": 27487.844385000004,
+    "cpuMs": 880,
+    "byClass": {
+     "app": 880
+    },
+    "threads": [
+     {
+      "comm": "npm exec js-run",
+      "ms": 740
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     }
+    ]
+   },
+   {
+    "pid": "764092",
+    "kind": "js-runner",
+    "cmd": "sh -c 'js-runner' localhost:50053 'https://w3id.org/rdf-connect#NodeRunner'",
+    "firstSeenMs": 8945.552281000011,
+    "lastSeenMs": 27461.16286499999,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "764093",
+    "kind": "js-runner",
+    "cmd": "node /home/silvius/rdfc-journal-bench/node_modules/.bin/js-runner localhost:50053 https://w3id.org/rdf-connect#NodeRunner",
+    "firstSeenMs": 8945.552281000011,
+    "lastSeenMs": 27328.945502999995,
+    "cpuMs": 14100,
+    "byClass": {
+     "app": 14100
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 10740
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 760
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 850
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 890
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 800
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 20
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 20
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     }
+    ]
+   }
+  ],
+  "stderr": ""
+ },
+ {
+  "arm": "shell",
+  "n": 5,
+  "rep": 4,
+  "code": 0,
+  "wallMs": 12621.817440000013,
+  "cgCpuMs": 35628.884,
+  "sampledCpuMs": 34900,
+  "correct": true,
+  "activities": {
+   "creates": 70,
+   "updates": 9
+  },
+  "expected": {
+   "creates": 70,
+   "updates": 9
+  },
+  "perProcess": [
+   {
+    "pid": "764589",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "/usr/bin/sh -c exec < /dev/null; cd /dev/shm/rdfc-profile/shell__n5__r4; rm -f /dev/shm/rdfc-profile/shell__n5__r4/meta.fifo /dev/shm/rdfc-profile/shell__n5__r4/bmeta.fifo; mkfifo /dev/shm/rdfc-profil",
+    "firstSeenMs": 58.45475699999952,
+    "lastSeenMs": 12616.402119000006,
+    "cpuMs": 10,
+    "byClass": {
+     "app": 10
+    },
+    "threads": [
+     {
+      "comm": "sh",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "764618",
+    "kind": "rml-map",
+    "cmd": "java -Dlogback.configurationFile=/home/silvius/rdfc-journal-bench/bench/logback-quiet.xml -jar /home/silvius/rdfc-journal-bench/rml-processor-jvm/bin/../build/libs/rml-map.jar --mapping /home/silvius/",
+    "firstSeenMs": 85.92506599999615,
+    "lastSeenMs": 12080.450852999988,
+    "cpuMs": 19170,
+    "byClass": {
+     "app": 6990,
+     "gc/vm": 330,
+     "jit": 11850
+    },
+    "threads": [
+     {
+      "comm": "java",
+      "ms": 6990
+     },
+     {
+      "comm": "GC Thread#0",
+      "ms": 40
+     },
+     {
+      "comm": "G1 Conc#0",
+      "ms": 20
+     },
+     {
+      "comm": "G1 Refine#0",
+      "ms": 10
+     },
+     {
+      "comm": "VM Periodic Tas",
+      "ms": 10
+     },
+     {
+      "comm": "VM Thread",
+      "ms": 10
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 5230
+     },
+     {
+      "comm": "C1 CompilerThre",
+      "ms": 2170
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 10
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 30
+     },
+     {
+      "comm": "GC Thread#1",
+      "ms": 50
+     },
+     {
+      "comm": "GC Thread#2",
+      "ms": 80
+     },
+     {
+      "comm": "GC Thread#3",
+      "ms": 110
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 610
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 150
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 3650
+     }
+    ]
+   },
+   {
+    "pid": "764619",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/validate-bluebike.ttl --stdin in --stdout out --write report=/dev/shm/rdfc-profile/shell__",
+    "firstSeenMs": 85.92506599999615,
+    "lastSeenMs": 12336.469947000005,
+    "cpuMs": 4360,
+    "byClass": {
+     "app": 4360
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 2920
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 360
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 340
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 360
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 370
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "764620",
+    "kind": "rdfc-proc:dumps-to-feed",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/dumps-to-feed.ttl --stdin in --read shape=/dev/shm/rdfc-profile/shell__n5__r4/shape.ndjson",
+    "firstSeenMs": 85.92506599999615,
+    "lastSeenMs": 12488.914010000008,
+    "cpuMs": 6700,
+    "byClass": {
+     "app": 6700
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 5580
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 280
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 280
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 300
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 240
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "764621",
+    "kind": "rdfc-proc:sdsify-feed",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/sdsify-feed.ttl --stdin in --stdout out --write metadata=/dev/shm/rdfc-profile/shell__n5__",
+    "firstSeenMs": 85.92506599999615,
+    "lastSeenMs": 12514.771173999994,
+    "cpuMs": 1640,
+    "byClass": {
+     "app": 1640
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1310
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 50
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 100
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 80
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 90
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "764622",
+    "kind": "rdfc-proc:bucketize",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/bucketize.ttl --stdin in --read metadataIn=/dev/shm/rdfc-profile/shell__n5__r4/meta.fifo -",
+    "firstSeenMs": 85.92506599999615,
+    "lastSeenMs": 12564.891080000001,
+    "cpuMs": 1860,
+    "byClass": {
+     "app": 1860
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1540
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 80
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 80
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 90
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 70
+     }
+    ]
+   },
+   {
+    "pid": "764623",
+    "kind": "rdfc-proc:ldes-writer",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/ldes-writer.ttl --stdin in --read metadataIn=/dev/shm/rdfc-profile/shell__n5__r4/bmeta.fif",
+    "firstSeenMs": 85.92506599999615,
+    "lastSeenMs": 12589.750419999997,
+    "cpuMs": 1160,
+    "byClass": {
+     "app": 1160
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 970
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 50
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 50
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 50
+     }
+    ]
+   }
+  ],
+  "stderr": ""
+ },
+ {
+  "arm": "rdfc",
+  "n": 5,
+  "rep": 4,
+  "code": 0,
+  "wallMs": 27550.508684,
+  "cgCpuMs": 51051.89,
+  "sampledCpuMs": 50220,
+  "correct": true,
+  "activities": {
+   "creates": 70,
+   "updates": 9
+  },
+  "expected": {
+   "creates": 70,
+   "updates": 9
+  },
+  "perProcess": [
+   {
+    "pid": "765166",
+    "kind": "npx",
+    "cmd": "/usr/bin/sh -c exec < /dev/null; npx rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n5_r4.ttl > /dev/shm/rdfc-profile/rdfc__n5__r4/log.txt 2>&1",
+    "firstSeenMs": 57.70128099998692,
+    "lastSeenMs": 27514.819487,
+    "cpuMs": 10,
+    "byClass": {
+     "app": 10
+    },
+    "threads": [
+     {
+      "comm": "sh",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "765167",
+    "kind": "npx",
+    "cmd": "npm exec rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n5_r4.ttl",
+    "firstSeenMs": 57.70128099998692,
+    "lastSeenMs": 27487.218153999973,
+    "cpuMs": 1070,
+    "byClass": {
+     "app": 1070
+    },
+    "threads": [
+     {
+      "comm": "npm exec rdfc /",
+      "ms": 870
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     }
+    ]
+   },
+   {
+    "pid": "765200",
+    "kind": "other",
+    "cmd": "sh -c 'rdfc' /home/silvius/rdfc-journal-bench/pipelines/profile__n5_r4.ttl",
+    "firstSeenMs": 935.4921589999867,
+    "lastSeenMs": 27461.504266999982,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "765201",
+    "kind": "orchestrator",
+    "cmd": "node /home/silvius/rdfc-journal-bench/node_modules/.bin/rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n5_r4.ttl",
+    "firstSeenMs": 962.1475109999883,
+    "lastSeenMs": 27461.504266999982,
+    "cpuMs": 11350,
+    "byClass": {
+     "app": 11350
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 7740
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 690
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 710
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 850
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 730
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 150
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 150
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 160
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 170
+     }
+    ]
+   },
+   {
+    "pid": "765378",
+    "kind": "jvm-runner",
+    "cmd": "java -Dlogback.configurationFile=./bench/logback-quiet.xml -jar ./vendor/jvm-runner.jar localhost:50053 https://w3id.org/rdf-connect/bench#JvmRunner",
+    "firstSeenMs": 8867.675367999997,
+    "lastSeenMs": 27548.243167999986,
+    "cpuMs": 23460,
+    "byClass": {
+     "app": 7840,
+     "gc/vm": 420,
+     "jit": 15200
+    },
+    "threads": [
+     {
+      "comm": "java",
+      "ms": 30
+     },
+     {
+      "comm": "java",
+      "ms": 1440
+     },
+     {
+      "comm": "GC Thread#0",
+      "ms": 70
+     },
+     {
+      "comm": "G1 Conc#0",
+      "ms": 50
+     },
+     {
+      "comm": "VM Periodic Tas",
+      "ms": 10
+     },
+     {
+      "comm": "VM Thread",
+      "ms": 30
+     },
+     {
+      "comm": "Service Thread",
+      "ms": 10
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 6630
+     },
+     {
+      "comm": "C1 CompilerThre",
+      "ms": 2380
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 90
+     },
+     {
+      "comm": "GC Thread#1",
+      "ms": 90
+     },
+     {
+      "comm": "GC Thread#2",
+      "ms": 70
+     },
+     {
+      "comm": "GC Thread#3",
+      "ms": 100
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 10
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 360
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 5560
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 10
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 420
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1320
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 240
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1070
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1910
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1560
+     }
+    ]
+   },
+   {
+    "pid": "765380",
+    "kind": "other",
+    "cmd": "",
+    "firstSeenMs": 8867.675367999997,
+    "lastSeenMs": 8867.675367999997,
+    "cpuMs": 0,
+    "byClass": {},
+    "threads": []
+   },
+   {
+    "pid": "765381",
+    "kind": "other",
+    "cmd": "",
+    "firstSeenMs": 8867.675367999997,
+    "lastSeenMs": 8867.675367999997,
+    "cpuMs": 0,
+    "byClass": {},
+    "threads": []
+   },
+   {
+    "pid": "765382",
+    "kind": "npx",
+    "cmd": "npm exec js-runner localhost:50053 https://w3id.org/rdf-connect#NodeRunner",
+    "firstSeenMs": 8891.324078999984,
+    "lastSeenMs": 27383.62073299999,
+    "cpuMs": 990,
+    "byClass": {
+     "app": 990
+    },
+    "threads": [
+     {
+      "comm": "npm exec js-run",
+      "ms": 860
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     }
+    ]
+   },
+   {
+    "pid": "765440",
+    "kind": "js-runner",
+    "cmd": "sh -c 'js-runner' localhost:50053 'https://w3id.org/rdf-connect#NodeRunner'",
+    "firstSeenMs": 9915.13640399999,
+    "lastSeenMs": 27383.62073299999,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "765441",
+    "kind": "js-runner",
+    "cmd": "node /home/silvius/rdfc-journal-bench/node_modules/.bin/js-runner localhost:50053 https://w3id.org/rdf-connect#NodeRunner",
+    "firstSeenMs": 9915.13640399999,
+    "lastSeenMs": 27281.841752999986,
+    "cpuMs": 13340,
+    "byClass": {
+     "app": 13340
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 10180
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 780
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 750
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 810
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 770
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     }
+    ]
+   }
+  ],
+  "stderr": ""
+ },
+ {
+  "arm": "shell",
+  "n": 60,
+  "rep": 0,
+  "code": 0,
+  "wallMs": 33801.47852800001,
+  "cgCpuMs": 86901.06,
+  "sampledCpuMs": 85970,
+  "correct": true,
+  "activities": {
+   "creates": 70,
+   "updates": 139
+  },
+  "expected": {
+   "creates": 70,
+   "updates": 139
+  },
+  "perProcess": [
+   {
+    "pid": "765926",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "/usr/bin/sh -c exec < /dev/null; cd /dev/shm/rdfc-profile/shell__n60__r0; rm -f /dev/shm/rdfc-profile/shell__n60__r0/meta.fifo /dev/shm/rdfc-profile/shell__n60__r0/bmeta.fifo; mkfifo /dev/shm/rdfc-pro",
+    "firstSeenMs": 64.65965099999448,
+    "lastSeenMs": 33792.965593,
+    "cpuMs": 30,
+    "byClass": {
+     "app": 30
+    },
+    "threads": [
+     {
+      "comm": "sh",
+      "ms": 30
+     }
+    ]
+   },
+   {
+    "pid": "765929",
+    "kind": "rml-map",
+    "cmd": "java -Dlogback.configurationFile=/home/silvius/rdfc-journal-bench/bench/logback-quiet.xml -jar /home/silvius/rdfc-journal-bench/rml-processor-jvm/bin/../build/libs/rml-map.jar --mapping /home/silvius/",
+    "firstSeenMs": 92.50117900001351,
+    "lastSeenMs": 33145.209147000016,
+    "cpuMs": 48610,
+    "byClass": {
+     "app": 22290,
+     "gc/vm": 1920,
+     "jit": 24400
+    },
+    "threads": [
+     {
+      "comm": "java",
+      "ms": 10
+     },
+     {
+      "comm": "java",
+      "ms": 22270
+     },
+     {
+      "comm": "GC Thread#0",
+      "ms": 480
+     },
+     {
+      "comm": "G1 Conc#0",
+      "ms": 30
+     },
+     {
+      "comm": "G1 Refine#0",
+      "ms": 60
+     },
+     {
+      "comm": "VM Periodic Tas",
+      "ms": 30
+     },
+     {
+      "comm": "VM Thread",
+      "ms": 40
+     },
+     {
+      "comm": "Monitor Deflati",
+      "ms": 10
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 11730
+     },
+     {
+      "comm": "C1 CompilerThre",
+      "ms": 2610
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 10
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 30
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 80
+     },
+     {
+      "comm": "GC Thread#1",
+      "ms": 440
+     },
+     {
+      "comm": "GC Thread#2",
+      "ms": 430
+     },
+     {
+      "comm": "GC Thread#3",
+      "ms": 410
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 610
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 9330
+     }
+    ]
+   },
+   {
+    "pid": "765930",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/validate-bluebike.ttl --stdin in --stdout out --write report=/dev/shm/rdfc-profile/shell__",
+    "firstSeenMs": 92.50117900001351,
+    "lastSeenMs": 33499.02160900002,
+    "cpuMs": 18620,
+    "byClass": {
+     "app": 18620
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 12570
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1450
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1570
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1420
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1600
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "765931",
+    "kind": "rdfc-proc:dumps-to-feed",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/dumps-to-feed.ttl --stdin in --read shape=/dev/shm/rdfc-profile/shell__n60__r0/shape.ndjso",
+    "firstSeenMs": 92.50117900001351,
+    "lastSeenMs": 33603.928524999996,
+    "cpuMs": 12350,
+    "byClass": {
+     "app": 12350
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 9910
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 470
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 570
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 470
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 500
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 100
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 110
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 120
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 90
+     }
+    ]
+   },
+   {
+    "pid": "765932",
+    "kind": "other",
+    "cmd": "/bin/sh /home/silvius/rdfc-journal-bench/rml-processor-jvm/bin/rml-map --mapping /home/silvius/rdfc-journal-bench/anchor/bluebike.rml.ttl",
+    "firstSeenMs": 92.50117900001351,
+    "lastSeenMs": 92.50117900001351,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "765933",
+    "kind": "other",
+    "cmd": "readlink -f /home/silvius/rdfc-journal-bench/rml-processor-jvm/bin/rml-map",
+    "firstSeenMs": 92.50117900001351,
+    "lastSeenMs": 92.50117900001351,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "765934",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "/usr/bin/sh -c exec < /dev/null; cd /dev/shm/rdfc-profile/shell__n60__r0; rm -f /dev/shm/rdfc-profile/shell__n60__r0/meta.fifo /dev/shm/rdfc-profile/shell__n60__r0/bmeta.fifo; mkfifo /dev/shm/rdfc-pro",
+    "firstSeenMs": 92.50117900001351,
+    "lastSeenMs": 33658.72801600001,
+    "cpuMs": 2120,
+    "byClass": {
+     "app": 2120
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1670
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 140
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 110
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 100
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 100
+     }
+    ]
+   },
+   {
+    "pid": "765935",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "/usr/bin/sh -c exec < /dev/null; cd /dev/shm/rdfc-profile/shell__n60__r0; rm -f /dev/shm/rdfc-profile/shell__n60__r0/meta.fifo /dev/shm/rdfc-profile/shell__n60__r0/bmeta.fifo; mkfifo /dev/shm/rdfc-pro",
+    "firstSeenMs": 92.50117900001351,
+    "lastSeenMs": 33713.789923000004,
+    "cpuMs": 2490,
+    "byClass": {
+     "app": 2490
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1910
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 140
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 110
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 190
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 140
+     }
+    ]
+   },
+   {
+    "pid": "765936",
+    "kind": "rdfc-proc:ldes-writer",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/ldes-writer.ttl --stdin in --read metadataIn=/dev/shm/rdfc-profile/shell__n60__r0/bmeta.fi",
+    "firstSeenMs": 123.85264100000495,
+    "lastSeenMs": 33792.965593,
+    "cpuMs": 1750,
+    "byClass": {
+     "app": 1750
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1380
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 130
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 90
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 50
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     }
+    ]
+   }
+  ],
+  "stderr": ""
+ },
+ {
+  "arm": "rdfc",
+  "n": 60,
+  "rep": 0,
+  "code": 0,
+  "wallMs": 66666.99135899998,
+  "cgCpuMs": 102187.883,
+  "sampledCpuMs": 100950,
+  "correct": true,
+  "activities": {
+   "creates": 70,
+   "updates": 139
+  },
+  "expected": {
+   "creates": 70,
+   "updates": 139
+  },
+  "perProcess": [
+   {
+    "pid": "766865",
+    "kind": "npx",
+    "cmd": "/usr/bin/sh -c exec < /dev/null; npx rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n60_r0.ttl > /dev/shm/rdfc-profile/rdfc__n60__r0/log.txt 2>&1",
+    "firstSeenMs": 40.2429879999836,
+    "lastSeenMs": 66655.415966,
+    "cpuMs": 10,
+    "byClass": {
+     "app": 10
+    },
+    "threads": [
+     {
+      "comm": "sh",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "766866",
+    "kind": "npx",
+    "cmd": "npm exec rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n60_r0.ttl",
+    "firstSeenMs": 66.09124399998109,
+    "lastSeenMs": 66655.415966,
+    "cpuMs": 1130,
+    "byClass": {
+     "app": 1130
+    },
+    "threads": [
+     {
+      "comm": "npm exec rdfc /",
+      "ms": 960
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "npm exec rdfc /",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "766900",
+    "kind": "other",
+    "cmd": "sh -c 'rdfc' /home/silvius/rdfc-journal-bench/pipelines/profile__n60_r0.ttl",
+    "firstSeenMs": 1026.2214189999795,
+    "lastSeenMs": 66573.77915399999,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "766901",
+    "kind": "orchestrator",
+    "cmd": "node /home/silvius/rdfc-journal-bench/node_modules/.bin/rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n60_r0.ttl",
+    "firstSeenMs": 1026.2214189999795,
+    "lastSeenMs": 66573.77915399999,
+    "cpuMs": 16520,
+    "byClass": {
+     "app": 16520
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 11300
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1110
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 980
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1300
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1270
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 140
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 130
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 140
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 150
+     }
+    ]
+   },
+   {
+    "pid": "767084",
+    "kind": "jvm-runner",
+    "cmd": "java -Dlogback.configurationFile=./bench/logback-quiet.xml -jar ./vendor/jvm-runner.jar localhost:50053 https://w3id.org/rdf-connect/bench#JvmRunner",
+    "firstSeenMs": 8853.214707999985,
+    "lastSeenMs": 66406.96612699999,
+    "cpuMs": 43030,
+    "byClass": {
+     "app": 18650,
+     "gc/vm": 2460,
+     "jit": 21920
+    },
+    "threads": [
+     {
+      "comm": "java",
+      "ms": 20
+     },
+     {
+      "comm": "java",
+      "ms": 1300
+     },
+     {
+      "comm": "GC Thread#0",
+      "ms": 520
+     },
+     {
+      "comm": "G1 Conc#0",
+      "ms": 70
+     },
+     {
+      "comm": "G1 Service",
+      "ms": 10
+     },
+     {
+      "comm": "VM Periodic Tas",
+      "ms": 140
+     },
+     {
+      "comm": "VM Thread",
+      "ms": 70
+     },
+     {
+      "comm": "Service Thread",
+      "ms": 20
+     },
+     {
+      "comm": "Monitor Deflati",
+      "ms": 10
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 11350
+     },
+     {
+      "comm": "C1 CompilerThre",
+      "ms": 3330
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 30
+     },
+     {
+      "comm": "GC Thread#1",
+      "ms": 540
+     },
+     {
+      "comm": "GC Thread#2",
+      "ms": 520
+     },
+     {
+      "comm": "GC Thread#3",
+      "ms": 590
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 10
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 15710
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 10
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 10
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 1560
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 310
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 30
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 430
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 2140
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1000
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 850
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 300
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 330
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1440
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 220
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 140
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 10
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "767088",
+    "kind": "npx",
+    "cmd": "npm exec js-runner localhost:50053 https://w3id.org/rdf-connect#NodeRunner",
+    "firstSeenMs": 8878.055128999986,
+    "lastSeenMs": 66406.96612699999,
+    "cpuMs": 840,
+    "byClass": {
+     "app": 840
+    },
+    "threads": [
+     {
+      "comm": "npm exec js-run",
+      "ms": 720
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 20
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     }
+    ]
+   },
+   {
+    "pid": "767142",
+    "kind": "js-runner",
+    "cmd": "sh -c 'js-runner' localhost:50053 'https://w3id.org/rdf-connect#NodeRunner'",
+    "firstSeenMs": 9675.270632,
+    "lastSeenMs": 66362.15730799997,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "767143",
+    "kind": "js-runner",
+    "cmd": "node /home/silvius/rdfc-journal-bench/node_modules/.bin/js-runner localhost:50053 https://w3id.org/rdf-connect#NodeRunner",
+    "firstSeenMs": 9699.985470999993,
+    "lastSeenMs": 66075.27813300001,
+    "cpuMs": 39420,
+    "byClass": {
+     "app": 39420
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 27910
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 2600
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 2820
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 2730
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 2780
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 160
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 140
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 140
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 140
+     }
+    ]
+   }
+  ],
+  "stderr": ""
+ },
+ {
+  "arm": "shell",
+  "n": 60,
+  "rep": 1,
+  "code": 0,
+  "wallMs": 31432.047477000044,
+  "cgCpuMs": 87288.773,
+  "sampledCpuMs": 86450,
+  "correct": true,
+  "activities": {
+   "creates": 70,
+   "updates": 139
+  },
+  "expected": {
+   "creates": 70,
+   "updates": 139
+  },
+  "perProcess": [
+   {
+    "pid": "768577",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "/usr/bin/sh -c exec < /dev/null; cd /dev/shm/rdfc-profile/shell__n60__r1; rm -f /dev/shm/rdfc-profile/shell__n60__r1/meta.fifo /dev/shm/rdfc-profile/shell__n60__r1/bmeta.fifo; mkfifo /dev/shm/rdfc-pro",
+    "firstSeenMs": 59.961271000036504,
+    "lastSeenMs": 31396.715116000036,
+    "cpuMs": 10,
+    "byClass": {
+     "app": 10
+    },
+    "threads": [
+     {
+      "comm": "sh",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "768580",
+    "kind": "rml-map",
+    "cmd": "java -Dlogback.configurationFile=/home/silvius/rdfc-journal-bench/bench/logback-quiet.xml -jar /home/silvius/rdfc-journal-bench/rml-processor-jvm/bin/../build/libs/rml-map.jar --mapping /home/silvius/",
+    "firstSeenMs": 85.31222500000149,
+    "lastSeenMs": 30258.330929000047,
+    "cpuMs": 47130,
+    "byClass": {
+     "app": 20860,
+     "gc/vm": 2160,
+     "jit": 24110
+    },
+    "threads": [
+     {
+      "comm": "java",
+      "ms": 10
+     },
+     {
+      "comm": "java",
+      "ms": 20850
+     },
+     {
+      "comm": "GC Thread#0",
+      "ms": 470
+     },
+     {
+      "comm": "G1 Conc#0",
+      "ms": 20
+     },
+     {
+      "comm": "G1 Refine#0",
+      "ms": 60
+     },
+     {
+      "comm": "VM Periodic Tas",
+      "ms": 20
+     },
+     {
+      "comm": "VM Thread",
+      "ms": 70
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 11760
+     },
+     {
+      "comm": "C1 CompilerThre",
+      "ms": 2690
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 180
+     },
+     {
+      "comm": "GC Thread#1",
+      "ms": 530
+     },
+     {
+      "comm": "GC Thread#2",
+      "ms": 520
+     },
+     {
+      "comm": "GC Thread#3",
+      "ms": 470
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 670
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 8810
+     }
+    ]
+   },
+   {
+    "pid": "768581",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/validate-bluebike.ttl --stdin in --stdout out --write report=/dev/shm/rdfc-profile/shell__",
+    "firstSeenMs": 85.31222500000149,
+    "lastSeenMs": 30920.937572000024,
+    "cpuMs": 19170,
+    "byClass": {
+     "app": 19170
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 12820
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1520
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1590
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1590
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1640
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "768582",
+    "kind": "rdfc-proc:dumps-to-feed",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/dumps-to-feed.ttl --stdin in --read shape=/dev/shm/rdfc-profile/shell__n60__r1/shape.ndjso",
+    "firstSeenMs": 85.31222500000149,
+    "lastSeenMs": 31130.119623000035,
+    "cpuMs": 13160,
+    "byClass": {
+     "app": 13160
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 10580
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 530
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 430
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 620
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 540
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 110
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 110
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 120
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 110
+     }
+    ]
+   },
+   {
+    "pid": "768583",
+    "kind": "rdfc-proc:sdsify-feed",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/sdsify-feed.ttl --stdin in --stdout out --write metadata=/dev/shm/rdfc-profile/shell__n60_",
+    "firstSeenMs": 85.31222500000149,
+    "lastSeenMs": 31190.165837000008,
+    "cpuMs": 2350,
+    "byClass": {
+     "app": 2350
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1870
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 130
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 130
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 80
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 130
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "768584",
+    "kind": "rdfc-proc:bucketize",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/bucketize.ttl --stdin in --read metadataIn=/dev/shm/rdfc-profile/shell__n60__r1/meta.fifo ",
+    "firstSeenMs": 85.31222500000149,
+    "lastSeenMs": 31319.416354000045,
+    "cpuMs": 2600,
+    "byClass": {
+     "app": 2600
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 2070
+     },
+     {
+      "comm": "DelayedTaskSche",
+      "ms": 10
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 130
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 110
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 110
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 160
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "768585",
+    "kind": "rdfc-proc:ldes-writer",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/ldes-writer.ttl --stdin in --read metadataIn=/dev/shm/rdfc-profile/shell__n60__r1/bmeta.fi",
+    "firstSeenMs": 85.31222500000149,
+    "lastSeenMs": 31396.715116000036,
+    "cpuMs": 2030,
+    "byClass": {
+     "app": 2030
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1620
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 140
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 80
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 80
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     }
+    ]
+   }
+  ],
+  "stderr": ""
+ },
+ {
+  "arm": "rdfc",
+  "n": 60,
+  "rep": 1,
+  "code": 0,
+  "wallMs": 72526.870926,
+  "cgCpuMs": 111926.032,
+  "sampledCpuMs": 110620,
+  "correct": true,
+  "activities": {
+   "creates": 70,
+   "updates": 139
+  },
+  "expected": {
+   "creates": 70,
+   "updates": 139
+  },
+  "perProcess": [
+   {
+    "pid": "769454",
+    "kind": "npx",
+    "cmd": "/usr/bin/sh -c exec < /dev/null; npx rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n60_r1.ttl > /dev/shm/rdfc-profile/rdfc__n60__r1/log.txt 2>&1",
+    "firstSeenMs": 85.77031500003068,
+    "lastSeenMs": 72511.510686,
+    "cpuMs": 20,
+    "byClass": {
+     "app": 20
+    },
+    "threads": [
+     {
+      "comm": "sh",
+      "ms": 20
+     }
+    ]
+   },
+   {
+    "pid": "769455",
+    "kind": "npx",
+    "cmd": "npm exec rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n60_r1.ttl",
+    "firstSeenMs": 110.78312199999345,
+    "lastSeenMs": 72511.510686,
+    "cpuMs": 1560,
+    "byClass": {
+     "app": 1560
+    },
+    "threads": [
+     {
+      "comm": "npm exec rdfc /",
+      "ms": 1370
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     }
+    ]
+   },
+   {
+    "pid": "769496",
+    "kind": "other",
+    "cmd": "sh -c 'rdfc' /home/silvius/rdfc-journal-bench/pipelines/profile__n60_r1.ttl",
+    "firstSeenMs": 1674.533985999995,
+    "lastSeenMs": 72454.86684899998,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "769497",
+    "kind": "orchestrator",
+    "cmd": "node /home/silvius/rdfc-journal-bench/node_modules/.bin/rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n60_r1.ttl",
+    "firstSeenMs": 1674.533985999995,
+    "lastSeenMs": 72329.45311900001,
+    "cpuMs": 17760,
+    "byClass": {
+     "app": 17760
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 12470
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1170
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1360
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1090
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1090
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 150
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 150
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 130
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 150
+     }
+    ]
+   },
+   {
+    "pid": "769732",
+    "kind": "jvm-runner",
+    "cmd": "java -Dlogback.configurationFile=./bench/logback-quiet.xml -jar ./vendor/jvm-runner.jar localhost:50053 https://w3id.org/rdf-connect/bench#JvmRunner",
+    "firstSeenMs": 10675.182075000019,
+    "lastSeenMs": 72404.92274399998,
+    "cpuMs": 48010,
+    "byClass": {
+     "app": 20860,
+     "gc/vm": 2470,
+     "jit": 24680
+    },
+    "threads": [
+     {
+      "comm": "java",
+      "ms": 40
+     },
+     {
+      "comm": "java",
+      "ms": 1950
+     },
+     {
+      "comm": "GC Thread#0",
+      "ms": 490
+     },
+     {
+      "comm": "G1 Conc#0",
+      "ms": 50
+     },
+     {
+      "comm": "G1 Service",
+      "ms": 10
+     },
+     {
+      "comm": "VM Periodic Tas",
+      "ms": 140
+     },
+     {
+      "comm": "VM Thread",
+      "ms": 90
+     },
+     {
+      "comm": "Service Thread",
+      "ms": 10
+     },
+     {
+      "comm": "Monitor Deflati",
+      "ms": 20
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 12140
+     },
+     {
+      "comm": "C1 CompilerThre",
+      "ms": 4000
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 30
+     },
+     {
+      "comm": "GC Thread#1",
+      "ms": 560
+     },
+     {
+      "comm": "GC Thread#2",
+      "ms": 580
+     },
+     {
+      "comm": "GC Thread#3",
+      "ms": 550
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 10
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 16930
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 10
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 30
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 1860
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 680
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 390
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 920
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1460
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1670
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 320
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 700
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1620
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 400
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 320
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 30
+     }
+    ]
+   },
+   {
+    "pid": "769736",
+    "kind": "npx",
+    "cmd": "npm exec js-runner localhost:50053 https://w3id.org/rdf-connect#NodeRunner",
+    "firstSeenMs": 10700.506279000023,
+    "lastSeenMs": 72354.81106500002,
+    "cpuMs": 1250,
+    "byClass": {
+     "app": 1250
+    },
+    "threads": [
+     {
+      "comm": "npm exec js-run",
+      "ms": 1020
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 50
+     }
+    ]
+   },
+   {
+    "pid": "769739",
+    "kind": "other",
+    "cmd": "",
+    "firstSeenMs": 10726.171253000037,
+    "lastSeenMs": 10726.171253000037,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "769740",
+    "kind": "npx",
+    "cmd": "bash -l -c npx js-runner localhost:50053 https://w3id.org/rdf-connect#NodeRunner",
+    "firstSeenMs": 10726.171253000037,
+    "lastSeenMs": 10726.171253000037,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "769789",
+    "kind": "js-runner",
+    "cmd": "sh -c 'js-runner' localhost:50053 'https://w3id.org/rdf-connect#NodeRunner'",
+    "firstSeenMs": 11835.941705000005,
+    "lastSeenMs": 72304.894188,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "769790",
+    "kind": "js-runner",
+    "cmd": "node /home/silvius/rdfc-journal-bench/node_modules/.bin/js-runner localhost:50053 https://w3id.org/rdf-connect#NodeRunner",
+    "firstSeenMs": 11861.637104000023,
+    "lastSeenMs": 72071.41793500003,
+    "cpuMs": 42020,
+    "byClass": {
+     "app": 42020
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 30480
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 2770
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 2670
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 2780
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 2710
+     },
+     {
+      "comm": "MainThread",
+      "ms": 20
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 150
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 140
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 140
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 140
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 20
+     }
+    ]
+   }
+  ],
+  "stderr": ""
+ },
+ {
+  "arm": "shell",
+  "n": 60,
+  "rep": 2,
+  "code": 0,
+  "wallMs": 27419.28263000003,
+  "cgCpuMs": 78625.778,
+  "sampledCpuMs": 77710,
+  "correct": true,
+  "activities": {
+   "creates": 70,
+   "updates": 139
+  },
+  "expected": {
+   "creates": 70,
+   "updates": 139
+  },
+  "perProcess": [
+   {
+    "pid": "771315",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "/usr/bin/sh -c exec < /dev/null; cd /dev/shm/rdfc-profile/shell__n60__r2; rm -f /dev/shm/rdfc-profile/shell__n60__r2/meta.fifo /dev/shm/rdfc-profile/shell__n60__r2/bmeta.fifo; mkfifo /dev/shm/rdfc-pro",
+    "firstSeenMs": 58.688958000042476,
+    "lastSeenMs": 27392.775292000035,
+    "cpuMs": 10,
+    "byClass": {
+     "app": 10
+    },
+    "threads": [
+     {
+      "comm": "sh",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "771318",
+    "kind": "other",
+    "cmd": "mkfifo /dev/shm/rdfc-profile/shell__n60__r2/meta.fifo /dev/shm/rdfc-profile/shell__n60__r2/bmeta.fifo",
+    "firstSeenMs": 58.688958000042476,
+    "lastSeenMs": 58.688958000042476,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "771319",
+    "kind": "rml-map",
+    "cmd": "java -Dlogback.configurationFile=/home/silvius/rdfc-journal-bench/bench/logback-quiet.xml -jar /home/silvius/rdfc-journal-bench/rml-processor-jvm/bin/../build/libs/rml-map.jar --mapping /home/silvius/",
+    "firstSeenMs": 84.79134799999883,
+    "lastSeenMs": 26724.647719,
+    "cpuMs": 40870,
+    "byClass": {
+     "app": 17920,
+     "gc/vm": 1800,
+     "jit": 21150
+    },
+    "threads": [
+     {
+      "comm": "java",
+      "ms": 17920
+     },
+     {
+      "comm": "GC Thread#0",
+      "ms": 350
+     },
+     {
+      "comm": "G1 Conc#0",
+      "ms": 20
+     },
+     {
+      "comm": "G1 Refine#0",
+      "ms": 60
+     },
+     {
+      "comm": "VM Periodic Tas",
+      "ms": 30
+     },
+     {
+      "comm": "VM Thread",
+      "ms": 40
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 10160
+     },
+     {
+      "comm": "C1 CompilerThre",
+      "ms": 2360
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 150
+     },
+     {
+      "comm": "GC Thread#1",
+      "ms": 470
+     },
+     {
+      "comm": "GC Thread#2",
+      "ms": 440
+     },
+     {
+      "comm": "GC Thread#3",
+      "ms": 390
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 40
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 880
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 7560
+     }
+    ]
+   },
+   {
+    "pid": "771320",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/validate-bluebike.ttl --stdin in --stdout out --write report=/dev/shm/rdfc-profile/shell__",
+    "firstSeenMs": 84.79134799999883,
+    "lastSeenMs": 27140.216246000025,
+    "cpuMs": 17800,
+    "byClass": {
+     "app": 17800
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 11830
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1510
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1510
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1540
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1400
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "771321",
+    "kind": "rdfc-proc:dumps-to-feed",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/dumps-to-feed.ttl --stdin in --read shape=/dev/shm/rdfc-profile/shell__n60__r2/shape.ndjso",
+    "firstSeenMs": 84.79134799999883,
+    "lastSeenMs": 27267.64456300001,
+    "cpuMs": 12110,
+    "byClass": {
+     "app": 12110
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 9730
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 450
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 540
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 500
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 490
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 100
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 100
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 90
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 100
+     }
+    ]
+   },
+   {
+    "pid": "771324",
+    "kind": "rdfc-proc:sdsify-feed",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/sdsify-feed.ttl --stdin in --stdout out --write metadata=/dev/shm/rdfc-profile/shell__n60_",
+    "firstSeenMs": 84.79134799999883,
+    "lastSeenMs": 27317.17715500004,
+    "cpuMs": 2350,
+    "byClass": {
+     "app": 2350
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1860
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 110
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 110
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 100
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 140
+     },
+     {
+      "comm": "MainThread",
+      "ms": 30
+     }
+    ]
+   },
+   {
+    "pid": "771325",
+    "kind": "rdfc-proc:bucketize",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/bucketize.ttl --stdin in --read metadataIn=/dev/shm/rdfc-profile/shell__n60__r2/meta.fifo ",
+    "firstSeenMs": 84.79134799999883,
+    "lastSeenMs": 27342.50444400002,
+    "cpuMs": 2700,
+    "byClass": {
+     "app": 2700
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 2070
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 200
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 120
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 130
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 170
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "771326",
+    "kind": "rdfc-proc:ldes-writer",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/ldes-writer.ttl --stdin in --read metadataIn=/dev/shm/rdfc-profile/shell__n60__r2/bmeta.fi",
+    "firstSeenMs": 84.79134799999883,
+    "lastSeenMs": 27392.775292000035,
+    "cpuMs": 1870,
+    "byClass": {
+     "app": 1870
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1500
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 80
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 90
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 110
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     }
+    ]
+   }
+  ],
+  "stderr": ""
+ },
+ {
+  "arm": "rdfc",
+  "n": 60,
+  "rep": 2,
+  "code": 0,
+  "wallMs": 63858.98138000001,
+  "cgCpuMs": 101765.822,
+  "sampledCpuMs": 100940,
+  "correct": true,
+  "activities": {
+   "creates": 70,
+   "updates": 139
+  },
+  "expected": {
+   "creates": 70,
+   "updates": 139
+  },
+  "perProcess": [
+   {
+    "pid": "772104",
+    "kind": "npx",
+    "cmd": "/usr/bin/sh -c exec < /dev/null; npx rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n60_r2.ttl > /dev/shm/rdfc-profile/rdfc__n60__r2/log.txt 2>&1",
+    "firstSeenMs": 58.41806400002679,
+    "lastSeenMs": 63843.262628,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "772105",
+    "kind": "npx",
+    "cmd": "npm exec rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n60_r2.ttl",
+    "firstSeenMs": 58.41806400002679,
+    "lastSeenMs": 63818.40495900001,
+    "cpuMs": 980,
+    "byClass": {
+     "app": 980
+    },
+    "threads": [
+     {
+      "comm": "npm exec rdfc /",
+      "ms": 810
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "npm exec rdfc /",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "772139",
+    "kind": "other",
+    "cmd": "sh -c 'rdfc' /home/silvius/rdfc-journal-bench/pipelines/profile__n60_r2.ttl",
+    "firstSeenMs": 876.0321519999998,
+    "lastSeenMs": 63767.730351999984,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "772140",
+    "kind": "orchestrator",
+    "cmd": "node /home/silvius/rdfc-journal-bench/node_modules/.bin/rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n60_r2.ttl",
+    "firstSeenMs": 876.0321519999998,
+    "lastSeenMs": 63691.79505800002,
+    "cpuMs": 15660,
+    "byClass": {
+     "app": 15660
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 10620
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 960
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1240
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1120
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1170
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 130
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 150
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 130
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 140
+     }
+    ]
+   },
+   {
+    "pid": "772343",
+    "kind": "jvm-runner",
+    "cmd": "java -Dlogback.configurationFile=./bench/logback-quiet.xml -jar ./vendor/jvm-runner.jar localhost:50053 https://w3id.org/rdf-connect/bench#JvmRunner",
+    "firstSeenMs": 8215.88140100002,
+    "lastSeenMs": 63858.840595000016,
+    "cpuMs": 44750,
+    "byClass": {
+     "app": 19160,
+     "gc/vm": 2350,
+     "jit": 23240
+    },
+    "threads": [
+     {
+      "comm": "java",
+      "ms": 70
+     },
+     {
+      "comm": "java",
+      "ms": 1320
+     },
+     {
+      "comm": "GC Thread#0",
+      "ms": 490
+     },
+     {
+      "comm": "G1 Conc#0",
+      "ms": 70
+     },
+     {
+      "comm": "G1 Service",
+      "ms": 10
+     },
+     {
+      "comm": "VM Periodic Tas",
+      "ms": 130
+     },
+     {
+      "comm": "VM Thread",
+      "ms": 80
+     },
+     {
+      "comm": "Service Thread",
+      "ms": 10
+     },
+     {
+      "comm": "Monitor Deflati",
+      "ms": 10
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 10910
+     },
+     {
+      "comm": "C1 CompilerThre",
+      "ms": 3690
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 260
+     },
+     {
+      "comm": "GC Thread#1",
+      "ms": 490
+     },
+     {
+      "comm": "GC Thread#2",
+      "ms": 530
+     },
+     {
+      "comm": "GC Thread#3",
+      "ms": 550
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 10
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 16100
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 20
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 20
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 1600
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 930
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 380
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 2150
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1040
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 380
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 330
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 500
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 320
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1880
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 450
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 20
+     }
+    ]
+   },
+   {
+    "pid": "772346",
+    "kind": "other",
+    "cmd": "bash -l -c java -Dlogback.configurationFile=./bench/logback-quiet.xml -jar ./vendor/jvm-runner.jar localhost:50053 https://w3id.org/rdf-connect/bench#JvmRunner",
+    "firstSeenMs": 8215.88140100002,
+    "lastSeenMs": 8215.88140100002,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "772347",
+    "kind": "npx",
+    "cmd": "npm exec js-runner localhost:50053 https://w3id.org/rdf-connect#NodeRunner",
+    "firstSeenMs": 8242.129790000035,
+    "lastSeenMs": 63717.490049000015,
+    "cpuMs": 920,
+    "byClass": {
+     "app": 920
+    },
+    "threads": [
+     {
+      "comm": "npm exec js-run",
+      "ms": 760
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "npm exec js-run",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "772351",
+    "kind": "other",
+    "cmd": "",
+    "firstSeenMs": 8242.129790000035,
+    "lastSeenMs": 8242.129790000035,
+    "cpuMs": 0,
+    "byClass": {},
+    "threads": []
+   },
+   {
+    "pid": "772406",
+    "kind": "js-runner",
+    "cmd": "sh -c 'js-runner' localhost:50053 'https://w3id.org/rdf-connect#NodeRunner'",
+    "firstSeenMs": 9088.971063999983,
+    "lastSeenMs": 63666.04174399999,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "772407",
+    "kind": "js-runner",
+    "cmd": "node /home/silvius/rdfc-journal-bench/node_modules/.bin/js-runner localhost:50053 https://w3id.org/rdf-connect#NodeRunner",
+    "firstSeenMs": 9113.82510800002,
+    "lastSeenMs": 63666.04174399999,
+    "cpuMs": 38630,
+    "byClass": {
+     "app": 38630
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 27550
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 2500
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 2810
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 2730
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 2520
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 130
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 130
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 130
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 130
+     }
+    ]
+   }
+  ],
+  "stderr": ""
+ },
+ {
+  "arm": "shell",
+  "n": 60,
+  "rep": 3,
+  "code": 0,
+  "wallMs": 29694.188789999927,
+  "cgCpuMs": 82229.131,
+  "sampledCpuMs": 81330,
+  "correct": true,
+  "activities": {
+   "creates": 70,
+   "updates": 139
+  },
+  "expected": {
+   "creates": 70,
+   "updates": 139
+  },
+  "perProcess": [
+   {
+    "pid": "773783",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "/usr/bin/sh -c exec < /dev/null; cd /dev/shm/rdfc-profile/shell__n60__r3; rm -f /dev/shm/rdfc-profile/shell__n60__r3/meta.fifo /dev/shm/rdfc-profile/shell__n60__r3/bmeta.fifo; mkfifo /dev/shm/rdfc-pro",
+    "firstSeenMs": 62.6697479999857,
+    "lastSeenMs": 29669.092148000025,
+    "cpuMs": 20,
+    "byClass": {
+     "app": 20
+    },
+    "threads": [
+     {
+      "comm": "sh",
+      "ms": 20
+     }
+    ]
+   },
+   {
+    "pid": "773786",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "/usr/bin/sh -c exec < /dev/null; cd /dev/shm/rdfc-profile/shell__n60__r3; rm -f /dev/shm/rdfc-profile/shell__n60__r3/meta.fifo /dev/shm/rdfc-profile/shell__n60__r3/bmeta.fifo; mkfifo /dev/shm/rdfc-pro",
+    "firstSeenMs": 62.6697479999857,
+    "lastSeenMs": 62.6697479999857,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "773787",
+    "kind": "rml-map",
+    "cmd": "java -Dlogback.configurationFile=/home/silvius/rdfc-journal-bench/bench/logback-quiet.xml -jar /home/silvius/rdfc-journal-bench/rml-processor-jvm/bin/../build/libs/rml-map.jar --mapping /home/silvius/",
+    "firstSeenMs": 87.93538999999873,
+    "lastSeenMs": 29032.57654499996,
+    "cpuMs": 44530,
+    "byClass": {
+     "app": 18800,
+     "gc/vm": 1890,
+     "jit": 23840
+    },
+    "threads": [
+     {
+      "comm": "java",
+      "ms": 18800
+     },
+     {
+      "comm": "GC Thread#0",
+      "ms": 380
+     },
+     {
+      "comm": "G1 Conc#0",
+      "ms": 20
+     },
+     {
+      "comm": "G1 Refine#0",
+      "ms": 70
+     },
+     {
+      "comm": "VM Periodic Tas",
+      "ms": 20
+     },
+     {
+      "comm": "VM Thread",
+      "ms": 40
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 11870
+     },
+     {
+      "comm": "C1 CompilerThre",
+      "ms": 2780
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 20
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 10
+     },
+     {
+      "comm": "GC Thread#1",
+      "ms": 480
+     },
+     {
+      "comm": "GC Thread#2",
+      "ms": 410
+     },
+     {
+      "comm": "GC Thread#3",
+      "ms": 470
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 600
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 20
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 8540
+     }
+    ]
+   },
+   {
+    "pid": "773788",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/validate-bluebike.ttl --stdin in --stdout out --write report=/dev/shm/rdfc-profile/shell__",
+    "firstSeenMs": 87.93538999999873,
+    "lastSeenMs": 29434.892148999963,
+    "cpuMs": 18280,
+    "byClass": {
+     "app": 18280
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 12090
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1490
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1580
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1500
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1610
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "773789",
+    "kind": "rdfc-proc:dumps-to-feed",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/dumps-to-feed.ttl --stdin in --read shape=/dev/shm/rdfc-profile/shell__n60__r3/shape.ndjso",
+    "firstSeenMs": 87.93538999999873,
+    "lastSeenMs": 29541.713021999924,
+    "cpuMs": 12070,
+    "byClass": {
+     "app": 12070
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 9740
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 400
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 570
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 510
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 480
+     },
+     {
+      "comm": "MainThread",
+      "ms": 20
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 90
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 80
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 90
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 90
+     }
+    ]
+   },
+   {
+    "pid": "773790",
+    "kind": "rdfc-proc:sdsify-feed",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/sdsify-feed.ttl --stdin in --stdout out --write metadata=/dev/shm/rdfc-profile/shell__n60_",
+    "firstSeenMs": 87.93538999999873,
+    "lastSeenMs": 29592.540702000028,
+    "cpuMs": 2170,
+    "byClass": {
+     "app": 2170
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1730
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 100
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 120
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 110
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 100
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "773791",
+    "kind": "rdfc-proc:bucketize",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/bucketize.ttl --stdin in --read metadataIn=/dev/shm/rdfc-profile/shell__n60__r3/meta.fifo ",
+    "firstSeenMs": 87.93538999999873,
+    "lastSeenMs": 29642.872106999974,
+    "cpuMs": 2440,
+    "byClass": {
+     "app": 2440
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1960
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 90
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 100
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 100
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 170
+     },
+     {
+      "comm": "MainThread",
+      "ms": 20
+     }
+    ]
+   },
+   {
+    "pid": "773792",
+    "kind": "rdfc-proc:ldes-writer",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/ldes-writer.ttl --stdin in --read metadataIn=/dev/shm/rdfc-profile/shell__n60__r3/bmeta.fi",
+    "firstSeenMs": 87.93538999999873,
+    "lastSeenMs": 29669.092148000025,
+    "cpuMs": 1820,
+    "byClass": {
+     "app": 1820
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1440
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 110
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 80
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 80
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     }
+    ]
+   }
+  ],
+  "stderr": ""
+ },
+ {
+  "arm": "rdfc",
+  "n": 60,
+  "rep": 3,
+  "code": 0,
+  "wallMs": 65116.23700299999,
+  "cgCpuMs": 99374.073,
+  "sampledCpuMs": 98180,
+  "correct": true,
+  "activities": {
+   "creates": 70,
+   "updates": 139
+  },
+  "expected": {
+   "creates": 70,
+   "updates": 139
+  },
+  "perProcess": [
+   {
+    "pid": "774584",
+    "kind": "npx",
+    "cmd": "/usr/bin/sh -c exec < /dev/null; npx rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n60_r3.ttl > /dev/shm/rdfc-profile/rdfc__n60__r3/log.txt 2>&1",
+    "firstSeenMs": 60.318221000023186,
+    "lastSeenMs": 65104.05245800002,
+    "cpuMs": 10,
+    "byClass": {
+     "app": 10
+    },
+    "threads": [
+     {
+      "comm": "sh",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "774591",
+    "kind": "npx",
+    "cmd": "npm exec rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n60_r3.ttl",
+    "firstSeenMs": 60.318221000023186,
+    "lastSeenMs": 65078.014790999936,
+    "cpuMs": 960,
+    "byClass": {
+     "app": 960
+    },
+    "threads": [
+     {
+      "comm": "npm exec rdfc /",
+      "ms": 810
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "npm exec rdfc /",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "774639",
+    "kind": "other",
+    "cmd": "sh -c 'rdfc' /home/silvius/rdfc-journal-bench/pipelines/profile__n60_r3.ttl",
+    "firstSeenMs": 912.8425249999855,
+    "lastSeenMs": 65052.589094999945,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "774640",
+    "kind": "orchestrator",
+    "cmd": "node /home/silvius/rdfc-journal-bench/node_modules/.bin/rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n60_r3.ttl",
+    "firstSeenMs": 912.8425249999855,
+    "lastSeenMs": 64949.121074000024,
+    "cpuMs": 15900,
+    "byClass": {
+     "app": 15900
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 10900
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1060
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1070
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1280
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1010
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 140
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 160
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 140
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 140
+     }
+    ]
+   },
+   {
+    "pid": "774865",
+    "kind": "jvm-runner",
+    "cmd": "java -Dlogback.configurationFile=./bench/logback-quiet.xml -jar ./vendor/jvm-runner.jar localhost:50053 https://w3id.org/rdf-connect/bench#JvmRunner",
+    "firstSeenMs": 9045.52561100002,
+    "lastSeenMs": 65000.94990200002,
+    "cpuMs": 43840,
+    "byClass": {
+     "app": 19380,
+     "gc/vm": 2310,
+     "jit": 22150
+    },
+    "threads": [
+     {
+      "comm": "java",
+      "ms": 30
+     },
+     {
+      "comm": "java",
+      "ms": 1540
+     },
+     {
+      "comm": "GC Thread#0",
+      "ms": 520
+     },
+     {
+      "comm": "G1 Conc#0",
+      "ms": 50
+     },
+     {
+      "comm": "G1 Service",
+      "ms": 10
+     },
+     {
+      "comm": "VM Periodic Tas",
+      "ms": 80
+     },
+     {
+      "comm": "VM Thread",
+      "ms": 60
+     },
+     {
+      "comm": "Monitor Deflati",
+      "ms": 10
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 10480
+     },
+     {
+      "comm": "C1 CompilerThre",
+      "ms": 3430
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 70
+     },
+     {
+      "comm": "GC Thread#1",
+      "ms": 500
+     },
+     {
+      "comm": "GC Thread#2",
+      "ms": 590
+     },
+     {
+      "comm": "GC Thread#3",
+      "ms": 500
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 10
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 390
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 15900
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 1500
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1400
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 210
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 990
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1710
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1140
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 330
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 2150
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 230
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "774868",
+    "kind": "other",
+    "cmd": "bash -l -c java -Dlogback.configurationFile=./bench/logback-quiet.xml -jar ./vendor/jvm-runner.jar localhost:50053 https://w3id.org/rdf-connect/bench#JvmRunner",
+    "firstSeenMs": 9045.52561100002,
+    "lastSeenMs": 9045.52561100002,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "774871",
+    "kind": "npx",
+    "cmd": "npm exec js-runner localhost:50053 https://w3id.org/rdf-connect#NodeRunner",
+    "firstSeenMs": 9098.488323000027,
+    "lastSeenMs": 64975.630190999946,
+    "cpuMs": 1050,
+    "byClass": {
+     "app": 1050
+    },
+    "threads": [
+     {
+      "comm": "npm exec js-run",
+      "ms": 880
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     }
+    ]
+   },
+   {
+    "pid": "774924",
+    "kind": "js-runner",
+    "cmd": "sh -c 'js-runner' localhost:50053 'https://w3id.org/rdf-connect#NodeRunner'",
+    "firstSeenMs": 10117.868779000011,
+    "lastSeenMs": 64922.869799999986,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "774925",
+    "kind": "js-runner",
+    "cmd": "node /home/silvius/rdfc-journal-bench/node_modules/.bin/js-runner localhost:50053 https://w3id.org/rdf-connect#NodeRunner",
+    "firstSeenMs": 10117.868779000011,
+    "lastSeenMs": 64665.80933900003,
+    "cpuMs": 36420,
+    "byClass": {
+     "app": 36420
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 25820
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 2530
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 2590
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 2410
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 2560
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 120
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 110
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 130
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 140
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     }
+    ]
+   }
+  ],
+  "stderr": ""
+ },
+ {
+  "arm": "shell",
+  "n": 60,
+  "rep": 4,
+  "code": 0,
+  "wallMs": 29179.887916999985,
+  "cgCpuMs": 77878.508,
+  "sampledCpuMs": 77040,
+  "correct": true,
+  "activities": {
+   "creates": 70,
+   "updates": 139
+  },
+  "expected": {
+   "creates": 70,
+   "updates": 139
+  },
+  "perProcess": [
+   {
+    "pid": "776317",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "/usr/bin/sh -c exec < /dev/null; cd /dev/shm/rdfc-profile/shell__n60__r4; rm -f /dev/shm/rdfc-profile/shell__n60__r4/meta.fifo /dev/shm/rdfc-profile/shell__n60__r4/bmeta.fifo; mkfifo /dev/shm/rdfc-pro",
+    "firstSeenMs": 61.303469000034966,
+    "lastSeenMs": 29169.989180000033,
+    "cpuMs": 20,
+    "byClass": {
+     "app": 20
+    },
+    "threads": [
+     {
+      "comm": "sh",
+      "ms": 20
+     }
+    ]
+   },
+   {
+    "pid": "776320",
+    "kind": "rml-map",
+    "cmd": "java -Dlogback.configurationFile=/home/silvius/rdfc-journal-bench/bench/logback-quiet.xml -jar /home/silvius/rdfc-journal-bench/rml-processor-jvm/bin/../build/libs/rml-map.jar --mapping /home/silvius/",
+    "firstSeenMs": 61.303469000034966,
+    "lastSeenMs": 28589.82763299998,
+    "cpuMs": 41080,
+    "byClass": {
+     "app": 19120,
+     "gc/vm": 2120,
+     "jit": 19840
+    },
+    "threads": [
+     {
+      "comm": "java",
+      "ms": 10
+     },
+     {
+      "comm": "java",
+      "ms": 19110
+     },
+     {
+      "comm": "GC Thread#0",
+      "ms": 550
+     },
+     {
+      "comm": "G1 Conc#0",
+      "ms": 20
+     },
+     {
+      "comm": "G1 Refine#0",
+      "ms": 40
+     },
+     {
+      "comm": "VM Periodic Tas",
+      "ms": 30
+     },
+     {
+      "comm": "VM Thread",
+      "ms": 50
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 9250
+     },
+     {
+      "comm": "C1 CompilerThre",
+      "ms": 2280
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 140
+     },
+     {
+      "comm": "GC Thread#1",
+      "ms": 470
+     },
+     {
+      "comm": "GC Thread#2",
+      "ms": 530
+     },
+     {
+      "comm": "GC Thread#3",
+      "ms": 430
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 530
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 7640
+     }
+    ]
+   },
+   {
+    "pid": "776321",
+    "kind": "rdfc-proc:validate-bluebike",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/validate-bluebike.ttl --stdin in --stdout out --write report=/dev/shm/rdfc-profile/shell__",
+    "firstSeenMs": 61.303469000034966,
+    "lastSeenMs": 28967.288910000003,
+    "cpuMs": 17810,
+    "byClass": {
+     "app": 17810
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 11820
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1490
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1560
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1410
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1520
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "776322",
+    "kind": "rdfc-proc:dumps-to-feed",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/dumps-to-feed.ttl --stdin in --read shape=/dev/shm/rdfc-profile/shell__n60__r4/shape.ndjso",
+    "firstSeenMs": 61.303469000034966,
+    "lastSeenMs": 29068.735799000016,
+    "cpuMs": 11770,
+    "byClass": {
+     "app": 11770
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 9560
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 480
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 390
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 450
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 490
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 90
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 100
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 90
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 100
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "776323",
+    "kind": "rdfc-proc:sdsify-feed",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/sdsify-feed.ttl --stdin in --stdout out --write metadata=/dev/shm/rdfc-profile/shell__n60_",
+    "firstSeenMs": 61.303469000034966,
+    "lastSeenMs": 29094.66359400004,
+    "cpuMs": 2200,
+    "byClass": {
+     "app": 2200
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1760
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 120
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 120
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 100
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 90
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "776324",
+    "kind": "rdfc-proc:bucketize",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/bucketize.ttl --stdin in --read metadataIn=/dev/shm/rdfc-profile/shell__n60__r4/meta.fifo ",
+    "firstSeenMs": 61.303469000034966,
+    "lastSeenMs": 29144.869009000016,
+    "cpuMs": 2450,
+    "byClass": {
+     "app": 2450
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1950
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 90
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 160
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 110
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 130
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "776325",
+    "kind": "other",
+    "cmd": "/bin/sh /home/silvius/rdfc-journal-bench/rml-processor-jvm/bin/rml-map --mapping /home/silvius/rdfc-journal-bench/anchor/bluebike.rml.ttl",
+    "firstSeenMs": 61.303469000034966,
+    "lastSeenMs": 61.303469000034966,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "776326",
+    "kind": "rdfc-proc:ldes-writer",
+    "cmd": "node /home/silvius/rdfc-journal-bench/dist/bench/rdfc-proc.js --config /home/silvius/rdfc-journal-bench/steps/ldes-writer.ttl --stdin in --read metadataIn=/dev/shm/rdfc-profile/shell__n60__r4/bmeta.fi",
+    "firstSeenMs": 61.303469000034966,
+    "lastSeenMs": 29169.989180000033,
+    "cpuMs": 1710,
+    "byClass": {
+     "app": 1710
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 1380
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 60
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 100
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 50
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 80
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "776327",
+    "kind": "other",
+    "cmd": "readlink -f /home/silvius/rdfc-journal-bench/rml-processor-jvm/bin/rml-map",
+    "firstSeenMs": 61.303469000034966,
+    "lastSeenMs": 61.303469000034966,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   }
+  ],
+  "stderr": ""
+ },
+ {
+  "arm": "rdfc",
+  "n": 60,
+  "rep": 4,
+  "code": 0,
+  "wallMs": 67725.20584499999,
+  "cgCpuMs": 102517.664,
+  "sampledCpuMs": 101360,
+  "correct": true,
+  "activities": {
+   "creates": 70,
+   "updates": 139
+  },
+  "expected": {
+   "creates": 70,
+   "updates": 139
+  },
+  "perProcess": [
+   {
+    "pid": "777149",
+    "kind": "npx",
+    "cmd": "/usr/bin/sh -c exec < /dev/null; npx rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n60_r4.ttl > /dev/shm/rdfc-profile/rdfc__n60__r4/log.txt 2>&1",
+    "firstSeenMs": 59.461265999940224,
+    "lastSeenMs": 67708.563998,
+    "cpuMs": 10,
+    "byClass": {
+     "app": 10
+    },
+    "threads": [
+     {
+      "comm": "sh",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "777150",
+    "kind": "npx",
+    "cmd": "npm exec rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n60_r4.ttl",
+    "firstSeenMs": 59.461265999940224,
+    "lastSeenMs": 67682.140243,
+    "cpuMs": 1280,
+    "byClass": {
+     "app": 1280
+    },
+    "threads": [
+     {
+      "comm": "npm exec rdfc /",
+      "ms": 1050
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 70
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 80
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     }
+    ]
+   },
+   {
+    "pid": "777184",
+    "kind": "other",
+    "cmd": "sh -c 'rdfc' /home/silvius/rdfc-journal-bench/pipelines/profile__n60_r4.ttl",
+    "firstSeenMs": 1203.5045179999433,
+    "lastSeenMs": 67590.48616999993,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "777185",
+    "kind": "orchestrator",
+    "cmd": "node /home/silvius/rdfc-journal-bench/node_modules/.bin/rdfc /home/silvius/rdfc-journal-bench/pipelines/profile__n60_r4.ttl",
+    "firstSeenMs": 1203.5045179999433,
+    "lastSeenMs": 67347.59707499994,
+    "cpuMs": 17930,
+    "byClass": {
+     "app": 17930
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 11690
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1470
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1300
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1290
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 1380
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 180
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 240
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 200
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 180
+     }
+    ]
+   },
+   {
+    "pid": "777408",
+    "kind": "jvm-runner",
+    "cmd": "java -Dlogback.configurationFile=./bench/logback-quiet.xml -jar ./vendor/jvm-runner.jar localhost:50053 https://w3id.org/rdf-connect/bench#JvmRunner",
+    "firstSeenMs": 10321.005514999968,
+    "lastSeenMs": 67375.02888599993,
+    "cpuMs": 44700,
+    "byClass": {
+     "app": 18690,
+     "gc/vm": 2310,
+     "jit": 23700
+    },
+    "threads": [
+     {
+      "comm": "java",
+      "ms": 40
+     },
+     {
+      "comm": "java",
+      "ms": 1490
+     },
+     {
+      "comm": "GC Thread#0",
+      "ms": 470
+     },
+     {
+      "comm": "G1 Conc#0",
+      "ms": 50
+     },
+     {
+      "comm": "VM Periodic Tas",
+      "ms": 90
+     },
+     {
+      "comm": "VM Thread",
+      "ms": 70
+     },
+     {
+      "comm": "Service Thread",
+      "ms": 10
+     },
+     {
+      "comm": "Monitor Deflati",
+      "ms": 20
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 10730
+     },
+     {
+      "comm": "C1 CompilerThre",
+      "ms": 3380
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 80
+     },
+     {
+      "comm": "GC Thread#1",
+      "ms": 540
+     },
+     {
+      "comm": "GC Thread#2",
+      "ms": 580
+     },
+     {
+      "comm": "GC Thread#3",
+      "ms": 510
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 10
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 410
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 10
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 10
+     },
+     {
+      "comm": "grpc-default-ex",
+      "ms": 15100
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 10
+     },
+     {
+      "comm": "grpc-nio-worker",
+      "ms": 1580
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1170
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 2230
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 1110
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 510
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 300
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 3230
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 250
+     },
+     {
+      "comm": "C2 CompilerThre",
+      "ms": 710
+     }
+    ]
+   },
+   {
+    "pid": "777410",
+    "kind": "other",
+    "cmd": "",
+    "firstSeenMs": 10346.974098999985,
+    "lastSeenMs": 10346.974098999985,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "777411",
+    "kind": "other",
+    "cmd": "bash -l -c java -Dlogback.configurationFile=./bench/logback-quiet.xml -jar ./vendor/jvm-runner.jar localhost:50053 https://w3id.org/rdf-connect/bench#JvmRunner",
+    "firstSeenMs": 10346.974098999985,
+    "lastSeenMs": 10346.974098999985,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "777412",
+    "kind": "npx",
+    "cmd": "npm exec js-runner localhost:50053 https://w3id.org/rdf-connect#NodeRunner",
+    "firstSeenMs": 10374.148367999936,
+    "lastSeenMs": 67402.12815,
+    "cpuMs": 1010,
+    "byClass": {
+     "app": 1010
+    },
+    "threads": [
+     {
+      "comm": "npm exec js-run",
+      "ms": 850
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 40
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 30
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 50
+     },
+     {
+      "comm": "npm exec js-run",
+      "ms": 10
+     }
+    ]
+   },
+   {
+    "pid": "777414",
+    "kind": "other",
+    "cmd": "",
+    "firstSeenMs": 10374.148367999936,
+    "lastSeenMs": 10374.148367999936,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "777466",
+    "kind": "js-runner",
+    "cmd": "sh -c 'js-runner' localhost:50053 'https://w3id.org/rdf-connect#NodeRunner'",
+    "firstSeenMs": 11325.048146000016,
+    "lastSeenMs": 67296.35652699997,
+    "cpuMs": 0,
+    "byClass": {
+     "app": 0
+    },
+    "threads": []
+   },
+   {
+    "pid": "777467",
+    "kind": "js-runner",
+    "cmd": "/usr/bin/env node /home/silvius/rdfc-journal-bench/node_modules/.bin/js-runner localhost:50053 https://w3id.org/rdf-connect#NodeRunner",
+    "firstSeenMs": 11325.048146000016,
+    "lastSeenMs": 67059.50340099994,
+    "cpuMs": 36430,
+    "byClass": {
+     "app": 36430
+    },
+    "threads": [
+     {
+      "comm": "MainThread",
+      "ms": 26250
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 2470
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 2380
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 2430
+     },
+     {
+      "comm": "V8Worker",
+      "ms": 2380
+     },
+     {
+      "comm": "MainThread",
+      "ms": 10
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 120
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 130
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 120
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 130
+     },
+     {
+      "comm": "libuv-worker",
+      "ms": 10
+     }
+    ]
+   }
+  ],
+  "stderr": ""
+ }
+]
