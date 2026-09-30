@@ -6,7 +6,8 @@
   "description": "Benchmarks for the RDF-Connect journal paper",
   "scripts": {
     "build": "tsc",
-    "bench:overhead": "node dist/bench/run.js"
+    "bench:overhead": "node dist/bench/run.js",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@rdfc/dumps-to-feed-processor-ts": "^2.0.1",
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
+    "patch-package": "^8.0.1",
     "typescript": "^5.9.3"
   }
 }

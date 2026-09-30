@@ -1,0 +1,18 @@
+diff --git a/node_modules/@rdfc/js-runner/lib/client.js b/node_modules/@rdfc/js-runner/lib/client.js
+index 885699d..545e244 100644
+--- a/node_modules/@rdfc/js-runner/lib/client.js
++++ b/node_modules/@rdfc/js-runner/lib/client.js
+@@ -27,7 +27,12 @@ function watchGrpcState(client, state, runnerId, signal) {
+     update();
+ }
+ export async function start(addr, uri, configPath, signal, state, runnerId) {
+-    const client = new RunnerClient(addr, grpc.credentials.createInsecure());
++    // See the orchestrator: raise gRPC's 4 MiB default receive limit.
++    const maxMessage = Number(process.env.RDFC_MAX_MESSAGE_BYTES ?? 256 * 1024 * 1024);
++    const client = new RunnerClient(addr, grpc.credentials.createInsecure(), {
++        'grpc.max_receive_message_length': maxMessage,
++        'grpc.max_send_message_length': maxMessage,
++    });
+     const logStream = client.logStream(() => { });
+     // Same rationale as the writer's stream: an abrupt disconnect (e.g. the
+     // orchestrator shutting down) can emit 'error' on this stream. It's just a

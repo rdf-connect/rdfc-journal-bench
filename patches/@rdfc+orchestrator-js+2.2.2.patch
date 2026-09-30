@@ -1,0 +1,19 @@
+diff --git a/node_modules/@rdfc/orchestrator-js/lib/index.js b/node_modules/@rdfc/orchestrator-js/lib/index.js
+index 0673918..47766fc 100644
+--- a/node_modules/@rdfc/orchestrator-js/lib/index.js
++++ b/node_modules/@rdfc/orchestrator-js/lib/index.js
+@@ -19,7 +19,13 @@ export * from './server.js';
+ export * from './util.js';
+ export async function start(location, port = 50051, provenanceLocation) {
+     const logger = getLoggerFor(['start']);
+-    const grpcServer = new grpc.Server();
++    // gRPC's default receive limit is 4 MiB; messages between processors are
++    // routinely larger. RDFC_MAX_MESSAGE_BYTES overrides (-1: unlimited).
++    const maxMessage = Number(process.env.RDFC_MAX_MESSAGE_BYTES ?? 256 * 1024 * 1024);
++    const grpcServer = new grpc.Server({
++        'grpc.max_receive_message_length': maxMessage,
++        'grpc.max_send_message_length': maxMessage,
++    });
+     const orchestrator = new Orchestrator();
+     const server = new Server(orchestrator);
+     const injector = grpcServer.createConnectionInjector(grpc.ServerCredentials.createInsecure());

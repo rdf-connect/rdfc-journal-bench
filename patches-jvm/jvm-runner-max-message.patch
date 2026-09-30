@@ -1,0 +1,39 @@
+diff --git a/build.gradle b/build.gradle
+index d9c4b5a..6baed72 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -21,8 +21,13 @@ subprojects {
+ 		withJavadocJar()
+ 
+         toolchain {
+-            languageVersion = JavaLanguageVersion.of(11)
++            languageVersion = JavaLanguageVersion.of(21)
+         }
+ 	}
+ }
+ 
++
++// Local build: JDK 21 compiling to the same Java 11 bytecode JitPack produces.
++subprojects {
++	tasks.withType(JavaCompile).configureEach { options.release = 11 }
++}
+diff --git a/runner/src/main/java/io/github/rdfc/Rdfc.java b/runner/src/main/java/io/github/rdfc/Rdfc.java
+index 56883c7..7ce7b58 100644
+--- a/runner/src/main/java/io/github/rdfc/Rdfc.java
++++ b/runner/src/main/java/io/github/rdfc/Rdfc.java
+@@ -10,8 +10,15 @@ import rdfc.RunnerGrpc;
+ public class Rdfc {
+     public static void main(String[] args) throws Exception {
+ 
++        // gRPC's default receive limit is 4 MiB; messages between processors
++        // are routinely larger. RDFC_MAX_MESSAGE_BYTES overrides it.
++        String max = System.getenv("RDFC_MAX_MESSAGE_BYTES");
++        int maxMessage = max == null ? 256 * 1024 * 1024
++                : Integer.parseInt(max) < 0 ? Integer.MAX_VALUE : Integer.parseInt(max);
++
+         ManagedChannel channel = ManagedChannelBuilder.forTarget(args[0])
+                 .usePlaintext()
++                .maxInboundMessageSize(maxMessage)
+                 .build();
+ 
+         RunnerGrpc.RunnerStub stub = RunnerGrpc.newStub(channel);

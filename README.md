@@ -146,6 +146,28 @@ Two things to check on a server:
   `export BENCH_RUNS=/dev/shm/rdfc-bench`. Allow a few hundred MB, more for
   long archives.
 
+**gRPC message limit (patched).** RDF-Connect leaves gRPC's 4 MiB receive
+limit unset, so larger messages fail (the orchestrator exits 0; a JVM runner
+exits and the pipeline hangs). The benchmark runs a patched stack with a
+256 MiB limit, overridable with `RDFC_MAX_MESSAGE_BYTES`:
+
+- orchestrator and js-runner: `patches/`, reapplied by `npm ci` (postinstall
+  runs `patch-package`);
+- JVM runner: `patches-jvm/jvm-runner-max-message.patch` against
+  `rdf-connect/jvm-runner` at `f5b6df6`. The jars downloaded in step 3 are
+  **unpatched**; build instead:
+
+  ```bash
+  git clone https://github.com/rdf-connect/jvm-runner vendor/jvm-runner-src
+  cd vendor/jvm-runner-src && git checkout f5b6df6 \
+    && git apply ../../patches-jvm/jvm-runner-max-message.patch \
+    && ./gradlew :runner:shadowJar :runner:indexJar
+  cp runner/build/libs/runner-0.0.4-all.jar ../jvm-runner.jar
+  cp runner/build/libs/index-0.0.4-index.jar ../jvm-runner-index.jar
+  ```
+
+  The patch also lets JDK 21 build it, targeting the same Java 11 bytecode.
+
 Reproducibility gap: `rml-processor-jvm` resolves the RMLMapper and the runner
 types from JitPack at `master-SNAPSHOT`, so two machines can build against
 different code. Pin these to commit hashes before the final runs.
