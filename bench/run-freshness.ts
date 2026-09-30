@@ -63,7 +63,16 @@ type Result = {
   activities: { creates: number; updates: number }
   expected: { creates: number; updates: number }
   correct: boolean
+  /** Why the run was killed, if it was: it then counts as not correct. */
+  failure?: string
 }
+
+/**
+ * A hung rdfc run (a close lost between runners on shutdown) goes silent;
+ * see STALL_MS in run-bluebike.ts. Kill it rather than wait forever.
+ */
+const STALL_MS = 120 * 1000
+const TIMEOUT_MS = 60 * 60 * 1000
 
 const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms))
 const now = () => performance.timeOrigin + performance.now()
@@ -186,7 +195,17 @@ async function runStreaming(
   }
 
   const stop = watchPublication(ldesDir(arm as never, runDir), cumulative, arrivalsOf)
-  const run = await runPipe(cmd, '/dev/null', join(runDir, 'stdout.txt'), { env: { JAVA_OPTS } })
+  const run = await runPipe(cmd, '/dev/null', join(runDir, 'stdout.txt'), {
+    env: { JAVA_OPTS },
+    timeoutMs: TIMEOUT_MS,
+    stallFile: arm === 'rdfc' ? join(runDir, 'log.txt') : undefined,
+    stallMs: STALL_MS,
+  })
+  const failure = run.timedOut
+    ? `timed out after ${TIMEOUT_MS / 60000} min`
+    : run.stalled
+      ? `hung: no log output for ${STALL_MS / 1000} s, killed after ${(run.wallMs / 1000).toFixed(0)} s`
+      : undefined
   await sleep(300) // let the watcher see the last write
   const freshness = stop()
 
@@ -203,7 +222,8 @@ async function runStreaming(
     invocations: 1,
     activities: acts,
     expected,
-    correct: acts.creates === expected.creates && acts.updates === expected.updates,
+    correct: !failure && acts.creates === expected.creates && acts.updates === expected.updates,
+    failure,
   }
 }
 
@@ -344,6 +364,7 @@ async function main() {
         `${fmt(r.p95FreshnessMs / 1000, 1, 13)}${fmt((r.cpuMs ?? NaN) / 1000, 1, 9)}` +
         `${`${r.activities.creates}/${r.activities.updates}`.padStart(10)}${(r.correct ? 'yes' : 'NO').padStart(9)}`,
     )
+    if (r.failure) console.log(`  ! ${r.failure}`)
   }
   console.log(
     `\n  ${n} snapshots arriving every ${arrivalMs} ms; freshness is arrival to publication.`,
