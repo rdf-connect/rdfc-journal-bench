@@ -13,7 +13,8 @@
 #   INTERVALS    arrivals between scheduled runs (default 2,6,12,30)
 #
 # Results land in results/*.json and results/*.log. Per-run directories are
-# under BENCH_RUNS and are not needed afterwards.
+# under BENCH_RUNS; correct runs are deleted once checked (BENCH_KEEP_RUNS=1
+# keeps them), failed runs are kept for diagnosis.
 set -u
 cd "$(dirname "$0")/.."
 

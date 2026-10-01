@@ -17,5 +17,6 @@ run depth   "$MAIN" 3
 run payload "$MAIN" 3
 run stream  "rdfc,native" 3
 run work        "$MAIN" 3
+run work-count  "$MAIN" 3
 run work-depth  "rdfc,native" 3
 echo "ALL SWEEPS DONE"

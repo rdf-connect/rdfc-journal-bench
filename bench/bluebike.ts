@@ -314,7 +314,12 @@ export function cwlCommand(
       throw new Error('missing Toil: uv venv -p 3.14 .venv-toil && uv pip install -p .venv-toil "toil[cwl]"')
     }
     return (
-      `mkdir -p ${runDir}/toil-work && ${runner} --no-container --retryCount 0` +
+      // Every job reserves --defaultDisk, and Toil's single-machine scheduler
+      // sizes its capacity from the *free* space of the work dir. At Toil's
+      // default (3 GiB) a part-filled tmpfs admits one job at a time, so the
+      // scatter is limited by disk accounting rather than cores. CWL's own
+      // tmpdir/outdir defaults still apply on top.
+      `mkdir -p ${runDir}/toil-work && ${runner} --no-container --retryCount 0 --defaultDisk 256Mi` +
       ` --preserve-environment JAVA_OPTS` +
       ` --jobStore ${runDir}/toil-jobstore --workDir ${runDir}/toil-work --outdir ${outdir}` +
       ` --logFile ${runDir}/toil.log ${workflow} ${job} 2> ${runDir}/toil.stderr`

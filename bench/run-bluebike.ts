@@ -141,6 +141,13 @@ async function runOnce(arm: Arm, n: number, unit: number, rep: number): Promise<
     acts.updates === wantActs.updates
   if (correct) for (const m of expected) if (!published.has(m)) { correct = false; break }
 
+  // A checked, correct run's files are not needed again, and on tmpfs they
+  // hold memory and shrink the free space Toil schedules by. Failed runs are
+  // kept for diagnosis; BENCH_KEEP_RUNS=1 keeps them all.
+  if (run.code === 0 && correct && !process.env.BENCH_KEEP_RUNS) {
+    rmSync(runDir, { recursive: true, force: true })
+  }
+
   return {
     arm,
     snapshots: n,
