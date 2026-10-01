@@ -229,6 +229,16 @@ def growth(res, out):
 def freshness(res, out):
     rows = json.load(open(res / "freshness.json"))
     streaming = [r for r in rows if not r.get("interval")]
+    # The streaming arms' freshness was measured again (2026-09-30) once the
+    # shell arm's pacer recorded its own arrivals; the first run timed them from
+    # spawn. Their CPU stays from the first run, which is the session the
+    # scheduled arms ran in, so that every CPU figure comes from one session.
+    remeasured = res / "freshness-streaming.json"
+    if remeasured.exists():
+        again = {r["arm"]: r for r in json.load(open(remeasured))}
+        for r in streaming:
+            if r["arm"] in again:
+                r["freshnessMs"] = again[r["arm"]]["freshnessMs"]
     arrival = rows[0]["arrivalMs"]
     n = rows[0]["n"]
 

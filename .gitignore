@@ -24,3 +24,4 @@ ldes-output/
 bucket-state.json
 testing/
 test.sh
+__pycache__/
