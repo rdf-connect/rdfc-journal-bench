@@ -1,7 +1,8 @@
 node_modules/
 dist/
 # Generated per run by the harness
-pipelines/
+pipelines/*
+!pipelines/rml-index-only.ttl
 results/runs/
 results/stages/data/
 results/stages/out/

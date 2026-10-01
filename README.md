@@ -101,7 +101,9 @@ bench/all.sh         experiment-1 suite
 
 Generated and downloaded content is not in the repository: `node_modules/`,
 `dist/`, `vendor/`, `data/`, `.venv*/`, `pipelines/`, and the per-run
-directories under `results/`. Only result summaries are versioned.
+directories under `results/`. Only result summaries are versioned. The one
+exception in `pipelines/` is `rml-index-only.ttl`, the RmlMapper definition
+the generated pipelines import in place of the jar.
 
 ## Setting up a machine
 

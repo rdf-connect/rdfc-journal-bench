@@ -34,7 +34,7 @@ export function renderBluebikePipeline(cfg: BluebikePipelineConfig): string {
 
 <> owl:imports <../processors.ttl>,
   <../vendor/jvm-runner-index.jar>,
-  <../rml-processor-jvm/build/libs/rml-processor-jvm-0.0.2-all.jar>,
+  <rml-index-only.ttl>,
   <../shacl-processor-ts/processors.ttl>,
   <../node_modules/@rdfc/dumps-to-feed-processor-ts/processor.ttl>,
   <../node_modules/@rdfc/sds-processors-ts/configs/sdsify.ttl>,

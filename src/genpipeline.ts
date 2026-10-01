@@ -125,7 +125,7 @@ export function renderAnchorPipeline(cfg: AnchorPipelineConfig): string {
 
 <> owl:imports <../processors.ttl>,
   <../vendor/jvm-runner-index.jar>,
-  <../rml-processor-jvm/build/libs/rml-processor-jvm-0.0.2-all.jar>,
+  <rml-index-only.ttl>,
   <../shacl-processor-ts/processors.ttl>.
 
 <> a rdfc:Pipeline;

@@ -1,0 +1,99 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix rdfc: <https://w3id.org/rdf-connect#>.
+@prefix owl: <http://www.w3.org/2002/07/owl#>.
+
+rdfc:RmlMapper a rdfs:Class, owl:Class;
+  rdfc:javaImplementationOf rdfc:Processor;
+  rdfc:class "org.example.App";
+  rdfc:jar <../rml-processor-jvm/build/libs/rml-processor-jvm-0.0.2-all.jar>.
+
+[ ] a sh:NodeShape;
+  sh:targetClass <Source>;
+  sh:property [
+    sh:path rdfc:reader;
+    sh:name "reader";
+    sh:minCount 1;
+    sh:maxCount 1;
+    sh:class rdfc:Reader;
+  ], [
+    sh:path rdfc:mappingId;
+    sh:name "mappingId";
+    sh:maxCount 1;
+    sh:datatype xsd:string;
+  ], [
+    sh:path rdfc:triggers;
+    sh:name "triggers";
+    sh:maxCount 1;
+    sh:datatype xsd:boolean;
+  ].
+
+[ ] a sh:NodeShape;
+  sh:targetClass <Target>;
+  sh:property [
+    sh:path rdfc:writer;
+    sh:name "writer";
+    sh:minCount 1;
+    sh:maxCount 1;
+    sh:class rdfc:Writer;
+  ], [
+    sh:path rdfc:mappingId;
+    sh:name "mappingId";
+    sh:maxCount 1;
+    sh:datatype xsd:string;
+  ], [
+    sh:path rdfc:format;
+    sh:name "format";
+    sh:maxCount 1;
+    sh:datatype xsd:string;
+  ].
+
+[ ] a sh:NodeShape;
+  sh:targetClass <DefaultTarget>;
+  sh:property [
+    sh:path rdfc:writer;
+    sh:name "writer";
+    sh:minCount 1;
+    sh:maxCount 1;
+    sh:class rdfc:Writer;
+  ], [
+    sh:path rdfc:format;
+    sh:name "format";
+    sh:maxCount 1;
+    sh:datatype xsd:string;
+  ].
+
+[ ] a sh:NodeShape;
+  sh:targetClass rdfc:RmlMapper;
+  sh:property [
+    sh:path rdfc:mappings;
+    sh:name "mappings";
+    sh:minCount 1;
+    sh:maxCount 1;
+    sh:class rdfc:Reader;
+  ], [
+    sh:path rdfc:baseIRI;
+    sh:name "baseIRI";
+    sh:maxCount 1;
+    sh:datatype xsd:string;
+  ], [
+    sh:path rdfc:waitForMappingClose;
+    sh:name "waitForMappingClose";
+    sh:maxCount 1;
+    sh:datatype xsd:boolean;
+  ], [
+    sh:path rdfc:defaultTarget;
+    sh:name "defaultTarget";
+    sh:maxCount 1;
+    sh:class <DefaultTarget>;
+  ], [
+    sh:path rdfc:source;
+    sh:name "sources";
+    sh:class <Source>;
+  ], [
+    sh:path rdfc:target;
+    sh:name "targets";
+    sh:class <Target>;
+  ].
+
