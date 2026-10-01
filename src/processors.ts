@@ -55,6 +55,21 @@ export function busyWork(us: number): number {
   return acc
 }
 
+/**
+ * The work a consuming processor does per message: `busyWork` by default. With
+ * BENCH_WORK=sleep it waits asynchronously for as long instead, leaving the
+ * event loop free, which separates the cost of blocking the runner from the
+ * cost of idling between messages. setTimeout rounds waits below 1 ms up to
+ * 1 ms, so only compare work of 1 ms and more in that mode.
+ */
+function doWork(us: number): Promise<void> | undefined {
+  if (process.env.BENCH_WORK === 'sleep' && us > 0) {
+    return new Promise((res) => setTimeout(res, us / 1000))
+  }
+  busyWork(us)
+  return undefined
+}
+
 function emit(path: string, payload: unknown) {
   writeFileSync(path, JSON.stringify(payload, null, 2))
 }
@@ -153,7 +168,8 @@ export class BenchPassThrough extends Processor<PassThroughArgs> {
   async transform(this: PassThroughArgs & this): Promise<void> {
     const work = Number(this.workUs ?? 0)
     for await (const msg of this.reader.buffers()) {
-      busyWork(work)
+      const waiting = doWork(work)
+      if (waiting) await waiting
       await this.writer.buffer(msg)
     }
     await this.writer.close()
@@ -184,7 +200,8 @@ export class BenchSink extends Processor<SinkArgs> {
       if (count === 0) firstAbs = nowAbs()
       count++
       bytes += msg.byteLength
-      busyWork(work)
+      const waiting = doWork(work)
+      if (waiting) await waiting
       lastAbs = nowAbs()
     }
 

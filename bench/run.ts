@@ -460,6 +460,19 @@ const SWEEPS: Record<string, Workload[]> = {
     { count: 100, size: 1024, mode: 'buffer', depth: 0, workUs: 100000 },
   ],
 
+  /**
+   * Whether counts really are comparable: the framework's added cost per
+   * message rises as the work sweep's counts fall, so hold work fixed and vary
+   * the count. If the added cost depends on the count, it is warm-up.
+   */
+  'work-count': [
+    { count: 100, size: 1024, mode: 'buffer', depth: 0, workUs: 0 },
+    { count: 300, size: 1024, mode: 'buffer', depth: 0, workUs: 0 },
+    { count: 2000, size: 1024, mode: 'buffer', depth: 0, workUs: 0 },
+    { count: 100, size: 1024, mode: 'buffer', depth: 0, workUs: 10000 },
+    { count: 1000, size: 1024, mode: 'buffer', depth: 0, workUs: 10000 },
+  ],
+
   /** Same question, but for a deeper pipeline where every stage does work. */
   'work-depth': [
     { count: 500, size: 1024, mode: 'buffer', depth: 4, workUs: 0 },
