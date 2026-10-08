@@ -4,6 +4,7 @@
   "type": "module",
   "private": true,
   "description": "Benchmarks for the RDF-Connect journal paper",
+  "license": "MIT",
   "scripts": {
     "build": "tsc",
     "bench:overhead": "node dist/bench/run.js",

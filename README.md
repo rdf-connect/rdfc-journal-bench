@@ -221,3 +221,7 @@ of the paper:
    cores. A bounded in-flight window per channel would fix it.
 5. **Streaming channel slower than buffered messages** — the per-chunk await in
    `writer.ts` (already carrying a `TODO`) makes it 2.6× slower at 64 KB.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
